@@ -60,6 +60,22 @@
 <title>Venture</title>
 </head>
 
+<link rel="icon" type="image/png" href="assets/images/logo-venture.svg">
+
+
+    <!-- Open Graph Title -->
+    <meta property="og:title" content="VentureMedia.pl - Twoja stacja informacyjna!">
+
+    <!-- Open Graph Description -->
+    <meta property="og:description" content="Venture, rzetelność oraz wnikliwość w sprawy dotyczące nasz region - To my. Codzienna dawka informacji, sprawdź nasze artykuły i bądź na bieżąco!">
+
+    <!-- Open Graph URL -->
+    <meta property="og:url" content="https://venturemedia.pl">
+<meta property="og:image" content="assets/images/venture-og.png">
+<meta property="og:image:type" content="image/png"> <!-- Typ obrazu, np. jpeg, png -->
+<meta property="og:image:width" content="1200"> <!-- Szerokość obrazu w px -->
+<meta property="og:image:height" content="630"> <!-- Wysokość obrazu w px -->
+
   <!-- Ekran ładowania -->
   <div id="loading-screen">
     <div class="loading-content">
@@ -116,7 +132,7 @@
     <div class="notiglow"></div>
     <div class="notiborderglow"></div>
     <div class="notititle">About us</div>
-    <div class="notibody">Venture is a new, state-of-the-art news station that combines radio and television! We keep you updated on the latest events and news in the city. Explore original entertainment programmes and discover the world of media by gaining knowledge from experts!</div>
+    <div class="notibody">Venture, rzetelność oraz wnikliwość w sprawy dotyczące nasz region - To my. Codzienna dawka informacji, sprawdź nasze artykuły i bądź na bieżąco!</div>
   </div>
   
   <div class="what-do">
@@ -127,8 +143,8 @@
     <div class="info-block left">
         <div class="info-content">
             <div class="text-content">
-                <h3>Credibility and professionalism</h3>
-                <p>Our team is made up of experienced journalists and experts who thoroughly vet every piece of material to bring you only verified information.</p>
+                <h3>Wiarygodność i profesjonalizm</h3>
+                <p>Nasz zespół tworzą doświadczeni dziennikarze i eksperci, którzy rzetelnie weryfikują każdy materiał, by dostarczać wyłącznie sprawdzone informacje.</p>
             </div>
         </div>
     </div>
@@ -136,8 +152,8 @@
     <div class="info-block right">
         <div class="info-content">
             <div class="text-content">
-                <h3>Interactivity</h3>
-                <p>We focus on engaging our audience. We enable you to interact directly with the presenters, comment live and share your opinions.</p>
+                <h3>Przyjazne miejsce pracy</h3>
+                <p>Stawiamy na rozwój każdej osoby, wyrażającej chęć do pracy i rozwoju w pięknej dziedzinie jakim jest dziennikarstwo. Jednak praca w naszych mediach to nie tylko dziennikarstwo, możesz zostać fotografem, kamerzystą, pilotem, prezenterem telewizyjnym! Dołącz do nas, już teraz!</p>
             </div>
         </div>
     </div>
@@ -145,8 +161,8 @@
     <div class="info-block left">
         <div class="info-content">
             <div class="text-content">
-                <h3>Advertising and sponsorship</h3>
-                <p>If you want to reach a wide audience, we offer effective advertising options. From classic radio spots to programme sponsorships, with us your brand will become part of the conversation.</p>
+                <h3>Reklama i sponsoring</h3>
+                <p>Chcesz dotrzeć do szerokiej publiczności? Oferujemy skuteczne formy promocji – od reklamy radiowej. reportaże z wydarzeń po reklamy w telewizji. Z nami Twoja marka stanie się rozpoznawalna w zaledwie chwilę!</p>
             </div>
         </div>
     </div>
@@ -1663,6 +1679,32 @@ body.loaded #content {
 body.loaded #loading-screen {
   opacity: 0; /* Ustawienie przezroczystości na 0 */
   pointer-events: none; /* Uniemożliwienie interakcji z ekranem ładowania */
+}
+
+/* Stylowanie suwaka */
+::-webkit-scrollbar {
+  width: 15px;  /* szerokość suwaka */
+  height: 8px; /* wysokość suwaka dla poziomego */
+  background: #1d1d1d; /* ciemne tło dla całego suwaka */
+}
+
+/* Tło toru suwaka */
+::-webkit-scrollbar-track {
+  background: #1d1d1d; /* ciemne tło */
+  border-radius: 10px; /* zaokrąglone rogi */
+  margin: 0; /* usuwa marginesy */
+}
+
+/* Uchwyt suwaka */
+::-webkit-scrollbar-thumb {
+  background: #e2e2e2; /* ciemny uchwyt */
+  border-radius: 10px; /* zaokrąglone rogi uchwytu */
+  border: 3px solid #333; /* cienka ramka wokół uchwytu */
+}
+
+/* Stan suwaka po najechaniu */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(168, 168, 168); /* jaśniejszy uchwyt po najechaniu */
 }
 
 

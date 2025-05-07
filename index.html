@@ -98,13 +98,14 @@
   </div>
   
   <div id="slide-note" class="slide-note hidden">
-    <button id="closeSlideNote" class="close-btn" aria-label="Zamknij powiadomienie">&times;</button>
+    <span id="closeSlideNote" class="close-btn" aria-label="Zamknij powiadomienie">&times;</span>
     <div class="slide-note-content">
       <strong class="note-title">Czy wiesz, że...</strong>
       <span class="note-description">Możesz zakupić od nas reklamę w każdej chwili? Zareklamuj swoją firmę, biznes lub co tylko chcesz!</span>
       <a href="https://dsc.gg/venturenews" class="ad-link" target="_blank">Chcę kupić reklamę</a>
     </div>
   </div>
+  
 
   <script src="script.js"></script>
 
@@ -1760,25 +1761,23 @@ body.loaded #loading-screen {
 
 .note-description {
   font-size: 14px;
+  color: #c5c5c5;
   margin-bottom: 5px;
 }
 
 .ad-link {
-  display: inline-block;
-  background-color: #fafafa;
-  color: black;
-  padding: 8px 16px;
-  border-radius: 8px;
+  font-weight: 800;
+  font-size: 16px;
+  color: #afe2ff;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-shadow: 0 0 15px #afe2ff8e;
 }
 
 .ad-link:hover {
-  background-color: #646464;
-  color: white;
+  color: #7ea4bb;
+  text-shadow: 0 0 15px #7ea4bb;
 }
 
 .close-btn {
@@ -1797,6 +1796,7 @@ body.loaded #loading-screen {
 .close-btn:hover {
   color: rgb(156, 156, 156);
 }
+
 
 </style>
 <body>
@@ -2016,7 +2016,7 @@ window.addEventListener("DOMContentLoaded", () => {
     slideNote.classList.add("show");
   }, 6000);
 
-  // Zamknięcie powiadomienia po kliknięciu przycisku 'X'
+  // Zamknięcie powiadomienia po kliknięciu 'X'
   closeBtn.addEventListener("click", () => {
     slideNote.classList.remove("show");
     slideNote.classList.add("hidden");
@@ -2028,6 +2028,7 @@ window.addEventListener("DOMContentLoaded", () => {
     slideNote.classList.add("hidden");
   });
 });
+
 
 
 </script>

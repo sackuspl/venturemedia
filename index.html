@@ -102,12 +102,9 @@
     <div class="slide-note-content">
       <strong class="note-title">Czy wiesz, że...</strong>
       <span class="note-description">Możesz zakupić od nas reklamę w każdej chwili? Zareklamuj swoją firmę, biznes lub co tylko chcesz!</span>
-      <a href="https://dsc.gg/venturenews" class="ad-link" target="_blank" onclick="closeSlideNote()">Chcę kupić reklamę</a>
+      <a href="https://dsc.gg/venturenews" class="ad-link" target="_blank">Chcę kupić reklamę</a>
     </div>
   </div>
-  
-  
-  
 
   <script src="script.js"></script>
 
@@ -115,12 +112,12 @@
   <button class="button-nav" onclick="scrollToPosition(0)">
     <i class="fas fa-home"></i>
     <span class="label">Home</span>
-    <button class="button-nav" onclick="scrollToPosition(2350)">
+    <button class="button-nav" onclick="scrollToPosition(2650)">
       <i class="fas fa-newspaper"></i>
       <span class="label">Articles</span>
     </button>
   </button>
-  <button class="button-nav" onclick="scrollToPosition(3300)">
+  <button class="button-nav" onclick="scrollToPosition(3650)">
     <i class="fas fa-users"></i>
     <span class="label">Employees</span>
   </button>
@@ -709,7 +706,7 @@ button.click:active::before {
   display: flex;
   flex-direction: column;
   isolation: isolate;
-  position: absolute;
+  position: relative;  /* Zmiana na relative, aby karta była w obrębie strony */
   width: 40rem;  /* Zwiększenie szerokości */
   height: 16rem; /* Zwiększenie wysokości */
   background: linear-gradient(to right, #ffffff, #686868);  /* Gradient z prawej do lewej */
@@ -719,15 +716,17 @@ button.click:active::before {
   font-size: 24px; /* Zwiększenie rozmiaru czcionki */
   --gradient: linear-gradient(to bottom, #ffffff, #686868);
   --color: #ffffff;
-  top: 105%;  /* Przesunięcie w dół */
+  top: 20%;  /* Ustalenie odległości od góry strony */
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);  /* Utrzymanie na środku strony */
   word-wrap: break-word; /* Zapewnia zawijanie tekstu */
   word-break: break-word; /* Wymusza łamanie długich słów */
+  margin-top: 270px;
 
   animation: fadeIn 1.5s ease-out forwards;  /* Animacja pojawiania */
   animation-delay: 2.1s;
 }
+
 
 .notification:before {
   position: absolute;
@@ -963,7 +962,7 @@ button.click:active::before {
 }
 
 .info-section {
-  margin-top: 650px;
+  margin-top: 400px;
   margin-bottom: 110px;
   display: flex;
   flex-direction: column;
@@ -1187,7 +1186,7 @@ button.click:active::before {
 .what-do {
       letter-spacing: 5px; /* lub np. 0.2em dla większej skalowalności */
       color: #FFFFFF;
-      top: 600px;
+      top: 340px;
       position: relative;
       justify-content: center;
       text-align: center;
@@ -1726,7 +1725,7 @@ body.loaded #loading-screen {
 
 .slide-note {
   position: fixed;
-  bottom: -400px; /* Powiadomienie zaczyna się poza ekranem */
+  bottom: -400px;
   right: 20px;
   width: 360px;
   background-color: #292929c4;
@@ -1735,7 +1734,7 @@ body.loaded #loading-screen {
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.13);
   z-index: 9999;
-  transition: bottom 1s ease; /* Animacja przesuwania w dół */
+  transition: bottom 1s ease;
 }
 
 .slide-note.show {
@@ -1751,44 +1750,37 @@ body.loaded #loading-screen {
   line-height: 1.6;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Zmniejszamy odstęp między elementami */
-  padding-right: 24px;
+  gap: 8px;
 }
 
 .note-title {
-  font-size: 19px; /* Tytuł ma większy rozmiar */
+  font-size: 19px;
   font-weight: bold;
-  margin-bottom: 10px;
-  padding: 0; /* Usuwamy paddingi */
 }
 
 .note-description {
-  font-size: 14px; /* Opis ma mniejszy rozmiar */
-  margin: 0; /* Usuwamy marginesy */
+  font-size: 14px;
   margin-bottom: 5px;
-  padding: 0; /* Usuwamy paddingi */
 }
 
 .ad-link {
   display: inline-block;
   background-color: #fafafa;
-  color: rgb(0, 0, 0);
+  color: black;
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
   font-size: 14px;
-  transition: background-color 0.3s ease;
   text-align: center;
-  width: fit-content;
+  transition: background-color 0.3s ease;
 }
 
 .ad-link:hover {
   background-color: #646464;
-  color: rgb(255, 255, 255);
+  color: white;
 }
 
-/* Przyciski */
 .close-btn {
   position: absolute;
   top: 12px;
@@ -1798,12 +1790,10 @@ body.loaded #loading-screen {
   color: white;
   font-size: 20px;
   cursor: pointer;
-  line-height: 1;
-  padding: 6px 12px; /* Dodajemy przestrzeń wokół przycisku */
-  border-radius: 6px; /* Zaokrąglamy przycisk */
-  font-weight: bold; /* Dodatkowy wyróżnik */
+  padding: 6px 12px;
+  border-radius: 6px;
 }
-/* Przyciski */
+
 .close-btn:hover {
   color: rgb(156, 156, 156);
 }
@@ -2019,7 +2009,6 @@ window.addEventListener("load", function() {
 window.addEventListener("DOMContentLoaded", () => {
   const slideNote = document.getElementById("slide-note");
   const closeBtn = document.getElementById("closeSlideNote");
-  const adLink = document.querySelector(".ad-link"); // Dodajemy selektor do linku
 
   // Pokazanie powiadomienia po 6 sekundach
   setTimeout(() => {
@@ -2034,11 +2023,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Zamknięcie powiadomienia po kliknięciu w link 'Chcę kupić reklamę'
-  adLink.addEventListener("click", () => {
+  document.querySelector(".ad-link").addEventListener("click", () => {
     slideNote.classList.remove("show");
     slideNote.classList.add("hidden");
   });
 });
+
 
 </script>
 

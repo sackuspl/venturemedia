@@ -96,6 +96,18 @@
   <div id="content">
     <h1></h1>
   </div>
+  
+  <div id="slide-note" class="slide-note hidden">
+    <button id="closeSlideNote" class="close-btn" aria-label="Zamknij powiadomienie">&times;</button>
+    <div class="slide-note-content">
+      <strong class="note-title">Czy wiesz, że...</strong>
+      <span class="note-description">Możesz zakupić od nas reklamę w każdej chwili? Zareklamuj swoją firmę, biznes lub co tylko chcesz!</span>
+      <a href="https://dsc.gg/venturenews" class="ad-link" target="_blank" onclick="closeSlideNote()">Chcę kupić reklamę</a>
+    </div>
+  </div>
+  
+  
+  
 
   <script src="script.js"></script>
 
@@ -1712,6 +1724,89 @@ body.loaded #loading-screen {
   background: rgb(168, 168, 168); /* jaśniejszy uchwyt po najechaniu */
 }
 
+.slide-note {
+  position: fixed;
+  bottom: -400px; /* Powiadomienie zaczyna się poza ekranem */
+  right: 20px;
+  width: 360px;
+  background-color: #292929c4;
+  color: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.13);
+  z-index: 9999;
+  transition: bottom 1s ease; /* Animacja przesuwania w dół */
+}
+
+.slide-note.show {
+  bottom: 20px;
+}
+
+.slide-note.hidden {
+  bottom: -400px;
+}
+
+.slide-note-content {
+  font-size: 15px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Zmniejszamy odstęp między elementami */
+  padding-right: 24px;
+}
+
+.note-title {
+  font-size: 19px; /* Tytuł ma większy rozmiar */
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 0; /* Usuwamy paddingi */
+}
+
+.note-description {
+  font-size: 14px; /* Opis ma mniejszy rozmiar */
+  margin: 0; /* Usuwamy marginesy */
+  margin-bottom: 5px;
+  padding: 0; /* Usuwamy paddingi */
+}
+
+.ad-link {
+  display: inline-block;
+  background-color: #fafafa;
+  color: rgb(0, 0, 0);
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  width: fit-content;
+}
+
+.ad-link:hover {
+  background-color: #646464;
+  color: rgb(255, 255, 255);
+}
+
+/* Przyciski */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 6px 12px; /* Dodajemy przestrzeń wokół przycisku */
+  border-radius: 6px; /* Zaokrąglamy przycisk */
+  font-weight: bold; /* Dodatkowy wyróżnik */
+}
+/* Przyciski */
+.close-btn:hover {
+  color: rgb(156, 156, 156);
+}
 
 </style>
 <body>
@@ -1920,5 +2015,32 @@ window.addEventListener("load", function() {
 
 </script>
   
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const slideNote = document.getElementById("slide-note");
+  const closeBtn = document.getElementById("closeSlideNote");
+  const adLink = document.querySelector(".ad-link"); // Dodajemy selektor do linku
+
+  // Pokazanie powiadomienia po 6 sekundach
+  setTimeout(() => {
+    slideNote.classList.remove("hidden");
+    slideNote.classList.add("show");
+  }, 6000);
+
+  // Zamknięcie powiadomienia po kliknięciu przycisku 'X'
+  closeBtn.addEventListener("click", () => {
+    slideNote.classList.remove("show");
+    slideNote.classList.add("hidden");
+  });
+
+  // Zamknięcie powiadomienia po kliknięciu w link 'Chcę kupić reklamę'
+  adLink.addEventListener("click", () => {
+    slideNote.classList.remove("show");
+    slideNote.classList.add("hidden");
+  });
+});
+
+</script>
+
   
 </html>

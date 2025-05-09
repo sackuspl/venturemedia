@@ -312,8 +312,26 @@
         Contact me
       </button>
     </div>
+
+
+
+    <div class="card-row bottom-row">
+      <!-- 4 karty na dole -->
+      <div class="card">
+        <div class="img-wrapper">
+          <div class="img" style="background-image: url('assets/images/Ailya.png');"></div>
+          <i class="fa fa-newspaper badge journalist">
+            <span class="tooltip">Specialisation in the entertainment section</span>
+          </i>
+        </div>
+        <span>Ailya Vesai</span>
+        <p class="job">Journalist</p>
+        <!-- Przyciski Contact me -->
+        <button class="contact-button" onclick="window.open('https://li.v-rp.pl/timeline&u=Ailya_Vesai_60621&ref=se', '_blank');">
+          Contact me
+        </button>
+      </div>
   
-  <div class="card-row bottom-row">
     <!-- 4 karty na dole -->
     <div class="card">
       <div class="img-wrapper">
@@ -360,9 +378,11 @@
       </button>
     </div>
   
-    <div class="card">
-      <div class="img-wrapper">
-        <div class="img" style="background-image: url('assets/images/person.jpg');"></div>
+    <div class="card-row bottom-row">
+      <!-- 4 karty na dole -->
+      <div class="card">
+        <div class="img-wrapper">
+        <div class="img" style="background-image: url('assets/images/cody.png');"></div>
         <i class="fa fa-hashtag badge freelancer">
           <span class="tooltip">Independent creator</span>
         </i>
@@ -371,6 +391,21 @@
       <p class="job">Freelancer</p>
       <!-- Przyciski Contact me -->
       <button class="contact-button" onclick="window.open('https://li.v-rp.pl/timeline&u=Cody_Anderson_23597&ref=se', '_blank');">
+        Contact me
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="img-wrapper">
+        <div class="img" style="background-image: url('assets/images/ray.png');"></div>
+        <i class="fa fa-helicopter badge pilot">
+          <span class="tooltip">Broadcast helicopter pilot</span>
+        </i>
+      </div>
+      <span>Ray Garwin</span>
+      <p class="job">Pilot</p>
+      <!-- Przyciski Contact me -->
+      <button class="contact-button" onclick="window.open('https://li.v-rp.pl/timeline&u=Ray_Garvin_12573&ref=se', '_blank');">
         Contact me
       </button>
     </div>
@@ -1279,6 +1314,18 @@ button.click:active::before {
 .card .badge.freelancer {
   color: #ffcd9e;
   text-shadow: 0 0 8px #ffcd9e3f;
+}
+
+/* Ikona z klasą 'freelancer' */
+.card .badge.journalist {
+  color: #90ffff;
+  text-shadow: 0 0 8px #90ffff3b;
+}
+
+/* Ikona z klasą 'freelancer' */
+.card .badge.pilot {
+  color: #c6ff90;
+  text-shadow: 0 0 8px #c6ff903b;
 }
 
 /* Tooltip (opis) */

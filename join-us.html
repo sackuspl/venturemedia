@@ -1830,6 +1830,372 @@ html, body {
 }
 
 
+
+
+.join-us-section {
+  padding: 60px 20px;
+  text-align: center;
+  color: #ffffff;
+  max-width: 1200px; /* wyśrodkowanie całej sekcji */
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
+.join-us-section h2 {
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+.join-us-title {
+    letter-spacing: 5px;
+    color: #FFFFFF;
+    top: 340px;
+    font-size: 25px !important;
+    margin-bottom: 65px !important;
+    margin-top: 50px !important;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.join-us-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.join-us-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.join-button {
+  display: inline-block;
+  padding: 14px 36px;
+  background-color: #ffffff;
+  margin-bottom: 100px;
+  color: #121212;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+
+.join-button:hover {
+  background-color: #dddddd;
+}
+
+.join-columns-modern {
+  display: flex;
+  justify-content: center; /* wyśrodkowanie całej grupy */
+  gap: 6%; /* odstęp między panelami */
+  margin: 0 auto;
+  color: #ffffff;
+  flex-wrap: nowrap; /* zapobiega łamaniu kolumn na kolejne linie */
+}
+
+.join-modern-column {
+background: linear-gradient(
+  to bottom right, 
+  #181818,  /* jaśniejszy kolor w lewym górnym rogu */
+  #1f1f1f  /* ciemniejszy kolor w prawym dolnym rogu */
+);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.151);
+  color: #ffffff;
+  width: 48%; /* dwie kolumny */
+  text-align: left; /* tekst wyrównany do lewej */
+  overflow: hidden;
+  margin-bottom: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.join-modern-column::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 400px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.171) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  filter: blur(70px);
+}
+
+.join-modern-column:hover::before {
+  opacity: 1;
+}
+
+.join-modern-column h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  padding-left: 0; /* usuwamy padding dla paska */
+  color: #ffffff;
+  text-shadow: 0 0 15px #ffffff3b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  font-weight: 600;
+  transform: translateY(-17px); /* przesunięcie w górę */
+}
+
+/* Usuwamy border-left */
+.join-modern-column h3 {
+  border-left: none;
+}
+
+/* Ikona dla "Oferujemy" */
+.offer h3::before {
+  content: "\f058"; /* fa-check-circle */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #6dffc2;
+  font-size: 1.4rem;
+  display: inline-block;
+  transform: translateY(-3px);
+  text-shadow:
+    0 0 5px #53ffb715,
+    0 0 10px #53ffb715,
+    0 0 15px #53ffb715,
+    0 0 20px #53ffb715;
+}
+
+/* Ikona dla "Wymagamy" */
+.require h3::before {
+  content: "\f06a"; /* fa-square-exclamation */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #7cd6ff;
+  font-size: 1.4rem;
+  display: inline-block;
+  transform: translateY(-3px);
+    text-shadow:
+    0 0 5px #53ddff15,
+    0 0 10px #53ddff15,
+    0 0 15px #53ddff15,
+    0 0 20px #53ddff15;
+}
+
+.join-modern-column h3 span {
+  transform: translateY(-2px);
+}
+
+
+
+.modern-item {
+  background-color: #ffffff14;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s;
+  color: #ffffff;
+  white-space: nowrap;        /* tekst w jednej linii */
+  overflow: hidden;           /* ukrywa nadmiar */
+  text-overflow: ellipsis;    /* dodaje "…" na końcu */
+    -webkit-line-clamp: 1;    /* maksymalnie 2 linie */
+}
+
+.offer .modern-item {
+  background:
+    linear-gradient(
+      to right,
+      rgba(83, 255, 183, 0.5) 0%,
+      rgba(83, 255, 183, 0.25) 40%,
+      rgba(83, 255, 183, 0.1) 60%,
+      rgba(83, 255, 183, 0) 80%
+    ) 0 0 / 0% 100% no-repeat,
+    linear-gradient(to bottom right, #333333, #222222); /* nowe bazowe tło */
+  transition: background-size 0.6s ease;
+  color: #ffffff;
+}
+
+.offer .modern-item:hover {
+  background-size: 60% 100%, auto; /* pierwszy gradient rośnie, bazowe tło nie rusza się */
+}
+
+.require .modern-item {
+  background:
+    linear-gradient(
+      to right,
+      rgba(83, 200, 255, 0.5) 0%,
+      rgba(83, 200, 255, 0.25) 40%,
+      rgba(83, 200, 255, 0.1) 60%,
+      rgba(83, 200, 255, 0) 80%
+    ) 0 0 / 0% 100% no-repeat,
+    linear-gradient(to bottom right, #333333, #222222); /* nowe bazowe tło */
+  transition: background-size 0.6s ease;
+  color: #ffffff;
+}
+
+.require .modern-item:hover {
+  background-size: 60% 100%, auto;
+}
+
+/* Definicje animacji */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animacje dla zdjęcia i przycisku */
+.join-us-section img,
+.join-button {
+  opacity: 0;
+  animation: fadeSlideUp 1s ease forwards;
+}
+
+.join-button {
+  animation-delay: 0.3s; /* przycisk pojawia się szybciej */
+}
+
+.join-us-section img {
+  animation-delay: 0.8s; /* zdjęcie pojawia się później */
+}
+
+/* Animacje dla kolumn */
+.require {
+  opacity: 0;
+  animation: fadeSlideLeft 1s ease forwards;
+  animation-delay: 1.2s;
+}
+
+.offer {
+  opacity: 0;
+  animation: fadeSlideRight 1s ease forwards;
+  animation-delay: 1.8s;
+}
+
+@keyframes fadeInOnly {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+button.click2 {
+  opacity: 0;
+  animation: fadeInOnly 0.8s ease-out forwards;  /* 1s animacji */
+  animation-delay: 0.3s;  /* pojawia się po sekundzie od wejścia */
+  
+  display: block;
+  width: 10rem;
+  height: 2.6em;
+  line-height: 2.5em;
+  margin: 0px auto 120px auto;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #1a1a1a;
+  color: #73ffb2;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 6px;
+  z-index: 15;
+  transition: color 0.5s;
+
+  /* gradient border */
+  border: 1px solid transparent;
+  background-image: 
+    linear-gradient(#1a1a1a, #1a1a1a), 
+    linear-gradient(135deg, #73ffb2, #73ffb233);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+button.click2:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: radial-gradient(circle, #73ffb2, #73ffb233);
+  width: 280px;  /* większa niż przycisk, by efekt był efektowny */
+  height: 150px; /* proporcjonalnie większa */
+  border-radius: 50%;
+  top: 100%;
+  left: 100%;
+  transition: all 0.7s;
+}
+
+button.click2:hover {
+  color: #131313;
+}
+
+button.click2:hover:before {
+  top: -30px;
+  left: -30px;
+}
+
+button.click2:active::before {
+  background: radial-gradient(circle, #8affbe, #73ffb250);
+}
+
+.icon-check {
+  color: #8affbe;
+  text-shadow:
+    0 0 5px #8affbf15,
+    0 0 10px #8affbf15,
+    0 0 15px #6adfa10c,
+    0 0 20px #53ffb70e;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.icon-important {
+  color: #7cd6ff;
+  text-shadow:
+    0 0 5px #7cd5ff13,
+    0 0 10px #7cd5ff10,
+    0 0 15px #5bb8ff0e,
+    0 0 20px #53ddff11;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.modern-item:hover i {
+  color: #313131e5 !important;
+  text-shadow: none !important;
+}
+
+
 </style>
 <body>
 
@@ -1838,51 +2204,33 @@ html, body {
     <h1 style="text-align: center; margin-top: 100px;"></h1>
   </main>
 
-<div class="program-story fade-in">
-  <div class="story-container">
-    <div class="avatars">
-      <img src="assets/images/charlie.png" alt="Charlie" class="story-image charlie" />
-      <div class="coop-icon">
-        <i class="fa-solid fa-handshake-simple"></i>
-      </div>
-      <img src="assets/images/muffin.png" alt="Muffin" class="story-image muffin" />
-    </div>
 
-    <div class="story-text">
-      <h2 class="story-title">Charlie & Muffin: Sweet Adventures</h2>
-      <p class="story-description">
-        Kocham nie tylko słodycze, ale tworzę z nich urocze opowieści. Nasz program <strong>"Charlie & Muffin: Sweet Adventures"</strong> to coś więcej niż smak: to emocje, dziecięca radość i edukacja w najczystszej postaci. Każdy odcinek to cukierkowa podróż przez świat kolorów i uśmiechów. Muffin? To mój wierny kompan i ulubieniec dzieci, który nigdy nie przestaje zaskakiwać.
-      </p>
-      <div class="creator-info">
-        <span class="creator-name">Creators: Charlie Salvarez & Gaspard Moreau</span>
-      </div>
-    </div>
+  <section class="join-us-section">
+<h2 class="join-us-title">Join Us</h2>
+
+    <img src="assets/images/join-us.png" alt="Join Us Image">
+
+  <button class="button click2" onclick="window.open('https://dsc.gg/venturenews', '_blank')">Aplikuj już teraz</button>
+
+<div class="join-columns-modern">
+  <div class="join-modern-column offer">
+  <h3><span>Oferujemy</span></h3>
+<div class="modern-item"><i class="fa-solid fa-square-check icon-check"></i>Wspierającą i pomocną społeczność</div>
+    <div class="modern-item"><i class="fa-solid fa-square-check icon-check"></i>Szkolenia i doskonalenie umiejętności</div>
+    <div class="modern-item"><i class="fa-solid fa-square-check icon-check"></i>Dostęp do niezbędnych narzędzi i aplikacji</div>
+    <div class="modern-item"><i class="fa-solid fa-square-check icon-check"></i>Możliwość rozwoju i nauki w kreatywnym zespole</div>
+    <div class="modern-item"><i class="fa-solid fa-square-check icon-check"></i>Pracę w terenie i mozliwość relacjonowania na żywo</div>
   </div>
-
-  <!-- Karuzela obrazów -->
-  <div class="carousel-container fade-in">
-    <button class="carousel-btn left" onclick="moveSlide(-1)">&#10094;</button>
-    
-    <div class="carousel-track">
-    <img src="assets/charlie/charlie-zdj-1.png" alt="Image 1" onclick="openModal(this.src)">
-    <img src="assets/charlie/charlie-zdj-3.png" alt="Image 3" onclick="openModal(this.src)">
-    <img src="assets/charlie/charlie-zdj-2.png" alt="Image 2" onclick="openModal(this.src)">
-    <img src="assets/charlie/charlie-zdj-6.png" alt="Image 6" onclick="openModal(this.src)">
-    <img src="assets/charlie/charlie-zdj-4.png" alt="Image 4" onclick="openModal(this.src)">
-    <img src="assets/charlie/charlie-zdj-5.png" alt="Image 5" onclick="openModal(this.src)">
-    <img src="assets/charlie/charlie-zdj-7.png" alt="Image 7" onclick="openModal(this.src)">
-
-  </div>
-    <button class="carousel-btn right" onclick="moveSlide(1)">&#10095;</button>
+  <div class="join-modern-column require">
+   <h3><span>Wymagamy</span></h3>
+  <div class="modern-item"><i class="fa-solid fa-square-exclamation icon-important"></i>Profesjonalizmu oraz logicznego myślenia</div>
+  <div class="modern-item"><i class="fa-solid fa-square-exclamation icon-important"></i>Umiejętności pracy zespołowej i komunikacji</div>
+  <div class="modern-item"><i class="fa-solid fa-square-exclamation icon-important"></i>Wysokich standardów etycznych i rzetelności</div>
+  <div class="modern-item"><i class="fa-solid fa-square-exclamation icon-important"></i>Otwartości na krytykę i chęci ciągłego doskonalenia</div>
+  <div class="modern-item"><i class="fa-solid fa-square-exclamation icon-important"></i>Znajomości narzędzi multimedialnych i podstaw SEO</div>
   </div>
 </div>
-
-<div id="imageModal" class="image-modal" onclick="closeModal(event)">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal(event)">&times;</span>
-    <img id="modalImage" class="modal-image" src="" alt="Podgląd zdjęcia" />
-  </div>
-</div>
+  </section>
 
 
 
@@ -1909,9 +2257,10 @@ html, body {
       <p class="credits">Website design by Fineas Puttvise</p>
     </div>
   </footer>
-  
 
+    <div class="glow-top2"></div>
   <div class="glow-top"></div>
+  
   </body>
 
   
@@ -2142,5 +2491,10 @@ function closeModal(event) {
 }
 </script>
 
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.join-us-title').classList.add('visible');
+  });
+</script>
   
 </html>

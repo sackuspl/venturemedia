@@ -178,13 +178,6 @@
   </div>
   
   <button class="button click" onclick="window.open('https://dsc.gg/venturenews', '_blank')">Contact us</button>
-
-  <div class="notification">
-    <div class="notiglow"></div>
-    <div class="notiborderglow"></div>
-    <div class="notititle">About us</div>
-    <div class="notibody">Venture, rzetelność oraz wnikliwość w sprawy dotyczące nasz region - To my. Codzienna dawka informacji, sprawdź nasze artykuły i bądź na bieżąco!</div>
-  </div>
   
   <div class="what-do">
     What do we do?
@@ -907,112 +900,6 @@ button.click:active::before {
   }
 }
 
-.notification {
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  isolation: isolate;
-  position: relative;  /* Zmiana na relative, aby karta była w obrębie strony */
-  width: 40rem;  /* Zwiększenie szerokości */
-  height: 16rem; /* Zwiększenie wysokości */
-  background: linear-gradient(to right, #ffffff, #686868);  /* Gradient z prawej do lewej */
-  border-radius: 1.5rem;
-  overflow: hidden;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 24px; /* Zwiększenie rozmiaru czcionki */
-  --gradient: linear-gradient(to bottom, #ffffff, #686868);
-  --color: #ffffff;
-  top: 20%;  /* Ustalenie odległości od góry strony */
-  left: 50%;
-  transform: translateX(-50%);  /* Utrzymanie na środku strony */
-  word-wrap: break-word; /* Zapewnia zawijanie tekstu */
-  word-break: break-word; /* Wymusza łamanie długich słów */
-  margin-top: 270px;
-
-  animation: fadeIn 1.5s ease-out forwards;  /* Animacja pojawiania */
-  animation-delay: 2.1s;
-}
-
-
-.notification:before {
-  position: absolute;
-  content: "";
-  inset: 0.0625rem;
-  border-radius: 1.5rem;
-  background: #1a1a1a;
-  z-index: 2;
-}
-
-.notification:after {
-  position: absolute;
-  content: "";
-  width: 0.4rem;  /* Zwiększenie szerokości paska */
-  margin-left: 0.2rem;
-  inset: 0.9rem auto 0.9rem 0.8rem;
-  border-radius: 0.125rem;
-  background: var(--gradient);
-  transition: transform 300ms ease;
-  z-index: 4;
-}
-
-.notification:hover:after {
-  transform: translateX(0.25rem); /* Zwiększenie przesunięcia paska */
-}
-
-.notititle {
-  color: var(--color);
-  padding: 1.25rem 0.5rem 0.8rem 1.5rem;
-  font-weight: 600;
-  font-size: 1.8rem; /* Zwiększenie rozmiaru tytułu */
-  transition: transform 300ms ease;
-  z-index: 5;
-  white-space: normal; /* Pozwala na zawijanie tytułu */
-  margin-left: 1.0rem;
-}
-
-.notification:hover .notititle {
-  transform: translateX(0.25rem);
-}
-
-.notibody {
-  color: #99999d;
-  padding: 0 1.5rem;
-  transition: transform 300ms ease;
-  z-index: 5;
-  white-space: normal; /* Pozwala na zawijanie tekstu w ciele powiadomienia */
-  margin-left: 1.0rem;
-}
-
-.notification:hover .notibody {
-  transform: translateX(0.35rem); /* Zwiększenie przesunięcia tekstu */
-}
-
-.notiglow,
-.notiborderglow {
-  position: absolute;
-  width: 40rem;  /* Zwiększenie rozmiaru glow */
-  height: 40rem;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle closest-side at center, white, transparent);
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-
-.notiglow {
-  z-index: 3;
-}
-
-.notiborderglow {
-  z-index: 1;
-}
-
-.notification:hover .notiglow {
-  opacity: 0.1;
-}
-
-.notification:hover .notiborderglow {
-  opacity: 0.1;
-}
 
 .note {
   color: var(--color);
@@ -1954,30 +1841,151 @@ body.loaded #loading-screen {
   animation: fadeOutLogo 1s ease forwards;
 }
 
+#ad-panel {
+  max-width: 700px; /* mniejszy panel */
+  width: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  background-color: #f9f9f900;
+  border: 1px solid #dddddd00;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+}
+
+.ad-item {
+  position: relative;
+  display: none;
+  align-items: center;
+  gap: 20px;
+  width: 94%;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  padding: 15px 20px;
+
+  background: linear-gradient(135deg, #292929, #161616);
+  border-radius: 10px;
+  z-index: 0;
+  overflow: hidden; /* ważne dla przycinania pseudo-elementu */
+}
+
+.ad-item.active {
+  display: flex;
+}
+
+.ad-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px; /* grubość ramki */
+  border-radius: inherit;
+  background: linear-gradient(to bottom right, white 0%, transparent 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ad-item img,
+.ad-item p {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.ad-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.ad-item p {
+  font-size: 16px;
+  margin: 0;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.gif-wrapper {
+  max-width: 850px;
+  width: 100%;
+  margin: 15px auto 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.gif-wrapper img {
+  max-width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+.ad-item img,
+.ad-item p {
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.5s ease-in-out;
+}
+
+.ad-item.animate img,
+.ad-item.animate p {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 </style>
 <body>
-  <div class="sponsored">
-    Sponsored
+
+  <div class="sponsored">Sponsored</div>
+
+<div id="ad-panel" class="ad-panel">
+  <div class="ad-item active">
+    <img src="https://li-static.v-rp.pl/upload/photos/2025/02/DMrF6ArRK8QSfVWwJ1zB_23_6f2da5319f7e8b6909547d719919fcf5_avatar.png" alt="Logo 1" />
+    <p>CaféVelvet: Odkryj wyjątkowy świat doznań z filiżanką kawy. Tradycja, nowoczesność i najlepsze ziarna.</p>
+  </div>
+  <div class="ad-item">
+    <img src="https://li-static.v-rp.pl/upload/photos/2024/07/Z64Pf8g6R1l3ngHgmzzW_07_d88b7e3438fedbe984068cabbabffb4e_avatar.jpg" alt="Logo 2" />
+    <p>Ice Dreams: Tworzymy lody, które urzekają smakiem i jakością. Naturalne składniki, autorskie receptury i pasja do perfekcji.</p>
+  </div>
+  <div class="ad-item">
+    <img src="https://i.imgur.com/f0QJ3Xj.png" alt="Logo 3" />
+    <p>BLENZ: Zdjęcia, które mówią. Grafika, która działa. Marketing, który przyciąga.</p>
+  </div>
+  <div class="ad-item">
+    <img src="https://i.imgur.com/Zc2pmDC.png" alt="Logo 4" />
+    <p>Lumii Cosmetics: Kosmetyki inspirowane naturą – skuteczność, delikatność i naturalny blask.</p>
+  </div>
+  <div class="ad-item">
+    <img src="https://i.imgur.com/v5lKrdM.png" alt="Logo 5" />
+    <p>Green Energy: Zmniejsz rachunki i zadbaj o planetę. Zielona energia dla Twojego domu.</p>
   </div>
 
-    <div class="ladowanie">
-      <p></p>
-      <div class="slowa">
-        <span class="slowo">Odkryj wyjątkowy świat doznań z CaféVelvet, gdzie filiżanka kawy to prawdziwa podróż w głąb smaków i zapachów. Nasza kawa łączy tradycję z nowoczesnością, oferując starannie wybrane ziarna pochodzące z najlepszych plantacji na świecie.</span>
-        <span class="slowo">Tworzymy lody, które urzekają smakiem i jakością. Naturalne składniki, autorskie receptury i pasja do perfekcji. Kiedy liczy się każdy kęs, po prostu wybierz Ice Dreams.</span>
-        <span class="slowo">Zdjęcia, które mówią. Grafika, która działa. Marketing, który przyciąga. BLENZ – Twoje wsparcie wizualne i online. </span>
-        <span class="slowo">Cenisz naturalne piękno, delikatność i skuteczną pielęgnację? Odkryj Lumii Cosmetics. Tworzymy kosmetyki inspirowane naturą – pełne harmonii, lekkości i troski o Twoją skórę. Blask płynący z naturalnych składników i poczuj prawdziwą różnicę.</span>
-        <span class="slowo">Masz dość rosnących rachunków za prąd? Chcesz żyć w zgodzie z naturą? Green Energy to Twój partner w zielonej rewolucji! Oferujemy panele fotowoltaiczne, turbiny wiatrowe i wiele więcej. Z nami zyskasz niezależność i oszczędzisz pieniądze.</span>
-      </div>
-    </div>
+  <!-- GIF SPONSORSKI POD PANEL REKLAM -->
+  <div class="gif-wrapper">
+    <a href="https://dsc.gg/venturenews" target="_blank" rel="noopener noreferrer">
+      <img src="https://i.imgur.com/686YoaA.gif" alt="Sponsor GIF" />
+    </a>
   </div>
-  <a href="https://dsc.gg/venturenews" target="_blank" rel="noopener noreferrer">
-    <img src="https://i.imgur.com/686YoaA.gif" alt="Sponsor GIF" width="700" class="gif-with-glow">
-
-  </a>
+</div>
   
-
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-logo">
@@ -2232,6 +2240,40 @@ function closeProgramsModal(e) {
 </script>
 
 
+  <script>
+    const adItems = document.querySelectorAll('.ad-item');
+    let current = 0;
+
+    setInterval(() => {
+      adItems[current].classList.remove('active');
+      current = (current + 1) % adItems.length;
+      adItems[current].classList.add('active');
+    }, 5000); // zmiana co 5 sekund
+  </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const adPanel = document.getElementById('ad-panel');
+    const adItems = document.querySelectorAll('.ad-item');
+    const gifWrapper = document.querySelector('.gif-wrapper');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          adItems.forEach((item, index) => {
+            setTimeout(() => item.classList.add('animate'), index * 150); // kaskadowe opóźnienie
+          });
+          gifWrapper?.classList.add('animate');
+          observer.disconnect(); // działa tylko raz, usuń jeśli chcesz ponowne wywołanie
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+
+    observer.observe(adPanel);
+  });
+</script>
 
   
 </html>

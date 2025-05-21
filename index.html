@@ -902,6 +902,113 @@ button.click:active::before {
 }
 
 
+.notification {
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  position: relative;  /* Zmiana na relative, aby karta była w obrębie strony */
+  width: 40rem;  /* Zwiększenie szerokości */
+  height: 16rem; /* Zwiększenie wysokości */
+  background: linear-gradient(to right, #ffffff, #686868);  /* Gradient z prawej do lewej */
+  border-radius: 1.5rem;
+  overflow: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 24px; /* Zwiększenie rozmiaru czcionki */
+  --gradient: linear-gradient(to bottom, #ffffff, #686868);
+  --color: #ffffff;
+  top: 20%;  /* Ustalenie odległości od góry strony */
+  left: 50%;
+  transform: translateX(-50%);  /* Utrzymanie na środku strony */
+  word-wrap: break-word; /* Zapewnia zawijanie tekstu */
+  word-break: break-word; /* Wymusza łamanie długich słów */
+  margin-top: 270px;
+
+  animation: fadeIn 1.5s ease-out forwards;  /* Animacja pojawiania */
+  animation-delay: 2.1s;
+}
+
+
+.notification:before {
+  position: absolute;
+  content: "";
+  inset: 0.0625rem;
+  border-radius: 1.5rem;
+  background: #1a1a1a;
+  z-index: 2;
+}
+
+.notification:after {
+  position: absolute;
+  content: "";
+  width: 0.4rem;  /* Zwiększenie szerokości paska */
+  margin-left: 0.2rem;
+  inset: 0.9rem auto 0.9rem 0.8rem;
+  border-radius: 0.125rem;
+  background: var(--gradient);
+  transition: transform 300ms ease;
+  z-index: 4;
+}
+
+.notification:hover:after {
+  transform: translateX(0.25rem); /* Zwiększenie przesunięcia paska */
+}
+
+.notititle {
+  color: var(--color);
+  padding: 1.25rem 0.5rem 0.8rem 1.5rem;
+  font-weight: 600;
+  font-size: 1.8rem; /* Zwiększenie rozmiaru tytułu */
+  transition: transform 300ms ease;
+  z-index: 5;
+  white-space: normal; /* Pozwala na zawijanie tytułu */
+  margin-left: 1.0rem;
+}
+
+.notification:hover .notititle {
+  transform: translateX(0.25rem);
+}
+
+.notibody {
+  color: #99999d;
+  padding: 0 1.5rem;
+  transition: transform 300ms ease;
+  z-index: 5;
+  white-space: normal; /* Pozwala na zawijanie tekstu w ciele powiadomienia */
+  margin-left: 1.0rem;
+}
+
+.notification:hover .notibody {
+  transform: translateX(0.35rem); /* Zwiększenie przesunięcia tekstu */
+}
+
+.notiglow,
+.notiborderglow {
+  position: absolute;
+  width: 40rem;  /* Zwiększenie rozmiaru glow */
+  height: 40rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle closest-side at center, white, transparent);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.notiglow {
+  z-index: 3;
+}
+
+.notiborderglow {
+  z-index: 1;
+}
+
+.notification:hover .notiglow {
+  opacity: 0.1;
+}
+
+.notification:hover .notiborderglow {
+  opacity: 0.1;
+}
+
 .note {
   color: var(--color);
   position: fixed;

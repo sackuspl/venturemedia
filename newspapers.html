@@ -143,13 +143,7 @@
 const reader = document.getElementById('reader');
 const flipbookContainer = document.getElementById('flipbook-container');
 
-document.querySelectorAll('.paper').forEach(paper => {
-  paper.addEventListener('click', () => {
-    const link = paper.dataset.link;
-    openHeyzine(link);
-  });
-});
-
+// Funkcja otwierająca iframe
 function openHeyzine(link) {
   reader.classList.add('active');
   flipbookContainer.innerHTML = `
@@ -162,13 +156,35 @@ function openHeyzine(link) {
       src="${link}">
     </iframe>
   `;
+  // Aktualizacja URL w przeglądarce bez przeładowania
+  history.replaceState(null, '', '?gazeta=' + encodeURIComponent(link));
 }
 
 // Zamknięcie czytnika
 document.querySelector('.close').onclick = () => {
   reader.classList.remove('active');
   flipbookContainer.innerHTML = '';
+  // Przywrócenie pierwotnego URL
+  history.replaceState(null, '', window.location.pathname);
 };
+
+// Kliknięcie na gazetę
+document.querySelectorAll('.paper').forEach(paper => {
+  paper.addEventListener('click', () => {
+    const link = paper.dataset.link;
+    openHeyzine(link);
+  });
+});
+
+// Sprawdzenie, czy w URL jest podany parametr gazeta
+window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const gazetaLink = urlParams.get('gazeta');
+  if (gazetaLink) {
+    openHeyzine(decodeURIComponent(gazetaLink));
+  }
+});
+
 </script>
 
 <style>

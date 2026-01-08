@@ -272,10 +272,10 @@
 </section>
 
 
-<section class="ads-section">
+<section class="client-section">
   <h2>Our Partners</h2>
 
-  <div class="ads-container">
+  <div class="client-container">
     <div class="client-slide visible-scroll">
       <h3 class="client1">Nazwa Biznesu</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
@@ -290,9 +290,9 @@
     </div>
   </div>
 
-  <div class="ad-gif visible-scroll">
+  <div class="client-gif visible-scroll">
     <a href="https://i.imgur.com/686YoaA.gif" target="_blank" rel="noopener noreferrer">
-      <img src="https://i.imgur.com/686YoaA.gif" alt="Ad GIF">
+      <img src="https://i.imgur.com/686YoaA.gif" alt="client-gif">
     </a>
   </div>
 </section>
@@ -437,7 +437,7 @@
 
 
 <style>
-.ads-section {
+.client-section {
   padding: 4rem 1rem 6rem;
   background-image: url("assets/images/tlo-venture.png");
   background-size: cover;
@@ -448,14 +448,14 @@
   text-align: center;
 }
 
-.ads-section h2 {
+.client-section h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;
   text-shadow: 0 0 12px rgba(255,255,255,0.25);
 }
 
 /* kontener animowanych klientów */
-.ads-container {
+.client-container {
   position: relative;
   width: 80%;
   max-width: 800px;
@@ -503,7 +503,7 @@
 }
 
 /* GIF */
-.ad-gif img {
+.client-gif img {
   width: 850px;
   max-width: 80%;
   border-radius: 12px;
@@ -513,7 +513,7 @@
 
 /* Początkowo elementy ukryte do animacji przy scrollu */
 .client-slide.visible-scroll,
-.ad-gif.visible-scroll {
+.client-gif.visible-scroll {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -521,7 +521,7 @@
 
 /* Po pojawieniu się w oknie */
 .client-slide.visible-scroll.show,
-.ad-gif.visible-scroll.show {
+.client-gif.visible-scroll.show {
   opacity: 1;
   transform: translateY(0);
 }

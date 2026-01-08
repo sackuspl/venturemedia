@@ -29,8 +29,44 @@
   href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"
 />
 
+<link rel="stylesheet" href="phone-style.css" media="only screen and (max-width: 768px)">
+
+
+
+  <!-- Open Graph Meta Tags -->
+<meta property="og:title" content="venturemedia.pl - Your story, Venture glory!">
+<meta property="og:description" content="Innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.">
+<meta property="og:url" content="https://venturemedia.pl">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sackuspl.github.io/venturemedia/assets/images/venture-og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="venturemedia.pl - Your story, Venture glory!">
+<meta name="twitter:description" content="Innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.">
+<meta name="twitter:image" content="https://sackuspl.github.io/venturemedia/assets/images/venture-og.png">
+<meta name="twitter:url" content="https://venturemedia.pl">
+
+
+
+
 </head>
 <body>
+
+
+<div id="loading-screen">
+  <div id="col">
+    <div id="img-wrap">
+      <span class="loader"></span>
+    </div>
+  </div>
+</div>
+
+
+
 
   <section class="navigation-section">
   <nav class="top-nav">
@@ -42,25 +78,25 @@
         </button>
       </li>
       <li>
-        <button class="nav-button" onclick="window.location.href='index.html'">
+        <button class="nav-button" onclick="window.location.href='newspapers.html?scrollTo=gazety'">
           <i class="fa-solid fa-newspaper icon"></i>
           <span class="label">Newspapers</span>
         </button>
       </li>
       <li>
-        <button class="nav-button" onclick="scrollToPosition(3650)">
+        <button class="nav-button" onclick="scrollToSection('employees')">
           <i class="fa-solid fa-users icon"></i>
           <span class="label">Employees</span>
         </button>
       </li>
       <li>
-        <button class="nav-button" onclick="toggleProgramsModal()">
+  <!--    <button class="nav-button" onclick="window.location.href='index.html'">      -->
           <i class="fa-solid fa-video icon"></i>
           <span class="label">Programs</span>
         </button>
       </li>
       <li>
-        <button class="nav-button" onclick="window.location.href='praca.html'">
+        <button class="nav-button" onclick="window.location.href='join-us.html'">
           <i class="fa-solid fa-briefcase icon"></i>
           <span class="label">Join us</span>
         </button>
@@ -68,6 +104,39 @@
     </ul>
   </nav>
 </section>
+
+
+<script>
+function scrollToSection(className) {
+  // Szuka sekcji po klasie
+  const section = document.querySelector(`.${className}`);
+  
+  // Jeśli sekcja istnieje, przewiń do niej płynnie
+  if (section) {
+    section.scrollIntoView({ 
+      behavior: 'smooth',  // płynne przewijanie
+      block: 'start'       // do początku sekcji
+    });
+  }
+}
+
+window.addEventListener('load', () => {
+  // Pobranie parametru ?scrollTo=...
+  const urlParams = new URLSearchParams(window.location.search);
+  const scrollTo = urlParams.get('scrollTo');
+
+  if (scrollTo) {
+    const section = document.getElementById(scrollTo);
+    if (section) {
+      // Małe opóźnienie, aby strona w pełni się wyrenderowała
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50); // 50ms wystarczy
+    }
+  }
+});
+
+</script>
 
 
 
@@ -92,11 +161,11 @@
   </div>
   <div class="fade-in">
     <p>
-      Cryptic offers a seamless, secure experience for managing your digital assets, Cryptic offers a seamless, secure experience for managing your secure experience for managing your digital digital assets secure experience for managing your digital.
+      Venture to innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.
     </p>
   </div>
   <div class="fade-in">
-    <button class="btn" onclick="window.open('https://example.com', '_blank')">
+    <button class="btn" onclick="window.open('https://discord.gg/n8xBTJN4B9', '_blank')">
       Get started
     </button>
   </div>
@@ -202,7 +271,7 @@
   </div>
 </section>
 
-<section class="employees">
+<section class="employees" id="employees">
   <h2>Our Team</h2>
 
   <div class="employees-container">
@@ -277,16 +346,16 @@
 
   <div class="client-container">
     <div class="client-slide visible-scroll">
-      <h3 class="client1">Nazwa Biznesu</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
+      <h3 class="client1">Miejsce na reklamę 1</h3>
+      <p>Wykup miejsce na swoją unikalną reklamę, która odmieni twoją firmę! Skontaktuj się z nami!</p>
     </div>
     <div class="client-slide visible-scroll">
-      <h3 class="client2">Nazwa Biznesu</h3>
-      <p>Phasellus vel mauris a nibh malesuada luctus. Nulla facilisi. Curabitur consequat ligula sed magna venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
+      <h3 class="client2">Miejsce na reklamę 2</h3>
+      <p>Wykup miejsce na swoją unikalną reklamę, która odmieni twoją firmę! Skontaktuj się z nami!</p>
     </div>
     <div class="client-slide visible-scroll">
-      <h3 class="client3">Nazwa Biznesu</h3>
-      <p>Integer sit amet tortor nec justo eleifend laoreet. Sed lacinia quam at dolor pharetra, a fermentum erat sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
+      <h3 class="client3">Miejsce na reklamę 3</h3>
+      <p>Wykup miejsce na swoją unikalną reklamę, która odmieni twoją firmę! Skontaktuj się z nami!</p>
     </div>
   </div>
 
@@ -303,15 +372,18 @@
     <p>&copy; 2026 Venture for .devgaming - All rights reserved.</p>
 
     <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Contact</a>
+      <a href="https://forum.devgaming.pl/topic/1291-media-venture/" target="_blank" rel="noopener noreferrer">Forum Topic</a>
+      <a href="join-us.html">Join Us</a>
+      <a href="https://discord.gg/n8xBTJN4B9" target="_blank" rel="noopener noreferrer">Contact</a>
     </div>
 
     <div class="footer-social">
-      <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="#"><i class="fa-brands fa-twitter"></i></a>
-      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://forum.devgaming.pl/topic/1291-media-venture/" target="_blank" rel="noopener noreferrer">
+        <img src="assets/images/devgaming-icon.png" alt="Moje zdjęcie" style="width:24px; height:24px; vertical-align:middle;">
+      </a>
+      <a href="https://discord.gg/n8xBTJN4B9" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-discord"></i>
+      </a>
     </div>
 
     <!-- OPIS / DISCLAIMER -->
@@ -322,12 +394,143 @@
 
     <p class="footer-credit">
       Website created by
-      <a href="https://sackypl.com" target="_blank" rel="noopener noreferrer">sackypl</a>
+      <a href="https://discord.com/users/662788934266388510" target="_blank" rel="noopener noreferrer">sackypl</a>
     </p>
   </section>
 </footer>
 
 
+
+<style>
+#loading-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #0e0e0e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease 0.5s;
+  pointer-events: all;
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden; /* ukrywa dopiero po 0.5s opóźnienia */
+  pointer-events: none;
+}
+
+
+/* Kontener ikonki */
+#col {
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Biała pulsująca kropka */
+.loader {
+  display: block;
+  border: 5px solid white;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  opacity: 0;
+  animation: pulsate 1s ease-out infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+/* Animacja pulsowania */
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+body.loading {
+  overflow: hidden !important;
+  user-select: none;
+  /* Usuń pointer-events: none z body.loading - blokuje też loading-screen */
+}
+
+/* Blokada animacji i przejść dla WSZYSTKIEGO oprócz loading-screen */
+body.loading *:not(#loading-screen):not(#loading-screen *) {
+  animation-play-state: paused !important;
+  transition: none !important;
+  pointer-events: none !important;
+}
+
+/* Pozwól animować i mieć pointer-events tylko na loading screen i dzieci */
+body.loading #loading-screen,
+body.loading #loading-screen * {
+  animation-play-state: running !important;
+  transition: all 0.5s ease !important;
+  pointer-events: all !important;
+}
+
+</style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loadingScreen = document.getElementById('loading-screen');
+  const now = Date.now();
+  const lastLoad = localStorage.getItem('lastLoadingScreen');
+  const oneDay = 24 * 60 * 60 * 1000; // 24h w ms
+
+  function initScrollAnimations() {
+    const elements = document.querySelectorAll('.visible-scroll');
+    const observer = new IntersectionObserver((entries, observerInstance) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observerInstance.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    elements.forEach(el => observer.observe(el));
+  }
+
+  function showLoadingScreen() {
+    document.body.classList.add('loading');
+
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+
+      setTimeout(() => {
+        document.body.classList.remove('loading');
+        initScrollAnimations();
+      }, 100); // skrócone opóźnienie na animacje po fade
+
+    }, 2000); // czas wyświetlania loading screen
+  }
+
+  if (!lastLoad || (now - lastLoad) > oneDay) {
+    // Pokaż loading screen i zapisz czas
+    showLoadingScreen();
+    localStorage.setItem('lastLoadingScreen', now);
+  } else {
+    // Ukryj loading od razu i startuj animacje
+    loadingScreen.classList.add('hidden');
+    initScrollAnimations();
+  }
+});
+
+</script>
 
 
 <style>
@@ -424,14 +627,6 @@
   color: #ffffff;
 }
 
-/* Mobile */
-@media (max-width: 600px) {
-  .footer-links,
-  .footer-social {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-}
 
 </style>
 
@@ -455,32 +650,36 @@
 }
 
 /* kontener animowanych klientów */
+
 .client-container {
   position: relative;
   width: 80%;
   max-width: 800px;
-  height: 140px; /* wysokość jednej reklamy */
   margin: 0 auto 3rem;
-  overflow: hidden;
   border: 1px solid #ffffff4b;
   border-radius: 16px;
   background: linear-gradient(145deg, #292929, #1a1a1a);
   padding: 1rem 2rem;
+  overflow: hidden;
+  height: auto; /* auto, bo wysokość będzie zmienna */
 }
 
 /* pojedynczy slide klienta */
 .client-slide {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: relative;
   width: 100%;
   opacity: 0;
-  transition: all 0.8s ease-in-out;
-  
-  padding: 1rem 2rem; /* przestrzeń od krawędzi */
+  transition: opacity 0.8s ease-in-out;
+  padding: 1rem 2rem;
   box-sizing: border-box;
+  display: none; /* domyślnie ukryte */
+}
+.client-slide.active {
+  display: block;
+  opacity: 1;
 }
 
+/* Opcjonalne stylizacje tekstu */
 .client-slide h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
@@ -530,27 +729,31 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const slides = document.querySelectorAll('.client-slide');
+  const container = document.querySelector('.client-container');
   let current = 0;
+  let intervalId;
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
       if(i === index){
-        slide.style.top = '0';
-        slide.style.opacity = '1';
+        slide.classList.add('active');
       } else {
-        slide.style.top = '100%';
-        slide.style.opacity = '0';
+        slide.classList.remove('active');
       }
     });
   }
 
-  showSlide(current);
-
-  setInterval(() => {
-    current = (current + 1) % slides.length;
+  function startSlider() {
     showSlide(current);
-  }, 8000); // zmiana co 8 sekund
+    intervalId = setInterval(() => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }, 8000);
+  }
+
+  startSlider();
 });
+
 </script>
 
 
@@ -740,13 +943,6 @@ document.addEventListener("DOMContentLoaded", () => {
   color: #cfcfcf;
 }
 
-
-@media (max-width: 800px) {
-  .employee-card {
-    width: 260px;
-  }
-}
-
 </style>
 
 <script>
@@ -901,19 +1097,6 @@ document.addEventListener("DOMContentLoaded", () => {
   font-size: 0.85rem;
   color: #999;
   font-style: italic;
-}
-
-
-@media (max-width: 1200px) {
-  .article-card {
-    margin-bottom: 2rem;
-  }
-}
-
-@media (max-width: 800px) {
-  .article-card {
-    width: 100%;
-  }
 }
 
 </style>
@@ -1571,7 +1754,7 @@ html, body {
 
 .btn::before {
   position: absolute;
-  content: "READ MORE";
+  content: "CONTACT US";
   color: #ffffff;
   display: flex;
   align-items: center;

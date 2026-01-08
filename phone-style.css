@@ -1,0 +1,304 @@
+/* ====================== */
+/* STYLES FOR PHONES      */
+/* ====================== */
+
+/* ===== HERO ===== */
+.hero-logo {
+margin-top: 250px;
+    max-width: 300px;
+}
+
+.hero h1 {
+    font-size: 22px;
+    top: -90px;
+}
+
+.hero p {
+    font-size: 1rem;
+    top: -100px;
+}
+
+.btn {
+    width: 120px;
+    height: 35px;
+    top: -90px;
+}
+
+.logo {
+     opacity: 0;
+    }
+
+
+/* ===== NAVBAR ===== */
+.top-nav {
+    top: 20px;
+    padding: 3px 12px;
+}
+
+.top-nav ul {
+    gap: 8px;
+}
+
+.top-nav li {
+    padding: 8px 10px;
+}
+
+/* ===== EMPLOYEES ===== */
+.employees h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* EMPLOYEES - wszystkie karty jedna pod drugą */
+.employees-container {
+    display: flex !important;            /* nadpisujemy grid z PC */
+    flex-direction: column !important;   /* jedna pod drugą */
+    width: 100%;
+    gap: 1.5rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;                 /* wycentrowanie kart */
+}
+
+
+.employee-card {
+    width: 95%;           /* dopasowanie do telefonu */
+    max-width: 400px;     /* ograniczenie maksymalnej szerokości */
+    opacity: 1;           /* wszystkie widoczne */
+    transform: translateY(0);
+    margin: 0 auto;       /* dodatkowe wycentrowanie */
+}
+/* ===== LATEST ARTICLES ===== */
+.latest-articles h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.articles-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 5px;   /* niewielki padding po bokach, żeby karty nie dotykały krawędzi */
+    max-width: 100%;
+    box-sizing: border-box; /* ważne, żeby padding nie powiększał szerokości */
+}
+
+.article-card {
+    width: 92%;             /* trochę mniejsze niż wcześniej */
+    max-width: 350px;       /* ograniczenie szerokości dla większych telefonów */
+    box-sizing: border-box; /* padding nie zaburza szerokości */
+    margin: 0 auto;         /* wycentrowanie w kontenerze */
+}
+/* ===== SCROLL ICON ===== */
+.scroll-icon {
+    font-size: 35px;
+}
+
+/* ===== FADE-IN ELEMENTS ===== */
+.fade-in,
+.card-wrapper {
+    transform: translateY(10px);
+}
+
+/* ===== WHAT DO WE DO ===== */
+.what-do-we-do h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+
+@media (max-width: 600px) {
+    .cards {
+        max-width: 100% !important;   /* cała szerokość kontenera */
+        gap: 1.5rem;
+        flex-direction: column;       /* karty jedna pod drugą */
+        align-items: center;          /* wycentrowanie poziome */
+    }
+
+    .outer {
+        width: 90%;       /* dopasowanie do ekranu telefonu */
+        max-width: 350px; /* zachowanie proporcji, nie za szerokie */
+        height: auto;
+        padding: 1rem;
+    }
+
+    .card {
+        width: 100%;      /* wypełnia całą szerokość "outer" */
+        padding: 1.5rem 2rem;
+        box-sizing: border-box; /* żeby padding nie zaburzał szerokości */
+    }
+}
+
+.dot {
+opacity: 0;
+}
+
+.ray {
+    width: 200px;
+    height: 30px;
+}
+
+.subtitle {
+    font-size: 14px;
+    max-width: 90%;
+}
+
+.site-footer {
+    padding: 2rem 1rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+}
+
+.footer-social {
+    display: flex;           /* flex aktywny */
+    flex-direction: row;     /* w jednej linii */
+    gap: 15px;               /* odstęp między ikonami */
+    justify-content: center; /* wyśrodkowanie */
+    flex-wrap: wrap;         /* pozwala na przejście do następnego wiersza jeśli brakuje miejsca */
+}
+
+.footer-social a {
+    display: inline-flex;    /* najważniejsze! */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;      /* rozmiar ikon */
+    color: #fff;
+    text-decoration: none;
+    width: auto;             /* usuń 100% szerokości */
+}
+
+.footer-social a i {
+    pointer-events: none;    /* żeby kliknięcie było na link, a nie na ikonę */
+}
+
+.footer-social a:hover i {
+    color: #ff4081;
+}
+
+
+/* ===== GENERAL SCROLLBAR ADJUSTMENTS ===== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 2px solid #333;
+}
+
+/* ===== JOIN US — FINAL MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Sekcja */
+  .join-us-section.join-us-dark {
+    padding: 24px 14px;
+    margin-bottom: 60px;
+  }
+
+  /* Tytuł */
+  .join-us-heading {
+    font-size: 2rem;
+    margin-bottom: 48px;
+  }
+
+  /* Obraz */
+  .join-us-section img {
+    width: 150%;
+    max-width: 660px;   /* ⬅️ większe */
+    margin: 0 auto 24px auto;
+    display: block;
+    border-radius: 14px;
+  }
+
+  /* Przycisk */
+  button.click2 {
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto 48px auto;
+    display: block;
+  }
+
+  /* KONTENER KART */
+  .join-columns-modern {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;   /* 🔑 KLUCZ */
+    align-items: center;
+  }
+
+  /* KARTA */
+  .join-modern-column {
+    width: 100% !important;
+    max-width: 420px;
+    padding: 22px;
+    border-radius: 16px;
+      margin-top: 25px !important;
+    margin-bottom: 25px !important;
+
+    /* MOBILE SAFE */
+    opacity: 1;
+    transform: none;
+    transition: none;
+
+    background: linear-gradient(to bottom right, #181818, #1f1f1f);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+  }
+
+  /* WYŁĄCZ EFEKTY DESKTOP */
+  .join-modern-column::before {
+    display: none;
+  }
+
+  /* Nagłówki kart */
+  .join-modern-column h3 {
+    font-size: 1.45rem;
+    margin-bottom: 18px;
+  }
+
+  /* Elementy listy */
+  .modern-item {
+    font-size: 1rem;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+
+}
+
+/* MOBILE: wyłączamy slider, pokazujemy jeden slajd, kontener rośnie z tekstem */
+@media (max-width: 768px) {
+  .client-container {
+    height: auto !important;
+    overflow: visible !important;
+    padding: 1.5rem;
+  }
+
+  .client-slide {
+    position: static !important;
+    opacity: 1 !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    transition: none !important;
+    padding: 0;
+    display: none; /* domyślnie ukryte wszystkie */
+  }
+
+  /* Pokaż tylko aktywny slajd */
+  .client-slide.active {
+    display: block !important;
+  }
+
+  .client-slide h3 {
+    font-size: 1.1rem;
+  }
+
+  .client-slide p {
+    font-size: 0.95rem;
+    line-height: 1.6rem;
+  }
+}

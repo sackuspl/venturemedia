@@ -104,172 +104,174 @@
 <i class="fa-light fa-computer-mouse-scrollwheel scroll-icon"></i>
 </section>
 
-<section class="what-do-we-do">
-  <h2>What do we do?</h2>
-  <div class="cards">
 
-    <div class="card-wrapper">
-      <div class="outer">
-        <div class="dot"></div>
-        <div class="card">
-          <i class="fa-solid fa-badge-check info-icon"></i>
-          <div class="ray"></div>
-          <div class="text">Wiarygodność i profesjonalizm</div>
-          <div class="subtitle">Nasz zespół tworzą doświadczeni dziennikarze i eksperci, którzy rzetelnie weryfikują każdy materiał, by dostarczać wyłącznie sprawdzone informacje.</div>
-          <div class="line topl"></div>
-          <div class="line leftl"></div>
-          <div class="line bottoml"></div>
-          <div class="line rightl"></div>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-wrapper">
-      <div class="outer">
-        <div class="dot"></div>
-        <div class="card">
-          <i class="fa-solid fa-face-sunglasses info-icon"></i>
-          <div class="ray"></div>
-          <div class="text">Przyjazne miejsce pracy</div>
-          <div class="subtitle">Stawiamy na rozwój osób chętnych do pracy i nauki w dziennikarstwie. Możesz zostać fotografem, kamerzystą czy prezenterem telewizyjnym! Dołącz do nas już dziś!</div>
-          <div class="line topl"></div>
-          <div class="line leftl"></div>
-          <div class="line bottoml"></div>
-          <div class="line rightl"></div>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-wrapper">
-      <div class="outer">
-        <div class="dot"></div>
-        <div class="card">
-          <i class="fa-solid fa-megaphone info-icon"></i>
-          <div class="ray"></div>
-          <div class="text">Reklama i sponsoring</div>
-          <div class="subtitle">Chcesz dotrzeć do szerokiej publiczności? Oferujemy skuteczne formy promocji – od reklamy radiowej, reportaży z wydarzeń po reklamy w telewizji. Z nami Twoja marka stanie się rozpoznawalna w zaledwie chwilę!</div>
-          <div class="line topl"></div>
-          <div class="line leftl"></div>
-          <div class="line bottoml"></div>
-          <div class="line rightl"></div>
-        </div>
-      </div>
-    </div>
+<section class="gazety">
 
-    <!-- kolejne karty ... -->
+      <h2>Nasze Wydania</h2>
+        <div class="description-box">
+    Po kliknięciu na wybrany numer zostaniesz przekierowany do menu podglądu naszego wydania.
   </div>
+  <!-- ===== GALERIA ===== -->
+  <div class="gallery">
+    <div class="paper" data-link="https://heyzine.com/flip-book/909161484f.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link2.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link3.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link4.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link5.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link6.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link7.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link8.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link9.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link10.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link11.html"><img src="assets/images/okladki/gazeta1.png"></div>
+    <div class="paper" data-link="https://heyzine.com/flip-book/another-link12.html"><img src="assets/images/okladki/gazeta1.png"></div>
+  </div>
+
+  <!-- ===== CZYTNIK ===== -->
+  <div class="reader" id="reader">
+    <button class="close">✕</button>
+    <div id="flipbook-container">
+      <!-- Tutaj będzie iframe Heyzine -->
+    </div>
+  </div>
+
 </section>
 
+<script>
+const reader = document.getElementById('reader');
+const flipbookContainer = document.getElementById('flipbook-container');
 
-<section class="latest-articles">
-  <h2>Latest articles</h2>
-  <div class="articles-container">
-    <article class="article-card">
-      <div class="category">Music Pulse</div>
-      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 1 image" />
-      <h3>Dua Lipa i niespodzianka w Pradze! Jak jeden utwór odmienił atmosferę koncertu?</h3>
-      <p>Co się stanie, gdy światowa supergwiazda sięgnie po piosenkę lokalnej artystki w kraju, w którym akurat koncertuje?</p>
-      <a href="https://forum.devgaming.pl/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
-      <div class="meta">
-        <span>Pisze: Charlotte Culler</span>
-        <span>2 dni temu</span>
-      </div>
-    </article>
+document.querySelectorAll('.paper').forEach(paper => {
+  paper.addEventListener('click', () => {
+    const link = paper.dataset.link;
+    openHeyzine(link);
+  });
+});
 
-    <article class="article-card">
-      <div class="category">News</div>
-      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 2 image" />
-      <h3>"Kiedy kończy się dziennikarstwo, a zaczyna kabaret?</h3>
-      <p>Jeszcze kilka lat temu Daily Globe mogło uchodzić za jedno z głównych źródeł informacji w naszym mieście…</p>
-      <a href="https://forum.devgaming.pl/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
-      <div class="meta">
-        <span>Pisze: Raymond Hall</span>
-        <span>5 dni temu</span>
-      </div>
-    </article>
+function openHeyzine(link) {
+  reader.classList.add('active');
+  flipbookContainer.innerHTML = `
+    <iframe 
+      allowfullscreen="allowfullscreen" 
+      allow="clipboard-write" 
+      scrolling="no" 
+      class="fp-iframe" 
+      style="border: 0px; width: 100%; height: 80vh;" 
+      src="${link}">
+    </iframe>
+  `;
+}
 
-    <article class="article-card">
-      <div class="category">Sport</div>
-      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 3 image" />
-      <h3>Amanda Oxenberg – od górskich stoków do darterskiego tronu!</h3>
-      <p>Kilka lat temu nikt nie pomyślałby, że Amanda Oxenberg stanie się jedną z najbardziej rozpoznawalnych osób w świecie Darta.</p>
-      <a href="https://forum.devgaming.pl/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
-      <div class="meta">
-        <span>Pisze: Kai Reyes</span>
-        <span>3 dni temu</span>
-      </div>
-    </article>
-  </div>
-</section>
+// Zamknięcie czytnika
+document.querySelector('.close').onclick = () => {
+  reader.classList.remove('active');
+  flipbookContainer.innerHTML = '';
+};
+</script>
 
-<section class="employees">
-  <h2>Our Team</h2>
+<style>
+.gazety {
+  background: #0c0c0c;
+  font-family:Arial,sans-serif;
+}
 
-  <div class="employees-container">
+/* ===== GALERIA ===== */
+.gazety .gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 200px); /* 4 gazety w linii */
+  justify-content: center; /* wyśrodkowanie całej siatki */
+  column-gap: 50px; /* odstęp poziomy */
+  row-gap: 60px;    /* odstęp pionowy */
+  padding: 40px 0;
+  margin-bottom: 100px;
+}
 
-    <div class="employee-card">
-      <div class="card-icon card-icon-red" data-role="CEO">
-        <i class="fa-solid fa-crown"></i>
-      </div>
+.gazety .paper {
+  cursor: pointer;
+  transition: .3s;
+}
 
-      <div class="avatar">
-        <img src="assets/images/employees/raymond.png" alt="Raymond Hall">
-      </div>
+.gazety .paper img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  box-shadow: -5px 10px 15px rgba(0,0,0,0.4); /* cień jak gazety */
+  border-radius: 3px; /* minimalne zaokrąglenie */
+}
 
-      <h3>Raymond Hall</h3>
-      <p class="role">CEO</p>
-
-      <div class="phone">
-  <i class="fa-solid fa-phone"></i>
-  <span>XXX-XXX</span>
-</div>
-
-
-      <a href="https://forum.devgaming.pl/" class="contact-btn">Contact me</a>
-    </div>
-
-    <div class="employee-card">
-      <div class="card-icon card-icon-red" data-role="v-CEO">
-        <i class="fa-solid fa-crown"></i>
-      </div>
-
-      <div class="avatar">
-        <img src="assets/images/employees/julia.png" alt="Julia Hall">
-      </div>
-
-      <h3>Julia Hall</h3>
-      <p class="role">v-CEO</p>
-
-      <div class="phone">
-  <i class="fa-solid fa-phone"></i>
-  <span>XXX-XXX</span>
-</div>
+.gazety .paper:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+.gazety .description-box {
+  background-color: #2222227c; /* ciemne tło */
+  color: #afafaf; /* jasnoszary tekst */
+  padding: 1rem 0.1rem; /* trochę wewnętrznego odstępu */
+  border: 1px solid #5555558e; /* delikatna ramka w ciemnoszarym */
+  border-radius: 5px; /* zaokrąglone rogi */
+  font-size: 1rem; /* standardowa wielkość tekstu */
+  max-width: 800px; /* maksymalna szerokość okienka */
+  margin: 1rem auto 3rem auto; /* wyśrodkowanie i odstęp od h2 */
+  text-align: center; /* wyśrodkowany tekst */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.158); /* delikatny cień */
+}
 
 
-      <a href="https://forum.devgaming.pl/" class="contact-btn">Contact me</a>
-    </div>
+/* ===== CZYTNIK ===== */
+.gazety .reader {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 10px;
+}
 
-    <div class="employee-card">
-      <div class="card-icon card-icon-pink" data-role="Art & Graphics Director">
-        <i class="fa-solid fa-paintbrush-pencil"></i>
-      </div>
+.gazety .reader.active {
+  display: flex;
+}
 
-      <div class="avatar">
-        <img src="assets/images/employees/finneas.png" alt="Finneas Puttvise">
-      </div>
+#flipbook-container {
+  width: 95%;
+  max-width: none;
+  height: 80vh;
+}
 
-      <h3>Finneas Puttvise</h3>
-      <p class="role">Art & Graphics Director</p>
+.gazety .close {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  font-size: 3rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+.gazety h2 {
+  font-size: 2.5rem; /* duży nagłówek */
+  margin-bottom: 3rem; /* odstęp od galerii */
+  text-shadow: 0 0 12px rgba(255,255,255,0.25); /* lekki cień tekstu */
+  color: #fff; /* biały tekst, żeby dobrze kontrastował na ciemnym tle */
+  text-align: center; /* wyśrodkowany */
+  font-weight: 600; /* lekko pogrubiony */
+}
 
-      <div class="phone">
-  <i class="fa-solid fa-phone"></i>
-  <span>XXX-XXX</span>
-</div>
-      <a href="https://forum.devgaming.pl/" class="contact-btn">Contact me</a>
-    </div>
+</style>
 
-  </div>
-</section>
+
+
+
+
+
+
+
+
+
 
 
 <section class="ads-section">

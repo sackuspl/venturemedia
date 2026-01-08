@@ -289,20 +289,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-
 <section class="ads-section">
   <h2>Our Partners</h2>
 
   <div class="ads-container">
-    <div class="ad-slide visible-scroll">
+    <div class="client-slide visible-scroll">
       <h3 class="client1">Nazwa Biznesu</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
     </div>
-    <div class="ad-slide visible-scroll">
+    <div class="client-slide visible-scroll">
       <h3 class="client2">Nazwa Biznesu</h3>
       <p>Phasellus vel mauris a nibh malesuada luctus. Nulla facilisi. Curabitur consequat ligula sed magna venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
     </div>
-    <div class="ad-slide visible-scroll">
+    <div class="client-slide visible-scroll">
       <h3 class="client3">Nazwa Biznesu</h3>
       <p>Integer sit amet tortor nec justo eleifend laoreet. Sed lacinia quam at dolor pharetra, a fermentum erat sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget augue vitae sapien ultrices convallis.</p>
     </div>
@@ -472,7 +471,7 @@ window.addEventListener('DOMContentLoaded', () => {
   text-shadow: 0 0 12px rgba(255,255,255,0.25);
 }
 
-/* kontener animowanych reklam */
+/* kontener animowanych klientów */
 .ads-container {
   position: relative;
   width: 80%;
@@ -486,8 +485,8 @@ window.addEventListener('DOMContentLoaded', () => {
   padding: 1rem 2rem;
 }
 
-/* pojedyncza reklama */
-.ad-slide {
+/* pojedynczy slide klienta */
+.client-slide {
   position: absolute;
   top: 100%;
   left: 0;
@@ -495,12 +494,11 @@ window.addEventListener('DOMContentLoaded', () => {
   opacity: 0;
   transition: all 0.8s ease-in-out;
   
-  padding: 1rem 2rem; /* <<< przestrzeń od krawędzi */
+  padding: 1rem 2rem; /* przestrzeń od krawędzi */
   box-sizing: border-box;
 }
 
-
-.ad-slide h3 {
+.client-slide h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
@@ -515,7 +513,7 @@ window.addEventListener('DOMContentLoaded', () => {
   color: #7aceff;
 }
 
-.ad-slide p {
+.client-slide p {
   font-size: 1rem;
   line-height: 1.4rem;
   color: #ddd;
@@ -531,7 +529,7 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 
 /* Początkowo elementy ukryte do animacji przy scrollu */
-.ad-slide.visible-scroll,
+.client-slide.visible-scroll,
 .ad-gif.visible-scroll {
   opacity: 0;
   transform: translateY(30px);
@@ -539,17 +537,16 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 
 /* Po pojawieniu się w oknie */
-.ad-slide.visible-scroll.show,
+.client-slide.visible-scroll.show,
 .ad-gif.visible-scroll.show {
   opacity: 1;
   transform: translateY(0);
 }
-
 </style>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const slides = document.querySelectorAll('.ad-slide');
+  const slides = document.querySelectorAll('.client-slide');
   let current = 0;
 
   function showSlide(index) {
@@ -569,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(() => {
     current = (current + 1) % slides.length;
     showSlide(current);
-  }, 8000); // zmiana co 4 sekundy
+  }, 8000); // zmiana co 8 sekund
 });
 </script>
 

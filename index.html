@@ -234,38 +234,38 @@ window.addEventListener('load', () => {
   <h2>Latest articles</h2>
   <div class="articles-container">
     <article class="article-card">
-      <div class="category">Music Pulse</div>
+      <div class="category">TAG</div>
       <img src="https://i.imgur.com/asBFTmM.png" alt="Article 1 image" />
-      <h3>Dua Lipa i niespodzianka w Pradze! Jak jeden utwór odmienił atmosferę koncertu?</h3>
-      <p>Co się stanie, gdy światowa supergwiazda sięgnie po piosenkę lokalnej artystki w kraju, w którym akurat koncertuje?</p>
+      <h3>Nagłówek artykułu</h3>
+      <p>Treść artykułu</p>
       <a href="https://forum.devgaming.pl/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
       <div class="meta">
-        <span>Pisze: Charlotte Culler</span>
-        <span>2 dni temu</span>
+        <span>Pisze: Imię i nazwisko</span>
+        <span class="time-ago" data-date="2026-01-03T14:30:00"></span>
       </div>
     </article>
 
     <article class="article-card">
-      <div class="category">News</div>
-      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 2 image" />
-      <h3>"Kiedy kończy się dziennikarstwo, a zaczyna kabaret?</h3>
-      <p>Jeszcze kilka lat temu Daily Globe mogło uchodzić za jedno z głównych źródeł informacji w naszym mieście…</p>
+      <div class="category">TAG</div>
+      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 1 image" />
+      <h3>Nagłówek artykułu</h3>
+      <p>Treść artykułu</p>
       <a href="https://forum.devgaming.pl/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
       <div class="meta">
-        <span>Pisze: Raymond Hall</span>
-        <span>5 dni temu</span>
+        <span>Pisze: Imię i nazwisko</span>
+        <span class="time-ago" data-date="2026-01-03T14:30:00"></span>
       </div>
     </article>
 
     <article class="article-card">
-      <div class="category">Sport</div>
-      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 3 image" />
-      <h3>Amanda Oxenberg – od górskich stoków do darterskiego tronu!</h3>
-      <p>Kilka lat temu nikt nie pomyślałby, że Amanda Oxenberg stanie się jedną z najbardziej rozpoznawalnych osób w świecie Darta.</p>
+      <div class="category">TAG</div>
+      <img src="https://i.imgur.com/asBFTmM.png" alt="Article 1 image" />
+      <h3>Nagłówek artykułu</h3>
+      <p>Treść artykułu</p>
       <a href="https://forum.devgaming.pl/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
       <div class="meta">
-        <span>Pisze: Kai Reyes</span>
-        <span>3 dni temu</span>
+        <span>Pisze: Imię i nazwisko</span>
+        <span class="time-ago" data-date="2026-01-03T14:30:00"></span>
       </div>
     </article>
   </div>
@@ -294,7 +294,7 @@ window.addEventListener('load', () => {
 </div>
 
 
-      <a href="https://forum.devgaming.pl/" class="contact-btn">Contact me</a>
+      <a href="https://discord.com/users/530441518989705217" class="contact-btn">Contact me</a>
     </div>
 
     <div class="employee-card">
@@ -311,11 +311,11 @@ window.addEventListener('load', () => {
 
       <div class="phone">
   <i class="fa-solid fa-phone"></i>
-  <span>XXX-XXX</span>
+  <span>9487524628</span>
 </div>
 
 
-      <a href="https://forum.devgaming.pl/" class="contact-btn">Contact me</a>
+      <a href="https://discord.com/users/1332245779469045831" class="contact-btn">Contact me</a>
     </div>
 
     <div class="employee-card">
@@ -332,10 +332,51 @@ window.addEventListener('load', () => {
 
       <div class="phone">
   <i class="fa-solid fa-phone"></i>
-  <span>XXX-XXX</span>
+  <span>1341824673</span>
 </div>
-      <a href="https://forum.devgaming.pl/" class="contact-btn">Contact me</a>
+      <a href="https://discord.com/users/662788934266388510" class="contact-btn">Contact me</a>
     </div>
+
+
+    <div class="employee-card">
+      <div class="card-icon card-icon-blue" data-role="Freelancer">
+        <i class="fa-solid fa-hashtag"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/charlie.png" alt="Charlie Salvarez">
+      </div>
+
+      <h3>Charlie Salvarez</h3>
+      <p class="role">Freelancer</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>9651262850</span>
+</div>
+      <a href="https://discord.com/users/1156687192496799886" class="contact-btn">Contact me</a>
+    </div>
+
+
+    <div class="employee-card">
+      <div class="card-icon card-icon-blue" data-role="Freelancer">
+        <i class="fa-solid fa-hashtag"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/hugo.png" alt="Hugo d'Pembroke">
+      </div>
+
+      <h3>Hugo d'Pembroke</h3>
+      <p class="role">Freelancer</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>XXXXXXXXXX</span>
+</div>
+      <a href="https://discord.com/users/1126125703696498798" class="contact-btn">Contact me</a>
+    </div>
+
 
   </div>
 </section>
@@ -398,6 +439,52 @@ window.addEventListener('load', () => {
     </p>
   </section>
 </footer>
+
+<script>
+function polishTimeAgo(date) {
+  const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(seconds / 3600);
+  const days = Math.floor(seconds / 86400);
+  const months = Math.floor(seconds / 2592000);
+
+  // 1–10 minut
+  if (minutes >= 1 && minutes <= 10) {
+    return "przed chwilą";
+  }
+
+  function plural(n, forms) {
+    if (n === 1) return forms[0];
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) {
+      return forms[1];
+    }
+    return forms[2];
+  }
+
+  if (minutes < 60) {
+    return `${minutes} ${plural(minutes, ["minutę temu", "minuty temu", "minut temu"])}`;
+  }
+
+  if (hours < 24) {
+    return `${hours} ${plural(hours, ["godzinę temu", "godziny temu", "godzin temu"])}`;
+  }
+
+  if (days < 30) {
+    return `${days} ${plural(days, ["dzień temu", "dni temu", "dni temu"])}`;
+  }
+
+  return `${months} ${plural(months, ["miesiąc temu", "miesiące temu", "miesięcy temu"])}`;
+}
+
+function updateTimes() {
+  document.querySelectorAll(".time-ago").forEach(el => {
+    el.textContent = polishTimeAgo(el.dataset.date);
+  });
+}
+
+updateTimes();
+setInterval(updateTimes, 60000);
+</script>
 
 
 
@@ -847,6 +934,9 @@ document.addEventListener("DOMContentLoaded", () => {
 /* === ICON + TOOLTIP === */
 .card-icon-pink {
   color: #ff7aff;
+}
+.card-icon-blue {
+  color: #7ab4ff;
 }
 
 /* === ICON + TOOLTIP === */

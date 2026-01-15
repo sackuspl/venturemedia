@@ -230,9 +230,36 @@ window.addEventListener('load', () => {
 </section>
 
 
+
 <section class="latest-articles">
   <h2>Latest articles</h2>
   <div class="articles-container">
+    
+        <article class="article-card">
+      <div class="category">NEWS</div>
+      <img src="https://i.imgur.com/N1FbWJJ.png" alt="Article 1 image" />
+      <h3>Hotele przestały być dla gości - Oblicze nadchodzącego kryzysu...</h3>
+      <p>Los Santos od zawsze przyciągało ludzi w biegu - pracujących, przyjezdnych bądź tych, którzy chcieli spróbować czegoś nowego. Jednak w ostatnich...</p>
+      <a href="https://forum.devgaming.pl/topic/2320-03-hotele-przesta%C5%82y-by%C4%87-dla-go%C5%9Bci-oblicze-nadchodz%C4%85cego-kryzysu/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
+      <div class="meta">
+        <span>Pisze: Raymond Hall</span>
+        <span class="time-ago" data-date="2026-01-15T18:00:00"></span>
+      </div>
+    </article>
+
+        <article class="article-card">
+      <div class="category">NEWS</div>
+      <img src="https://i.imgur.com/BKGJiMx.png" alt="Article 1 image" />
+      <h3>Bezkarna dewastacja, desperackie wołanie pracownicy kawiarni o pomoc służb</h3>
+      <p>14 stycznia, piętnaście minut przed godziną dziewiątą – spokojną, rutynową drogę do pracy Diego Moore - Jednego z mieszkańców Los Santos zakłócił...</p>
+      <a href="https://forum.devgaming.pl/topic/2241-02-bezkarna-dewastacja-desperackie-wo%C5%82anie-pracownicy-kawiarni-o-pomoc-s%C5%82u%C5%BCb-historia-mieszka%C5%84ca-diego/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
+      <div class="meta">
+        <span>Pisze: Raymond Hall</span>
+        <span class="time-ago" data-date="2026-01-14T12:12:00"></span>
+      </div>
+    </article>
+
+
     <article class="article-card">
       <div class="category">NEWS</div>
       <img src="https://i.imgur.com/N1FbWJJ.png" alt="Article 1 image" />
@@ -245,6 +272,9 @@ window.addEventListener('load', () => {
       </div>
     </article>
 
+
+
+    
     
   </div>
 </section>
@@ -268,7 +298,7 @@ window.addEventListener('load', () => {
 
       <div class="phone">
   <i class="fa-solid fa-phone"></i>
-  <span>XXX-XXX</span>
+  <span>8939337975</span>
 </div>
 
 
@@ -315,10 +345,29 @@ window.addEventListener('load', () => {
       <a href="https://discord.com/users/662788934266388510" class="contact-btn">Contact me</a>
     </div>
 
+        <div class="employee-card">
+      <div class="card-icon card-icon-blue" data-role="Journalist">
+        <i class="fa-solid fa-hashtag"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/hugo.png" alt="Hugo d'Pembroke">
+      </div>
+
+      <h3>Hugo T. de Pembroke</h3>
+      <p class="role">Journalist</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>7220629408</span>
+</div>
+      <a href="https://discord.com/users/1126125703696498798" class="contact-btn">Contact me</a>
+    </div>
+
 
     <div class="employee-card">
-      <div class="card-icon card-icon-blue" data-role="Freelancer">
-        <i class="fa-solid fa-hashtag"></i>
+      <div class="card-icon card-icon-green" data-role="Freelancer">
+        <i class="fa-solid fa-graduation-cap"></i>
       </div>
 
       <div class="avatar">
@@ -336,24 +385,7 @@ window.addEventListener('load', () => {
     </div>
 
 
-    <div class="employee-card">
-      <div class="card-icon card-icon-blue" data-role="Freelancer">
-        <i class="fa-solid fa-hashtag"></i>
-      </div>
 
-      <div class="avatar">
-        <img src="assets/images/employees/hugo.png" alt="Hugo d'Pembroke">
-      </div>
-
-      <h3>Hugo d'Pembroke</h3>
-      <p class="role">Freelancer</p>
-
-      <div class="phone">
-  <i class="fa-solid fa-phone"></i>
-  <span>XXXXXXXXXX</span>
-</div>
-      <a href="https://discord.com/users/1126125703696498798" class="contact-btn">Contact me</a>
-    </div>
 
 
   </div>
@@ -890,10 +922,6 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
-
-
-
-
 .employee-card.visible {
   opacity: 1;
   transform: translateY(0);
@@ -916,6 +944,9 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .card-icon-blue {
   color: #7ab4ff;
+}
+.card-icon-green {
+  color: #7aff9b;
 }
 
 /* === ICON + TOOLTIP === */
@@ -1109,6 +1140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   text-transform: uppercase;
   color: #fff;
   position: absolute;
+  border: 1px solid #ffffff1a;
   top: 1rem;
   left: 1rem;
   border-radius: 8px;

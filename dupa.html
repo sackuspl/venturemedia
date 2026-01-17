@@ -1161,21 +1161,36 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  console.log(">>> JS startuje: DOM gotowy <<<");
+
   const RSS_URL = 'https://api.allorigins.win/raw?url=https://forum.devgaming.pl/forum/155-news/?rss=1';
   const LIMIT = 3;
 
+  const container = document.getElementById("articles");
+  if (!container) {
+    console.error(">>> Brak kontenera #articles <<<");
+    return;
+  }
+  console.log(">>> Kontener #articles znaleziony <<<");
+
   fetch(RSS_URL)
-    .then(res => res.text())
+    .then(res => {
+      console.log(">>> Fetch RSS wykonany, status:", res.status);
+      if (!res.ok) throw new Error("Błąd sieci przy pobieraniu RSS");
+      return res.text();
+    })
     .then(str => {
+      console.log(">>> Parsowanie XML RSS");
       const xml = new DOMParser().parseFromString(str, "text/xml");
       const items = Array.from(xml.querySelectorAll("item"))
         .sort((a, b) =>
-          new Date(b.querySelector("pubDate").textContent) -
-          new Date(a.querySelector("pubDate").textContent)
+          new Date(b.querySelector("pubDate")?.textContent) -
+          new Date(a.querySelector("pubDate")?.textContent)
         )
         .slice(0, LIMIT);
 
-      const container = document.getElementById("articles");
+      console.log(`>>> Znaleziono ${items.length} elementy RSS`);
+
       container.innerHTML = "";
 
       items.forEach((item, index) => {
@@ -1186,6 +1201,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const image = extractImage(description);
         const text = cleanText(description);
+
+        console.log(`>>> Tworzę artykuł: ${title}`);
 
         const article = document.createElement("article");
         article.className = "article-card";
@@ -1205,9 +1222,10 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(article);
       });
 
+      console.log(">>> Wszystkie artykuły wstawione do DOM");
       observeArticles();
     })
-    .catch(err => console.error("RSS ERROR:", err));
+    .catch(err => console.error(">>> RSS ERROR:", err));
 });
 
 /* ===== helpers ===== */
@@ -1226,6 +1244,7 @@ function cleanText(html) {
 }
 
 function timeAgo(date) {
+  if (!date) return "";
   const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
   if (seconds < 3600) return Math.floor(seconds / 60) + " minut temu";
   if (seconds < 86400) return Math.floor(seconds / 3600) + " godzin temu";
@@ -1244,8 +1263,10 @@ function observeArticles() {
   }, { threshold: 0.1 });
 
   articles.forEach(article => observer.observe(article));
+  console.log(">>> IntersectionObserver ustawiony dla artykułów");
 }
 </script>
+
 
 
 

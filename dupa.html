@@ -1163,7 +1163,8 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   console.log(">>> JS startuje: DOM gotowy <<<");
 
-  const RSS_URL = 'https://api.allorigins.win/raw?url=https://forum.devgaming.pl/forum/155-news/?rss=1';
+  // Testowy RSS, który działa (nie blokowany)
+  const RSS_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.reddit.com/r/javascript/.rss');
   const LIMIT = 3;
 
   const container = document.getElementById("articles");
@@ -1183,11 +1184,9 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(">>> Parsowanie XML RSS");
       const xml = new DOMParser().parseFromString(str, "text/xml");
 
-      // TUTAJ zmiana: getElementsByTagName("item") zamiast querySelectorAll
       const allItems = xml.getElementsByTagName("item");
       console.log(">>> Całkowita liczba elementów RSS:", allItems.length);
 
-      // Limitujemy do najnowszych
       const items = Array.from(allItems)
         .sort((a, b) => {
           const dateA = new Date(a.getElementsByTagName("pubDate")[0]?.textContent);
@@ -1217,7 +1216,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         article.innerHTML = `
           <div class="category">NEWS</div>
-          <img src="${image}" alt="">
+          ${image ? `<img src="${image}" alt="">` : ""}
           <h3>${title}</h3>
           <p>${text}</p>
           <a href="${link}" target="_blank" class="read-more">Read more</a>
@@ -1238,7 +1237,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ===== helpers ===== */
 function extractImage(html) {
   const match = html.match(/<img[^>]+src="([^">]+)"/);
-  return match ? match[1] : "https://i.imgur.com/rbBLULs.png";
+  return match ? match[1] : "";
 }
 
 function cleanText(html) {
@@ -1273,6 +1272,7 @@ function observeArticles() {
   console.log(">>> IntersectionObserver ustawiony dla artykułów");
 }
 </script>
+
 
 
 

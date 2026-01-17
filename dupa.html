@@ -1182,22 +1182,29 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(str => {
       console.log(">>> Parsowanie XML RSS");
       const xml = new DOMParser().parseFromString(str, "text/xml");
-      const items = Array.from(xml.querySelectorAll("item"))
-        .sort((a, b) =>
-          new Date(b.querySelector("pubDate")?.textContent) -
-          new Date(a.querySelector("pubDate")?.textContent)
-        )
+
+      // TUTAJ zmiana: getElementsByTagName("item") zamiast querySelectorAll
+      const allItems = xml.getElementsByTagName("item");
+      console.log(">>> Całkowita liczba elementów RSS:", allItems.length);
+
+      // Limitujemy do najnowszych
+      const items = Array.from(allItems)
+        .sort((a, b) => {
+          const dateA = new Date(a.getElementsByTagName("pubDate")[0]?.textContent);
+          const dateB = new Date(b.getElementsByTagName("pubDate")[0]?.textContent);
+          return dateB - dateA;
+        })
         .slice(0, LIMIT);
 
-      console.log(`>>> Znaleziono ${items.length} elementy RSS`);
+      console.log(`>>> Wybrano ${items.length} elementy RSS do wyświetlenia`);
 
       container.innerHTML = "";
 
       items.forEach((item, index) => {
-        const title = item.querySelector("title")?.textContent || '';
-        const link = item.querySelector("link")?.textContent || '';
-        const date = item.querySelector("pubDate")?.textContent || '';
-        const description = item.querySelector("description")?.textContent || '';
+        const title = item.getElementsByTagName("title")[0]?.textContent || '';
+        const link = item.getElementsByTagName("link")[0]?.textContent || '';
+        const date = item.getElementsByTagName("pubDate")[0]?.textContent || '';
+        const description = item.getElementsByTagName("description")[0]?.textContent || '';
 
         const image = extractImage(description);
         const text = cleanText(description);
@@ -1266,6 +1273,7 @@ function observeArticles() {
   console.log(">>> IntersectionObserver ustawiony dla artykułów");
 }
 </script>
+
 
 
 

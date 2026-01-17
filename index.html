@@ -230,55 +230,12 @@ window.addEventListener('load', () => {
 </section>
 
 
-
 <section class="latest-articles">
   <h2>Latest articles</h2>
-  <div class="articles-container">
 
-        <article class="article-card">
-      <div class="category">NEWS</div>
-      <img src="https://i.imgur.com/rbBLULs.png/" alt="Article 1 image" />
-      <h3>W ogniu sprzeciwu ICE - Protesty, kryzys i możliwe konsekwencje.</h3>
-      <p>W naszym kraju, od kilku tygodni w bardzo szybkim czasie nastąpił wzrost liczby protestów skierowanych przeciwko agencji U.S. Immigration and Customs Enforcement, czyli znane...</p>
-      <a href="https://forum.devgaming.pl/topic/2388-04-w-ogniu-sprzeciwu-ice-protesty-kryzys-i-mo%C5%BCliwe-konsekwencje/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
-      <div class="meta">
-        <span>Pisze: Finneas Puttvise</span>
-        <span class="time-ago" data-date="2026-01-16T16:20:00"></span>
-      </div>
-    </article>
-
-    
-        <article class="article-card">
-      <div class="category">NEWS</div>
-      <img src="https://i.imgur.com/SkDUpqh.png" alt="Article 1 image" />
-      <h3>Hotele przestały być dla gości - Oblicze nadchodzącego kryzysu...</h3>
-      <p>Los Santos od zawsze przyciągało ludzi w biegu - pracujących, przyjezdnych bądź tych, którzy chcieli spróbować czegoś nowego. Jednak w ostatnich...</p>
-      <a href="https://forum.devgaming.pl/topic/2320-03-hotele-przesta%C5%82y-by%C4%87-dla-go%C5%9Bci-oblicze-nadchodz%C4%85cego-kryzysu/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
-      <div class="meta">
-        <span>Pisze: Raymond Hall</span>
-        <span class="time-ago" data-date="2026-01-15T18:00:00"></span>
-      </div>
-    </article>
-
-        <article class="article-card">
-      <div class="category">NEWS</div>
-      <img src="https://i.imgur.com/BKGJiMx.png" alt="Article 1 image" />
-      <h3>Bezkarna dewastacja, desperackie wołanie pracownicy kawiarni o pomoc służb</h3>
-      <p>14 stycznia, piętnaście minut przed godziną dziewiątą – spokojną, rutynową drogę do pracy Diego Moore - Jednego z mieszkańców Los Santos zakłócił...</p>
-      <a href="https://forum.devgaming.pl/topic/2241-02-bezkarna-dewastacja-desperackie-wo%C5%82anie-pracownicy-kawiarni-o-pomoc-s%C5%82u%C5%BCb-historia-mieszka%C5%84ca-diego/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
-      <div class="meta">
-        <span>Pisze: Raymond Hall</span>
-        <span class="time-ago" data-date="2026-01-14T12:12:00"></span>
-      </div>
-    </article>
-
-
-
-
-    
-    
-  </div>
+  <div class="articles-container" id="articles"></div>
 </section>
+
 
 <section class="employees" id="employees">
   <h2>Our Team</h2>
@@ -1204,28 +1161,186 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const articles = document.querySelectorAll('.article-card');
+  console.log(">>> JS startuje: DOM gotowy <<<");
 
-  const observer = new IntersectionObserver((entries) => {
+  const RSS_URL = 'https://articles.sackydesign.workers.dev/'; // Twój Worker
+  const LIMIT = 3;
+
+  const container = document.getElementById("articles");
+  if (!container) {
+    console.error(">>> Brak kontenera #articles <<<");
+    return;
+  }
+  console.log(">>> Kontener #articles znaleziony <<<");
+
+  fetch(RSS_URL)
+    .then(res => {
+      console.log(">>> Fetch RSS wykonany, status:", res.status);
+      if (!res.ok) throw new Error("Błąd sieci przy pobieraniu RSS");
+      return res.text();
+    })
+    .then(str => {
+      console.log(">>> Parsowanie XML RSS");
+      const xml = new DOMParser().parseFromString(str, "text/xml");
+
+      const allItems = xml.getElementsByTagName("item");
+      console.log(">>> Całkowita liczba elementów RSS:", allItems.length);
+
+      const items = Array.from(allItems)
+        .sort((a, b) => {
+          const dateA = new Date(a.getElementsByTagName("pubDate")[0]?.textContent);
+          const dateB = new Date(b.getElementsByTagName("pubDate")[0]?.textContent);
+          return dateB - dateA;
+        })
+        .slice(0, LIMIT);
+
+      console.log(`>>> Wybrano ${items.length} elementy RSS do wyświetlenia`);
+
+      container.innerHTML = "";
+
+      items.forEach((item, index) => {
+        // Tytuł
+        let title = item.getElementsByTagName("title")[0]?.textContent || '';
+        title = cleanTitle(title);
+
+        const link = item.getElementsByTagName("link")[0]?.textContent || '';
+        const date = item.getElementsByTagName("pubDate")[0]?.textContent || '';
+        const description = item.getElementsByTagName("description")[0]?.textContent || '';
+
+        const image = extractImage(description);
+        let text = cleanText(description);
+
+        // Jeśli artykuł nie ma treści (tylko obraz lub pusty), dodaj placeholder
+        if (!text || text === "...") {
+          text = "Artykuł zawiera obraz, kliknij w przycisk poniżej, aby zapoznać się z jego dokładną treścią!";
+        }
+
+        const authorFromContent = extractAuthorFromDescription(description);
+        const mappedAuthor = mapAuthor(authorFromContent);
+
+        console.log(`>>> Tworzę artykuł: ${title} (Autor: ${mappedAuthor})`);
+
+        const article = document.createElement("article");
+        article.className = "article-card";
+        article.style.transitionDelay = (index * 0.3) + "s";
+
+        article.innerHTML = `
+          <div class="category">NEWS</div>
+          ${image ? `<img src="${image}" alt="">` : ""}
+          <h3>${title}</h3>
+          <p>${text}</p>
+          <a href="${link}" target="_blank" class="read-more">Read more</a>
+          <div class="meta">
+            <span>Pisze: ${mappedAuthor}</span>
+            <span style="float: right;">${timeAgo(date)}</span>
+          </div>
+        `;
+
+        container.appendChild(article);
+      });
+
+      console.log(">>> Wszystkie artykuły wstawione do DOM");
+      observeArticles();
+    })
+    .catch(err => console.error(">>> RSS ERROR:", err));
+});
+
+/* ===== helpers ===== */
+function cleanTitle(title) {
+  if (!title) return "";
+  return title
+    .replace(/\[QUICKNEWS\]\s*/i, "") // usuwa [QUICKNEWS]
+    .replace(/^\d+\.\s*/, "")         // usuwa numerki typu 01., 02.
+    .trim();
+}
+
+function extractImage(html) {
+  if (!html) return "https://i.imgur.com/rbBLULs.png";
+  // Szukamy pierwszego obrazka z Imgur
+  const match = html.match(/<img[^>]+src="([^">]*i\.imgur\.com[^">]+)"/);
+  return match ? match[1] : "https://i.imgur.com/rbBLULs.png";
+}
+
+function cleanText(html) {
+  return html
+    .replace(/<img[^>]*>/g, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 180) + "...";
+}
+
+// Wyciąga autora z końcówki artykułu: "Imię Nazwisko for Venture Media."
+function extractAuthorFromDescription(description) {
+  if (!description) return "";
+  const match = description.match(/([A-Z][a-z]+ [A-Z][a-z]+) for Venture Media\./);
+  return match ? match[1] : "";
+}
+
+// Mapowanie nicków na pełne imię i nazwisko
+function mapAuthor(author) {
+  if (!author) return "Redakcja";
+  const map = {
+    "Sacky": "Finneas Puttvise",
+    "CZEMPION": "Raymond Hall"
+  };
+  return map[author] || author;
+}
+
+// Poprawna polska funkcja czasu
+function timeAgo(date) {
+  if (!date) return "";
+
+  const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+
+  if (seconds < 600) { // mniej niż 10 minut
+    return "przed chwilą";
+  } else if (seconds < 3600) { // poniżej godziny
+    const minutes = Math.floor(seconds / 60);
+    return `${minutes} ${pluralize(minutes, "minutę", "minuty", "minut")} temu`;
+  } else if (seconds < 86400) { // poniżej doby
+    const hours = Math.floor(seconds / 3600);
+    return `${hours} ${pluralize(hours, "godzinę", "godziny", "godzin")} temu`;
+  } else { // dni
+    const days = Math.floor(seconds / 86400);
+    return `${days} ${pluralize(days, "dzień", "dni", "dni")} temu`;
+  }
+}
+
+// Funkcja do polskiej liczby mnogiej
+function pluralize(n, singular, few, many) {
+  n = Math.abs(n) % 100;
+  const n1 = n % 10;
+  if (n > 10 && n < 20) return many;
+  if (n1 > 1 && n1 < 5) return few;
+  if (n1 === 1) return singular;
+  return many;
+}
+
+function observeArticles() {
+  const articles = document.querySelectorAll(".article-card");
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // dodajemy opóźnienie w zależności od indexu artykułu w kolekcji
-        const index = Array.from(articles).indexOf(entry.target);
-        entry.target.style.transitionDelay = (index * 0.3) + "s";
-        entry.target.classList.add('visible');
+        entry.target.classList.add("visible");
         observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.1
-  });
+  }, { threshold: 0.1 });
 
-  articles.forEach(article => {
-    observer.observe(article);
-  });
-});
-
+  articles.forEach(article => observer.observe(article));
+  console.log(">>> IntersectionObserver ustawiony dla artykułów");
+}
 </script>
+
+
+
+
+
+
+
+
+
 
 
 <style>

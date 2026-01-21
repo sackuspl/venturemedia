@@ -1,6 +1,11 @@
+// 🔹 Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+// 🔹 Chart.js (ES Module poprawny import)
+import { Chart, registerables } from "https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.esm.js";
+Chart.register(...registerables);
 
 // 🔹 Firebase config
 const firebaseConfig = {
@@ -9,31 +14,34 @@ const firebaseConfig = {
   projectId: "venture-panel",
 };
 
+// 🔹 Inicjalizacja
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// logowanie
+// 🔹 Logowanie i autoryzacja
 onAuthStateChanged(auth, user => {
   if (!user) location.href = "login.html";
   else loadStats();
 });
 
-// wylogowanie
+// 🔹 Wylogowanie
 window.logout = () => signOut(auth).then(() => location.href="login.html");
 
-// funkcja pobierająca dane i rysująca wykresy
+// 🔹 Funkcja pobierająca dane i rysująca wykresy
 async function loadStats() {
+  // Pobranie danych
   const statsSnap = await getDocs(collection(db, "stats"));
   const visitsSnap = await getDocs(collection(db, "visits"));
 
+  // Dane do wykresów
   const dailyLabels = [];
   const dailyData = [];
   const weeklyMap = {};
   const monthlyMap = {};
 
   statsSnap.forEach(docSnap => {
-    const date = docSnap.id;
+    const date = docSnap.id; // YYYY-MM-DD
     const count = docSnap.data().count;
 
     dailyLabels.push(date);
@@ -44,32 +52,41 @@ async function loadStats() {
     weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`]||0)+count;
 
     // Miesiące
-    const monthKey = date.slice(0,7);
+    const monthKey = date.slice(0,7); // YYYY-MM
     monthlyMap[monthKey] = (monthlyMap[monthKey]||0)+count;
   });
 
-  // Wykres dzienny
+  // 🔹 Wykres dzienny
   new Chart(document.getElementById('dailyChart'), {
     type: 'bar',
-    data: { labels: dailyLabels, datasets:[{label:'Wejścia dzienne', data:dailyData, backgroundColor:'#4f46e5'}] },
-    options:{responsive:true}
+    data: {
+      labels: dailyLabels,
+      datasets: [{ label:'Wejścia dzienne', data: dailyData, backgroundColor:'#4f46e5' }]
+    },
+    options:{ responsive:true }
   });
 
-  // Wykres tygodniowy
+  // 🔹 Wykres tygodniowy
   new Chart(document.getElementById('weeklyChart'), {
     type: 'bar',
-    data:{ labels:Object.keys(weeklyMap), datasets:[{label:'Wejścia tygodniowe', data:Object.values(weeklyMap), backgroundColor:'#4f46e5'}]},
-    options:{responsive:true}
+    data: {
+      labels: Object.keys(weeklyMap),
+      datasets: [{ label:'Wejścia tygodniowe', data:Object.values(weeklyMap), backgroundColor:'#4f46e5' }]
+    },
+    options:{ responsive:true }
   });
 
-  // Wykres miesięczny
+  // 🔹 Wykres miesięczny
   new Chart(document.getElementById('monthlyChart'), {
     type:'bar',
-    data:{ labels:Object.keys(monthlyMap), datasets:[{label:'Wejścia miesięczne', data:Object.values(monthlyMap), backgroundColor:'#4f46e5'}]},
-    options:{responsive:true}
+    data:{
+      labels: Object.keys(monthlyMap),
+      datasets: [{ label:'Wejścia miesięczne', data:Object.values(monthlyMap), backgroundColor:'#4f46e5' }]
+    },
+    options:{ responsive:true }
   });
 
-  // TOP podstrony
+  // 🔹 TOP podstrony
   const pageCounts = {};
   for (let dayDoc of visitsSnap.docs) {
     const usersCol = collection(db, "visits", dayDoc.id, "users");

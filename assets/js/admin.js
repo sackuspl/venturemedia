@@ -24,6 +24,17 @@ onAuthStateChanged(auth, user => {
 // 🔹 Wylogowanie
 window.logout = () => signOut(auth).then(() => location.href="login.html");
 
+// 🔹 Mapa path → czytelna nazwa
+const pageNames = {
+  "/": "Home",
+  "/index.html": "Home",
+  "/join-us": "Join Us",
+  "/join-us.html": "Join Us",
+  "/kontakt": "Kontakt",
+  "/kontakt.html": "Kontakt",
+  // dodaj kolejne strony w razie potrzeby
+};
+
 // 🔹 Pobranie danych i wstawienie w panel
 async function loadStats() {
   const statsSnap = await getDocs(collection(db, "stats"));
@@ -43,12 +54,12 @@ async function loadStats() {
     dailyTotal += count;
 
     // tydzień
-    const weekNum = Math.ceil(new Date(date).getDate()/7);
-    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`]||0)+count;
+    const weekNum = Math.ceil(new Date(date).getDate() / 7);
+    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`] || 0) + count;
 
     // miesiąc
     const monthKey = date.slice(0,7);
-    monthlyMap[monthKey] = (monthlyMap[monthKey]||0)+count;
+    monthlyMap[monthKey] = (monthlyMap[monthKey] || 0) + count;
   });
 
   weeklyTotal = Object.values(weeklyMap).reduce((a,b)=>a+b,0);
@@ -59,17 +70,27 @@ async function loadStats() {
   for (let dayDoc of visitsSnap.docs) {
     const usersCol = collection(db, "visits", dayDoc.id, "users");
     const usersSnap = await getDocs(usersCol);
+
     usersSnap.forEach(userDoc => {
-      const page = userDoc.data().page;
-      pageCounts[page] = (pageCounts[page]||0)+1;
+      let page = userDoc.data().page;
+
+      // 🔹 Mapowanie ścieżki na czytelną nazwę
+      if (pageNames[page]) page = pageNames[page];
+
+      pageCounts[page] = (pageCounts[page] || 0) + 1;
     });
   }
 
-  // Wstawienie danych do panelu
-  document.getElementById("dailyCount").textContent = dailyTotal;
-  document.getElementById("weeklyCount").textContent = weeklyTotal;
-  document.getElementById("monthlyCount").textContent = monthlyTotal;
+  // 🔹 Wstawienie danych do panelu
+  const dailyEl = document.getElementById("dailyCount");
+  const weeklyEl = document.getElementById("weeklyCount");
+  const monthlyEl = document.getElementById("monthlyCount");
 
+  if(dailyEl) dailyEl.textContent = dailyTotal;
+  if(weeklyEl) weeklyEl.textContent = weeklyTotal;
+  if(monthlyEl) monthlyEl.textContent = monthlyTotal;
+
+  // Wstawienie TOP podstron do tabeli
   const tbody = document.querySelector("#topPages tbody");
   tbody.innerHTML = "";
   Object.entries(pageCounts)

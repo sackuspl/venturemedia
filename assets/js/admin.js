@@ -3,10 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebas
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-// 🔹 Chart.js (ES Module poprawny import)
-import { Chart, registerables } from "https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.esm.js";
-Chart.register(...registerables);
-
 // 🔹 Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyC0ALO1e0MQ2YZG5yJ43kXlQvLF9M1i-EE",
@@ -28,80 +24,52 @@ onAuthStateChanged(auth, user => {
 // 🔹 Wylogowanie
 window.logout = () => signOut(auth).then(() => location.href="login.html");
 
-// 🔹 Funkcja pobierająca dane i rysująca wykresy
+// 🔹 Funkcja pobierająca dane i wyświetlająca liczby
 async function loadStats() {
   // Pobranie danych
   const statsSnap = await getDocs(collection(db, "stats"));
   const visitsSnap = await getDocs(collection(db, "visits"));
 
-  // Dane do wykresów
-  const dailyLabels = [];
-  const dailyData = [];
-  const weeklyMap = {};
-  const monthlyMap = {};
+  // Sumy dzienne, tygodniowe i miesięczne
+  let dailyTotal = 0;
+  let weeklyMap = {};
+  let monthlyMap = {};
+  let pageCounts = {};
 
   statsSnap.forEach(docSnap => {
     const date = docSnap.id; // YYYY-MM-DD
     const count = docSnap.data().count;
-
-    dailyLabels.push(date);
-    dailyData.push(count);
+    dailyTotal += count;
 
     // Tygodnie
-    const weekNum = Math.ceil(new Date(date).getDate()/7);
-    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`]||0)+count;
+    const weekNum = Math.ceil(new Date(date).getDate() / 7);
+    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`] || 0) + count;
 
     // Miesiące
-    const monthKey = date.slice(0,7); // YYYY-MM
-    monthlyMap[monthKey] = (monthlyMap[monthKey]||0)+count;
+    const monthKey = date.slice(0, 7); // YYYY-MM
+    monthlyMap[monthKey] = (monthlyMap[monthKey] || 0) + count;
   });
 
-  // 🔹 Wykres dzienny
-  new Chart(document.getElementById('dailyChart'), {
-    type: 'bar',
-    data: {
-      labels: dailyLabels,
-      datasets: [{ label:'Wejścia dzienne', data: dailyData, backgroundColor:'#4f46e5' }]
-    },
-    options:{ responsive:true }
-  });
-
-  // 🔹 Wykres tygodniowy
-  new Chart(document.getElementById('weeklyChart'), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(weeklyMap),
-      datasets: [{ label:'Wejścia tygodniowe', data:Object.values(weeklyMap), backgroundColor:'#4f46e5' }]
-    },
-    options:{ responsive:true }
-  });
-
-  // 🔹 Wykres miesięczny
-  new Chart(document.getElementById('monthlyChart'), {
-    type:'bar',
-    data:{
-      labels: Object.keys(monthlyMap),
-      datasets: [{ label:'Wejścia miesięczne', data:Object.values(monthlyMap), backgroundColor:'#4f46e5' }]
-    },
-    options:{ responsive:true }
-  });
-
-  // 🔹 TOP podstrony
-  const pageCounts = {};
+  // TOP podstrony
   for (let dayDoc of visitsSnap.docs) {
     const usersCol = collection(db, "visits", dayDoc.id, "users");
     const usersSnap = await getDocs(usersCol);
     usersSnap.forEach(userDoc => {
       const page = userDoc.data().page;
-      pageCounts[page] = (pageCounts[page]||0)+1;
+      pageCounts[page] = (pageCounts[page] || 0) + 1;
     });
   }
+
+  // 🔹 Wstawianie danych do panelu
+  document.getElementById("dailyCount").textContent = dailyTotal;
+  document.getElementById("weeklyCount").textContent = Object.values(weeklyMap).reduce((a,b) => a+b, 0);
+  document.getElementById("monthlyCount").textContent = Object.values(monthlyMap).reduce((a,b) => a+b, 0);
 
   const tbody = document.querySelector("#topPages tbody");
   tbody.innerHTML = "";
   Object.entries(pageCounts)
-    .sort((a,b)=>b[1]-a[1])
-    .forEach(([page,count])=>{
+    .sort((a,b) => b[1]-a[1])
+    .forEach(([page,count]) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `<td>${page}</td><td>${count}</td>`;
       tbody.appendChild(tr);

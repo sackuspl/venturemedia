@@ -138,7 +138,6 @@ window.addEventListener('load', () => {
 
 
 
-
 <header>
   <h1>Panel Statystyk – Venture Media</h1>
   <button onclick="logout()">Wyloguj</button>
@@ -147,45 +146,47 @@ window.addEventListener('load', () => {
 <main>
   <section class="stats-section">
     <h2>Wejścia dzienne</h2>
-    <div id="dailyStats">Ładowanie...</div>
+    <p id="dailyCount">Ładowanie...</p>
   </section>
 
   <section class="stats-section">
     <h2>Wejścia tygodniowe</h2>
-    <div id="weeklyStats">Ładowanie...</div>
+    <p id="weeklyCount">Ładowanie...</p>
   </section>
 
   <section class="stats-section">
     <h2>Wejścia miesięczne</h2>
-    <div id="monthlyStats">Ładowanie...</div>
+    <p id="monthlyCount">Ładowanie...</p>
   </section>
 
   <section class="stats-section">
     <h2>TOP podstrony</h2>
     <table id="topPages">
       <thead>
-        <tr><th>Podstrona</th><th>Wejścia</th></tr>
+        <tr>
+          <th>Podstrona</th>
+          <th>Wejścia</th>
+        </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <tr><td colspan="2">Ładowanie...</td></tr>
+      </tbody>
     </table>
   </section>
 </main>
 
+<style>
+  header { background:#4f46e5; color:#fff; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+  header h1 { margin:0; font-size:1.5rem; }
+  header button { background:#fff; color:#4f46e5; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer; font-weight:bold; }
+  main { padding:2rem; }
+  .stats-section { background:#fff; padding:1rem 2rem; margin-bottom:2rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+  .stats-section h2 { margin-top:0; margin-bottom:1rem; }
+  table { width:100%; border-collapse:collapse; }
+  table th, table td { text-align:left; padding:0.5rem; border-bottom:1px solid #ddd; }
+</style>
 
-
-  <style>
-    body { font-family: sans-serif; background:#f0f2f5; margin:0; }
-    header { background: #4f46e5; color: #fff; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center;}
-    header h1 { margin:0; font-size:1.5rem; }
-    header button { background:#fff; color:#4f46e5; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer; font-weight:bold;}
-    main { padding:2rem; }
-    .stats-section { background:#fff; padding:1rem 2rem; margin-bottom:2rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-    .stats-section h2 { margin-top:0; margin-bottom:1rem; }
-    table { width:100%; border-collapse:collapse; }
-    table th, table td { text-align:left; padding:0.5rem; border-bottom:1px solid #ddd; }
-  </style>
-
-<!-- Logowanie / sprawdzanie auth -->
+<!-- SPRAWDZENIE LOGOWANIA -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
@@ -206,7 +207,6 @@ window.addEventListener('load', () => {
   window.logout = () => signOut(auth).then(() => location.href="login.html");
 </script>
 
-<!-- Panel admin.js -->
 <script type="module" src="assets/js/admin.js"></script>
 
 

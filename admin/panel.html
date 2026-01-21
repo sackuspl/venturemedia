@@ -230,31 +230,32 @@ window.addEventListener('load', () => {
   </style>
 
 
-  <!-- SPRAWDZENIE LOGOWANIA -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+<!-- SPRAWDZENIE LOGOWANIA -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyC0ALO1e0MQ2YZG5yJ43kXlQvLF9M1i-EE",
-      authDomain: "venture-panel.firebaseapp.com",
-      projectId: "venture-panel",
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyC0ALO1e0MQ2YZG5yJ43kXlQvLF9M1i-EE",
+    authDomain: "venture-panel.firebaseapp.com",
+    projectId: "venture-panel",
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    // jeśli nie zalogowany → przekieruj do login.html
-    onAuthStateChanged(auth, user => {
-      if (!user) location.href = "login.html";
-    });
+  // jeśli nie zalogowany → przekieruj do login.html w katalogu admin
+  onAuthStateChanged(auth, user => {
+    if (!user) location.href = "/admin/login.html";
+  });
 
-    // funkcja wylogowania
-    window.logout = () => signOut(auth).then(() => location.href = "login.html");
-  </script>
+  // funkcja wylogowania
+  window.logout = () => signOut(auth).then(() => location.href = "/admin/login.html");
+</script>
 
-  <!-- Twój admin.js – wykresy i statystyki -->
-  <script type="module" src="assets/js/admin.js"></script>
+<!-- Twój admin.js – wykresy i statystyki -->
+<script type="module" src="/assets/js/admin.js"></script>
+
 
 
 <style>

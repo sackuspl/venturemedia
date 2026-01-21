@@ -33,7 +33,6 @@ window.logout = () =>
 const pageNames = {
   "/": "Home",
   "/index.html": "Home",
-  "/join-us": "Join Us",
   "/join-us.html": "Join Us",
   "/newspapers.html": "Newspapers",
 };

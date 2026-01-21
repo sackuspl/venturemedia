@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>venturemedia.pl - Your story, Venture glory!</title>
+
+    <!-- Podłączenie czcionki Jakarta z Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link
+  rel="stylesheet"
+  href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"
+/>
+
+<link rel="stylesheet" href="phone-style.css" media="only screen and (max-width: 768px)">
+
+
+
+  <!-- Open Graph Meta Tags -->
+<meta property="og:title" content="venturemedia.pl - Your story, Venture glory!">
+<meta property="og:description" content="Innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.">
+<meta property="og:url" content="https://venturemedia.pl">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sackuspl.github.io/venturemedia/assets/images/venture-og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="venturemedia.pl - Your story, Venture glory!">
+<meta name="twitter:description" content="Innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.">
+<meta name="twitter:image" content="https://sackuspl.github.io/venturemedia/assets/images/venture-og.png">
+<meta name="twitter:url" content="https://venturemedia.pl">
+
+
+
+
+</head>
+<body>
+
+
+<div id="loading-screen">
+  <div id="col">
+    <div id="img-wrap">
+      <span class="loader"></span>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <section class="navigation-section">
+  <nav class="top-nav">
+    <ul>
+      <li>
+        <button class="nav-button" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-house icon"></i>
+          <span class="label">Home</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-button" onclick="window.location.href='newspapers.html?scrollTo=gazety'">
+          <i class="fa-solid fa-newspaper icon"></i>
+          <span class="label">Newspapers</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-button" onclick="scrollToSection('employees')">
+          <i class="fa-solid fa-users icon"></i>
+          <span class="label">Employees</span>
+        </button>
+      </li>
+      <li>
+  <!--    <button class="nav-button" onclick="window.location.href='index.html'">      -->
+          <i class="fa-solid fa-video icon"></i>
+          <span class="label">Programs</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-button" onclick="window.location.href='join-us.html'">
+          <i class="fa-solid fa-briefcase icon"></i>
+          <span class="label">Join us</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</section>
+
+
+<script>
+function scrollToSection(className) {
+  // Szuka sekcji po klasie
+  const section = document.querySelector(`.${className}`);
+  
+  // Jeśli sekcja istnieje, przewiń do niej płynnie
+  if (section) {
+    section.scrollIntoView({ 
+      behavior: 'smooth',  // płynne przewijanie
+      block: 'start'       // do początku sekcji
+    });
+  }
+}
+
+window.addEventListener('load', () => {
+  // Pobranie parametru ?scrollTo=...
+  const urlParams = new URLSearchParams(window.location.search);
+  const scrollTo = urlParams.get('scrollTo');
+
+  if (scrollTo) {
+    const section = document.getElementById(scrollTo);
+    if (section) {
+      // Małe opóźnienie, aby strona w pełni się wyrenderowała
+      setTimeout(() => {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50); // 50ms wystarczy
+    }
+  }
+});
+
+</script>
+
+
+
+
+
+<section class="hero">
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="assets/videos/tlo-venture-1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="hero-overlay"></div>      <!-- nakładka przyciemnienia -->
+  <div class="hero-gradient"></div>     <!-- gradient od dołu -->
+   <div class="hero-light"></div>
+
+   <a href="https://www.devgaming.pl/" target="_blank" rel="noopener noreferrer">
+    <img src="assets/images/logo-devgaming.png" alt="Logo" class="logo">
+</a>
+
+  <div class="fade-in">
+    <img src="assets/images/logo-venture.png" alt="Venture logo" class="hero-logo">
+  </div>
+  <div class="fade-in">
+    <p>
+      Venture to innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.
+    </p>
+  </div>
+  <div class="fade-in">
+    <button class="btn" onclick="window.open('https://discord.gg/n8xBTJN4B9', '_blank')">
+      Get started
+    </button>
+  </div>
+
+<i class="fa-light fa-computer-mouse-scrollwheel scroll-icon"></i>
+</section>
+
+<section class="what-do-we-do">
+  <h2>What do we do?</h2>
+  <div class="cards">
+
+    <div class="card-wrapper">
+      <div class="outer">
+        <div class="dot"></div>
+        <div class="card">
+          <i class="fa-solid fa-badge-check info-icon"></i>
+          <div class="ray"></div>
+          <div class="text">Wiarygodność i profesjonalizm</div>
+          <div class="subtitle">Nasz zespół tworzą doświadczeni dziennikarze i eksperci, którzy rzetelnie weryfikują każdy materiał, by dostarczać wyłącznie sprawdzone informacje.</div>
+          <div class="line topl"></div>
+          <div class="line leftl"></div>
+          <div class="line bottoml"></div>
+          <div class="line rightl"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper">
+      <div class="outer">
+        <div class="dot"></div>
+        <div class="card">
+          <i class="fa-solid fa-face-sunglasses info-icon"></i>
+          <div class="ray"></div>
+          <div class="text">Przyjazne miejsce pracy</div>
+          <div class="subtitle">Stawiamy na rozwój osób chętnych do pracy i nauki w dziennikarstwie. Możesz zostać fotografem, kamerzystą czy prezenterem telewizyjnym! Dołącz do nas już dziś!</div>
+          <div class="line topl"></div>
+          <div class="line leftl"></div>
+          <div class="line bottoml"></div>
+          <div class="line rightl"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper">
+      <div class="outer">
+        <div class="dot"></div>
+        <div class="card">
+          <i class="fa-solid fa-megaphone info-icon"></i>
+          <div class="ray"></div>
+          <div class="text">Reklama i sponsoring</div>
+          <div class="subtitle">Chcesz dotrzeć do szerokiej publiczności? Oferujemy skuteczne formy promocji – od reklamy radiowej, reportaży z wydarzeń po reklamy w telewizji. Z nami Twoja marka stanie się rozpoznawalna w zaledwie chwilę!</div>
+          <div class="line topl"></div>
+          <div class="line leftl"></div>
+          <div class="line bottoml"></div>
+          <div class="line rightl"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- kolejne karty ... -->
+  </div>
+</section>
+
+
+
+<section class="latest-articles">
+  <h2>Latest articles</h2>
+  <div class="articles-container">
+
+        <article class="article-card">
+      <div class="category">NEWS</div>
+      <img src="https://i.imgur.com/rbBLULs.png/" alt="Article 1 image" />
+      <h3>W ogniu sprzeciwu ICE - Protesty, kryzys i możliwe konsekwencje.</h3>
+      <p>W naszym kraju, od kilku tygodni w bardzo szybkim czasie nastąpił wzrost liczby protestów skierowanych przeciwko agencji U.S. Immigration and Customs Enforcement, czyli znane...</p>
+      <a href="https://forum.devgaming.pl/topic/2388-04-w-ogniu-sprzeciwu-ice-protesty-kryzys-i-mo%C5%BCliwe-konsekwencje/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
+      <div class="meta">
+        <span>Pisze: Finneas Puttvise</span>
+        <span class="time-ago" data-date="2026-01-16T16:20:00"></span>
+      </div>
+    </article>
+
+    
+        <article class="article-card">
+      <div class="category">NEWS</div>
+      <img src="https://i.imgur.com/SkDUpqh.png" alt="Article 1 image" />
+      <h3>Hotele przestały być dla gości - Oblicze nadchodzącego kryzysu...</h3>
+      <p>Los Santos od zawsze przyciągało ludzi w biegu - pracujących, przyjezdnych bądź tych, którzy chcieli spróbować czegoś nowego. Jednak w ostatnich...</p>
+      <a href="https://forum.devgaming.pl/topic/2320-03-hotele-przesta%C5%82y-by%C4%87-dla-go%C5%9Bci-oblicze-nadchodz%C4%85cego-kryzysu/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
+      <div class="meta">
+        <span>Pisze: Raymond Hall</span>
+        <span class="time-ago" data-date="2026-01-15T18:00:00"></span>
+      </div>
+    </article>
+
+        <article class="article-card">
+      <div class="category">NEWS</div>
+      <img src="https://i.imgur.com/BKGJiMx.png" alt="Article 1 image" />
+      <h3>Bezkarna dewastacja, desperackie wołanie pracownicy kawiarni o pomoc służb</h3>
+      <p>14 stycznia, piętnaście minut przed godziną dziewiątą – spokojną, rutynową drogę do pracy Diego Moore - Jednego z mieszkańców Los Santos zakłócił...</p>
+      <a href="https://forum.devgaming.pl/topic/2241-02-bezkarna-dewastacja-desperackie-wo%C5%82anie-pracownicy-kawiarni-o-pomoc-s%C5%82u%C5%BCb-historia-mieszka%C5%84ca-diego/" target="_blank" rel="noopener noreferrer" class="read-more">Read more</a>
+      <div class="meta">
+        <span>Pisze: Raymond Hall</span>
+        <span class="time-ago" data-date="2026-01-14T12:12:00"></span>
+      </div>
+    </article>
+
+
+
+
+    
+    
+  </div>
+</section>
+
+<section class="employees" id="employees">
+  <h2>Our Team</h2>
+
+  <div class="employees-container">
+
+    <div class="employee-card">
+      <div class="card-icon card-icon-red" data-role="CEO">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/raymond.png" alt="Raymond Hall">
+      </div>
+
+      <h3>Raymond Hall</h3>
+      <p class="role">CEO</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>8939337975</span>
+</div>
+
+
+      <a href="https://discord.com/users/530441518989705217" class="contact-btn">Contact me</a>
+    </div>
+
+    <div class="employee-card">
+      <div class="card-icon card-icon-red" data-role="v-CEO">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/julia.png" alt="Julia Hall">
+      </div>
+
+      <h3>Julia Hall</h3>
+      <p class="role">v-CEO</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>9487524628</span>
+</div>
+
+
+      <a href="https://discord.com/users/1332245779469045831" class="contact-btn">Contact me</a>
+    </div>
+
+    <div class="employee-card">
+      <div class="card-icon card-icon-pink" data-role="Art & Graphics Director">
+        <i class="fa-solid fa-paintbrush-pencil"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/finneas.png" alt="Finneas Puttvise">
+      </div>
+
+      <h3>Finneas Puttvise</h3>
+      <p class="role">Art & Graphics Director</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>1341824673</span>
+</div>
+      <a href="https://discord.com/users/662788934266388510" class="contact-btn">Contact me</a>
+    </div>
+
+        <div class="employee-card">
+      <div class="card-icon card-icon-blue" data-role="Journalist">
+        <i class="fa-solid fa-hashtag"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/hugo.png" alt="Hugo d'Pembroke">
+      </div>
+
+      <h3>Hugo T. de Pembroke</h3>
+      <p class="role">Journalist</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>7220629408</span>
+</div>
+      <a href="https://discord.com/users/1126125703696498798" class="contact-btn">Contact me</a>
+    </div>
+
+
+    <div class="employee-card">
+      <div class="card-icon card-icon-green" data-role="Freelancer">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+
+      <div class="avatar">
+        <img src="assets/images/employees/charlie.png" alt="Charlie Salvarez">
+      </div>
+
+      <h3>Charlie Salvarez</h3>
+      <p class="role">Freelancer</p>
+
+      <div class="phone">
+  <i class="fa-solid fa-phone"></i>
+  <span>9651262850</span>
+</div>
+      <a href="https://discord.com/users/1156687192496799886" class="contact-btn">Contact me</a>
+    </div>
+
+
+
+
+
+  </div>
+</section>
+
+
+<section class="client-section">
+  <h2>Our Partners</h2>
+
+  <div class="client-container">
+    <div class="client-slide visible-scroll">
+      <h3 class="client1">Miejsce na reklamę 1</h3>
+      <p>Wykup miejsce na swoją unikalną reklamę, która odmieni twoją firmę! Skontaktuj się z nami!</p>
+    </div>
+    <div class="client-slide visible-scroll">
+      <h3 class="client2">Miejsce na reklamę 2</h3>
+      <p>Wykup miejsce na swoją unikalną reklamę, która odmieni twoją firmę! Skontaktuj się z nami!</p>
+    </div>
+    <div class="client-slide visible-scroll">
+      <h3 class="client3">Miejsce na reklamę 3</h3>
+      <p>Wykup miejsce na swoją unikalną reklamę, która odmieni twoją firmę! Skontaktuj się z nami!</p>
+    </div>
+  </div>
+  
+      <!-- 
+  <div class="client-gif visible-scroll">
+    <a href="https://i.imgur.com/686YoaA.gif" target="_blank" rel="noopener noreferrer">
+      <img src="https://i.imgur.com/686YoaA.gif" alt="client-gif">
+    </a>
+  </div>-->
+</section>
+
+
+<footer class="site-footer">
+  <section class="footer-content">
+    <p>&copy; 2026 Venture for .devgaming - All rights reserved.</p>
+
+    <div class="footer-links">
+      <a href="https://forum.devgaming.pl/topic/1291-media-venture/" target="_blank" rel="noopener noreferrer">Forum Topic</a>
+      <a href="join-us.html">Join Us</a>
+      <a href="https://discord.gg/n8xBTJN4B9" target="_blank" rel="noopener noreferrer">Contact</a>
+    </div>
+
+    <div class="footer-social">
+      <a href="https://forum.devgaming.pl/topic/1291-media-venture/" target="_blank" rel="noopener noreferrer">
+        <img src="assets/images/devgaming-icon.png" alt="Moje zdjęcie" style="width:24px; height:24px; vertical-align:middle;">
+      </a>
+      <a href="https://discord.gg/n8xBTJN4B9" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-discord"></i>
+      </a>
+    </div>
+
+    <!-- OPIS / DISCLAIMER -->
+    <p class="footer-disclaimer">
+      Ta strona internetowa jest fikcyjnym projektem stworzonym na potrzeby
+      <strong>devgaming.pl</strong><br> Wszystkie treści służą wyłącznie celom demonstracyjnym.
+    </p>
+
+    <p class="footer-credit">
+      Website created by
+      <a href="https://discord.com/users/662788934266388510" target="_blank" rel="noopener noreferrer">sackypl</a>
+    </p>
+  </section>
+</footer>
+
+<script>
+function polishTimeAgo(date) {
+  const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(seconds / 3600);
+  const days = Math.floor(seconds / 86400);
+  const months = Math.floor(seconds / 2592000);
+
+  // 1–10 minut
+  if (minutes >= 1 && minutes <= 10) {
+    return "przed chwilą";
+  }
+
+  function plural(n, forms) {
+    if (n === 1) return forms[0];
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) {
+      return forms[1];
+    }
+    return forms[2];
+  }
+
+  if (minutes < 60) {
+    return `${minutes} ${plural(minutes, ["minutę temu", "minuty temu", "minut temu"])}`;
+  }
+
+  if (hours < 24) {
+    return `${hours} ${plural(hours, ["godzinę temu", "godziny temu", "godzin temu"])}`;
+  }
+
+  if (days < 30) {
+    return `${days} ${plural(days, ["dzień temu", "dni temu", "dni temu"])}`;
+  }
+
+  return `${months} ${plural(months, ["miesiąc temu", "miesiące temu", "miesięcy temu"])}`;
+}
+
+function updateTimes() {
+  document.querySelectorAll(".time-ago").forEach(el => {
+    el.textContent = polishTimeAgo(el.dataset.date);
+  });
+}
+
+updateTimes();
+setInterval(updateTimes, 60000);
+</script>
+
+
+
+<style>
+#loading-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #0e0e0e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease 0.5s;
+  pointer-events: all;
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden; /* ukrywa dopiero po 0.5s opóźnienia */
+  pointer-events: none;
+}
+
+
+/* Kontener ikonki */
+#col {
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Biała pulsująca kropka */
+.loader {
+  display: block;
+  border: 5px solid white;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  opacity: 0;
+  animation: pulsate 1s ease-out infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+/* Animacja pulsowania */
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+body.loading {
+  overflow: hidden !important;
+  user-select: none;
+  /* Usuń pointer-events: none z body.loading - blokuje też loading-screen */
+}
+
+/* Blokada animacji i przejść dla WSZYSTKIEGO oprócz loading-screen */
+body.loading *:not(#loading-screen):not(#loading-screen *) {
+  animation-play-state: paused !important;
+  transition: none !important;
+  pointer-events: none !important;
+}
+
+/* Pozwól animować i mieć pointer-events tylko na loading screen i dzieci */
+body.loading #loading-screen,
+body.loading #loading-screen * {
+  animation-play-state: running !important;
+  transition: all 0.5s ease !important;
+  pointer-events: all !important;
+}
+
+</style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loadingScreen = document.getElementById('loading-screen');
+  const now = Date.now();
+  const lastLoad = localStorage.getItem('lastLoadingScreen');
+  const oneDay = 24 * 60 * 60 * 1000; // 24h w ms
+
+  function initScrollAnimations() {
+    const elements = document.querySelectorAll('.visible-scroll');
+    const observer = new IntersectionObserver((entries, observerInstance) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observerInstance.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    elements.forEach(el => observer.observe(el));
+  }
+
+  function showLoadingScreen() {
+    document.body.classList.add('loading');
+
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+
+      setTimeout(() => {
+        document.body.classList.remove('loading');
+        initScrollAnimations();
+      }, 100); // skrócone opóźnienie na animacje po fade
+
+    }, 2000); // czas wyświetlania loading screen
+  }
+
+  if (!lastLoad || (now - lastLoad) > oneDay) {
+    // Pokaż loading screen i zapisz czas
+    showLoadingScreen();
+    localStorage.setItem('lastLoadingScreen', now);
+  } else {
+    // Ukryj loading od razu i startuj animacje
+    loadingScreen.classList.add('hidden');
+    initScrollAnimations();
+  }
+});
+
+</script>
+
+
+<style>
+.logo {
+    position: absolute;
+    top: 30px;     /* margines od góry */
+    right: 45px;   /* margines od prawej */
+    height: 40px;  /* mniejsze logo */
+    width: auto;
+}
+
+</style>
+
+<style>
+.site-footer {
+  background-color: #131313;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 3rem 1rem;
+  border-top: 1px solid #ffffff34;
+}
+.footer-disclaimer {
+  max-width: 600px;
+  font-size: 0.8rem;
+  color: #777;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem; /* równe odstępy między sekcjami */
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+.footer-links,
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-links {
+  gap: 1.6rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #aaaaaa;
+}
+
+.footer-social {
+  gap: 1.2rem;
+}
+
+.footer-social a {
+  color: #fff;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #aaaaaa;
+}
+
+/* WYRAŹNIE NIŻEJ */
+.footer-credit {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.footer-credit a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-credit a:hover {
+  color: #ffffff;
+}
+
+
+</style>
+
+
+<style>
+.client-section {
+  padding: 4rem 1rem 6rem;
+  background-image: url("assets/images/tlo-venture.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  text-align: center;
+}
+
+.client-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-shadow: 0 0 12px rgba(255,255,255,0.25);
+}
+
+/* kontener animowanych klientów */
+
+.client-container {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  border: 1px solid #ffffff4b;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #292929, #1a1a1a);
+  padding: 1rem 2rem;
+  overflow: hidden;
+  height: auto; /* auto, bo wysokość będzie zmienna */
+}
+
+/* pojedynczy slide klienta */
+.client-slide {
+  position: relative;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  display: none; /* domyślnie ukryte */
+}
+.client-slide.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Opcjonalne stylizacje tekstu */
+.client-slide h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.client1 {
+  color: #ffc27a;
+}
+.client2 {
+  color: #95ff7a;
+}
+.client3 {
+  color: #7aceff;
+}
+
+.client-slide p {
+  font-size: 1rem;
+  line-height: 1.4rem;
+  color: #ddd;
+}
+
+/* GIF */
+.client-gif img {
+  width: 850px;
+  max-width: 80%;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Początkowo elementy ukryte do animacji przy scrollu */
+.client-slide.visible-scroll,
+.client-gif.visible-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Po pojawieniu się w oknie */
+.client-slide.visible-scroll.show,
+.client-gif.visible-scroll.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll('.client-slide');
+  const container = document.querySelector('.client-container');
+  let current = 0;
+  let intervalId;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      if(i === index){
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+  }
+
+  function startSlider() {
+    showSlide(current);
+    intervalId = setInterval(() => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }, 8000);
+  }
+
+  startSlider();
+});
+
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // wybieramy wszystkie elementy z klasą .visible-scroll
+  const elements = document.querySelectorAll('.visible-scroll');
+
+  const observer = new IntersectionObserver((entries, observerInstance) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show'); // dodaj klasę show -> animacja CSS
+        observerInstance.unobserve(entry.target); // tylko raz
+      }
+    });
+  }, {
+    threshold: 0.2 // 20% elementu w viewport
+  });
+
+  elements.forEach(el => observer.observe(el));
+});
+</script>
+
+
+
+
+
+
+<style>
+.employees {
+  padding: 4rem 1rem 6rem;
+  background-color: #0c0c0c;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  text-align: center;
+}
+
+.employees h2 {
+  font-size: 2.8rem;
+  margin-bottom: 100px;
+  text-shadow: 0 0 12px rgba(255,255,255,0.25);
+    cursor: default;
+}
+
+.employees-container {
+  display: grid;
+  grid-template-columns: repeat(3, 260px); /* 3 kolumny po 260px */
+  justify-content: center;
+  gap: 2.5rem; /* odstęp poziomy i pionowy */
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.employee-card {
+  box-sizing: border-box;  /* padding i border wliczone w szerokość */
+  width: 260px;             /* zwiększona szerokość */
+  padding: 2.5rem 1.5rem 2rem;
+  background: linear-gradient(145deg, #3d3d3d, #242424, #1a1a1a);
+  border: 1px solid #ffffff4b;
+  border-radius: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.employee-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.employee-card:hover {
+  transition-delay: 0s !important; /* <<< brak laga */
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  z-index: 5;
+}
+
+/* === ICON + TOOLTIP === */
+.card-icon-red {
+  color: #ff7a81;
+}
+/* === ICON + TOOLTIP === */
+.card-icon-pink {
+  color: #ff7aff;
+}
+.card-icon-blue {
+  color: #7ab4ff;
+}
+.card-icon-green {
+  color: #7aff9b;
+}
+
+/* === ICON + TOOLTIP === */
+.card-icon {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.card-icon::after {
+  content: attr(data-role);
+  position: absolute;
+  bottom: 140%;              /* <<< nad ikoną */
+  right: 0;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px); /* <<< lekki ruch z dołu */
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.card-icon:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* === AVATAR === */
+.avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #ffffff94, #ffffff41);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #000;
+}
+
+.employee-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.role {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 1.6rem;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 0.55rem 1.4rem;
+  border-radius: 8px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  padding: 0.35rem 0.7rem;
+  background: rgba(0, 0, 0, 0.212);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #ddd;
+}
+
+.phone i {
+  font-size: 0.8rem;
+  color: #cfcfcf;
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll('.employee-card');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const index = Array.from(cards).indexOf(entry.target);
+        entry.target.style.transitionDelay = (index * 0.25) + "s";
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(card => observer.observe(card));
+});
+</script>
+
+
+
+
+
+<style>
+.latest-articles {
+  padding: 4rem 1rem;
+  background-image: url("assets/images/tlo-venture.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  text-align: center;
+}
+
+.latest-articles h2 {
+  max-width: 600px;
+  margin: 0 auto 100px auto;
+  padding: 0 1rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255,255,255,0.25);
+  text-align: center;
+    cursor: default;
+}
+
+.articles-container {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto 100px auto;
+    padding-top: 20px; /* lub więcej, zależnie od wysokości podniesienia */
+  flex-wrap: nowrap;       /* trzy artykuły w jednej linii */
+  overflow-x: auto;        /* poziomy scroll, jeśli brak miejsca */
+  overflow-y: visible;     /* pozwala efektowi hover się nie uciąć */
+  padding-bottom: 20px;    /* miejsce na cień podniesienia */
+}
+
+.article-card {
+  background: linear-gradient(145deg, #3d3d3d, #242424, #1a1a1a);
+  border: 1px solid #ffffff4b;
+  border-radius: 12px;
+  width: 345px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: relative;
+}
+.article-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+    transition-delay: 0s !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.301);
+  z-index: 10; /* <-- dodaj to */
+}
+
+.article-card .category {
+  background: linear-gradient(135deg, #000000c5, #161616cc);
+  padding: 0.4rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  position: absolute;
+  border: 1px solid #ffffff1a;
+  top: 1rem;
+  left: 1rem;
+  border-radius: 8px;
+  user-select: none;
+  pointer-events: none; /* żeby nie reagowało na hover */
+}
+
+.article-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+  display: block;
+}
+
+.article-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 1.2rem 1.2rem 0.7rem 1.2rem;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.article-card p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin: 0 1.2rem 1.5rem 1.2rem;
+  flex-grow: 1;
+  line-height: 1.4;
+}
+
+.read-more {
+  display: inline-block;
+  margin: 0 1.2rem 1.5rem 1.2rem;
+  padding: 0.5rem 1.1rem;
+  background: linear-gradient(135deg, #929292, #ffffff, #929292);
+  color: #1a1a1a;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.116);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.read-more:hover {
+  background: linear-gradient(135deg, #7e7e7e, #d4d4d4, #7e7e7e);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.301);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.2rem 1.2rem 1.2rem;
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
+}
+
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const articles = document.querySelectorAll('.article-card');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // dodajemy opóźnienie w zależności od indexu artykułu w kolekcji
+        const index = Array.from(articles).indexOf(entry.target);
+        entry.target.style.transitionDelay = (index * 0.3) + "s";
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  articles.forEach(article => {
+    observer.observe(article);
+  });
+});
+
+</script>
+
+
+<style>
+    .scroll-icon {
+  font-size: 50px;        /* rozmiar ikonki */
+  color: rgba(255, 255, 255, 0.788);          /* kolor */
+  margin-top: 5px;
+  display: inline-block;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+}
+
+</style>
+
+<script>
+  document.querySelector('.scroll-icon').addEventListener('click', () => {
+    window.scrollBy({
+      top: 120,
+      behavior: 'smooth'
+    });
+  });
+</script>
+
+
+
+<style>
+  /* Animacja pojawiania */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+</style>
+
+
+
+<style>
+.info-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  background: linear-gradient(
+    45deg,
+    #4a4a4a,
+    #a5a5a5,
+    #e0e0e0,
+    #a5a5a5,
+    #4a4a4a
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  text-align: center;
+}
+
+
+.what-do-we-do {
+  position: relative;
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 4rem 0 6rem;
+  text-align: center;
+  perspective: 1400px;
+}
+
+/* Overlay przyciemnienie */
+.what-do-we-do::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #0c0c0ca1,
+    #0c0c0ca1
+  );
+  z-index: 0;
+}
+
+/* Wszystko nad tłem */
+.what-do-we-do > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Wycentrowany nagłówek z ograniczoną szerokością */
+.what-do-we-do h2 {
+  max-width: 600px;
+  margin: 0 auto 100px auto;
+  padding: 0 1rem;
+  font-size: 2.8rem;
+    cursor: default;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255,255,255,0.25);
+  text-align: center;
+}
+
+/* Kontener kart - wyśrodkowany */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  align-items: center;
+}
+
+/* Karty - rozmiary dostosowane */
+.outer {
+  width: 580px;   
+  height: 380px;  
+  border-radius: 10px;
+  padding: 1px;
+  background: radial-gradient(circle 230px at 0% 0%, #ffffff, #0c0d0d);
+  position: relative;
+  user-select: none;
+  transition: box-shadow 0.4s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.514);
+  box-sizing: border-box;
+}
+
+.outer:hover {
+  transform: scale(1.03);
+}
+
+.dot {
+  width: 5px;
+  aspect-ratio: 1;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 0 10px #ffffff;
+  border-radius: 100px;
+  z-index: 2;
+  /* Zmienione pozycjonowanie, dopasowane do rozmiaru karty */
+  right: 12%;
+  top: 12%;
+  animation: moveDot 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes moveDot {
+  0%, 100% {
+    top: 12%;
+    right: 12%;
+  }
+  25% {
+    top: 12%;
+    right: calc(100% - 65px);
+  }
+  50% {
+    top: calc(100% - 50px);
+    right: calc(100% - 65px);
+  }
+  75% {
+    top: calc(100% - 50px);
+    right: 12%;
+  }
+}
+
+.card {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+  border: solid 1px #202222;
+  background-size: 20px 20px;
+  background: radial-gradient(circle 480px at 0% 0%, #444444, #0c0d0d);
+  display: flex;
+  align-items: center;       /* poziome wyśrodkowanie */
+  justify-content: center;   /* pionowe wyśrodkowanie */
+    text-align: center;
+  gap: 0.2rem; /* odstęp między liniami tekstu */
+  position: relative;
+  flex-direction: column;
+  color: #fff;
+  padding: 2rem 3rem;   /* lekko zwiększone paddingi dla lepszego marginesu */
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+.ray {
+  width: 320px;
+  height: 45px;
+  border-radius: 100px;
+  position: absolute;
+  background-color: #c7c7c7;
+  opacity: 0.2;
+  box-shadow: 0 0 50px #fff;
+  filter: blur(30px);
+  transform-origin: 10%;
+  top: 0%;
+  left: 0;
+  transform: rotate(40deg);
+}
+
+.card .text {
+  font-weight: bolder;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #818181ab 4%, #fff, #6d6d6dab);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.line {
+  width: 100%;
+  height: 2px;  /* grubsza linia */
+  position: absolute;
+  background-color: #2c2c2c;
+}
+
+/* Linie poziome */
+.topl,
+.bottoml {
+  left: 0;
+  width: 100%;
+}
+
+.topl {
+  top: 12%;
+  background: linear-gradient(90deg, #888888 30%, #1d1f1f 70%);
+}
+
+.bottoml {
+  bottom: 12%;
+}
+
+.leftl {
+  left: 10.5%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, #747474 30%, #222424 70%);
+}
+
+.rightl {
+  right: 12%;
+  width: 1px;
+  height: 100%;
+}
+.subtitle {
+  font-size: 16px;        /* mniejszy rozmiar niż główny */
+  font-weight: 500;         /* lżejsza czcionka niż nagłówek */
+  max-width: 400px;
+  color: #a3a3a3;              /* delikatniejszy kolor */
+  text-align: center;       /* wyśrodkowanie tekstu */
+  letter-spacing: 0.05em;   /* lekki odstęp między literami */
+  transition: color 0.3s ease, text-shadow 0.3s ease;  /* przejście też w normalnym stanie */
+}
+.subtitle:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.212);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+
+}
+
+@keyframes fadeInBlurUp {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.card-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(8px);
+  /* bez transition bo animujemy przez keyframes */
+}
+
+.card-wrapper.visible {
+  animation: fadeInBlurUp 0.8s ease-out forwards;
+}
+
+
+</style>
+
+
+<script>
+const outers = document.querySelectorAll('.outer');
+
+outers.forEach(outer => {
+  const card = outer.querySelector('.card');
+
+  outer.addEventListener('mousemove', e => {
+    const rect = outer.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const maxRotate = 8;  // delikatny obrót
+    const maxScale = 1.03; // subtelne powiększenie
+
+    const deltaX = (x - centerX) / centerX;
+    const deltaY = (y - centerY) / centerY;
+
+    const rotateX = -deltaY * maxRotate;
+    const rotateY = deltaX * maxRotate;
+
+    outer.style.transform = `
+      perspective(600px)
+      scale(${maxScale})
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+    `;
+
+    const posXPercent = (x / rect.width) * 100;
+    const posYPercent = (y / rect.height) * 100;
+    card.style.setProperty('--light-x', `${posXPercent}%`);
+    card.style.setProperty('--light-y', `${posYPercent}%`);
+  });
+
+  outer.addEventListener('mouseleave', () => {
+    outer.style.transform = 'perspective(600px) scale(1) rotateX(0deg) rotateY(0deg)';
+  });
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const wrappers = document.querySelectorAll('.card-wrapper');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wrapper = entry.target;
+        const index = Array.from(wrappers).indexOf(wrapper);
+
+        setTimeout(() => {
+          wrapper.classList.add('visible');
+        }, index * 150);  // bardzo delikatne opóźnienie (150ms)
+
+        observer.unobserve(wrapper);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  wrappers.forEach(wrapper => observer.observe(wrapper));
+});
+
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faders = document.querySelectorAll('.fade-in');
+
+    const options = {
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    faders.forEach(fader => {
+      observer.observe(fader);
+    });
+  });
+</script>
+
+
+
+<style>
+    /* KOLOR ZAZNACZENIA */
+    ::selection {
+    background: #ffffffd2;
+    color: #111111f5;
+}
+::-moz-selection {
+    background: #ffffffd2;
+    color: #111111f5;
+}
+
+    /* PASEK SCROLLOWANIA */
+
+
+/* Stylowanie suwaka */
+::-webkit-scrollbar {
+  width: 15px;  /* szerokość suwaka */
+  height: 8px; /* wysokość suwaka dla poziomego */
+  background: #1d1d1d; /* ciemne tło dla całego suwaka */
+}
+
+/* Tło toru suwaka */
+::-webkit-scrollbar-track {
+  background: #1d1d1d; /* ciemne tło */
+  border-radius: 10px; /* zaokrąglone rogi */
+  margin: 0; /* usuwa marginesy */
+}
+
+/* Uchwyt suwaka */
+::-webkit-scrollbar-thumb {
+  background: #e2e2e2; /* ciemny uchwyt */
+  border-radius: 10px; /* zaokrąglone rogi uchwytu */
+  border: 3px solid #333; /* cienka ramka wokół uchwytu */
+}
+
+/* Stan suwaka po najechaniu */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(168, 168, 168); /* jaśniejszy uchwyt po najechaniu */
+}
+
+</style>
+
+<style>
+/* NAWIGACJA */
+
+/* ===== ANIMACJA WEJŚCIA NAVBARU ===== */
+@keyframes fadeInNavbar {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* ===== NAVBAR ===== */
+.top-nav {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, #181818c9, #0c0c0cc9);
+    border: 1px solid #ffffff71;
+    padding: 4px 18px;
+    border-radius: 15px;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.212);
+
+    /* FADE IN */
+    opacity: 0;
+    animation: fadeInNavbar 1s ease-out forwards;
+    animation-delay: 0.6s;
+}
+
+/* ===== LISTA ===== */
+.top-nav ul {
+    color: #dbdbdb;
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    margin-left: 2px;
+    padding: 0;
+    list-style: none;
+}
+
+/* ===== ELEMENT ===== */
+.top-nav li {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+
+    /* PŁYNNIEJ + WOLNIEJ */
+    transition: all 0.5s ease;
+}
+
+/* ===== IKONA ===== */
+.icon {
+    color: #ffffff;
+    font-size: 18px;
+    min-width: 22px;
+
+    transition: transform 0.45s ease;
+}
+
+/* ===== LABEL ===== */
+.label {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    white-space: nowrap;
+
+    transition:
+        max-width 0.45s ease,
+        opacity 0.45s ease,
+        margin-left 0.45s ease;
+}
+
+/* ===== HOVER – BEZ ZMIAN W WYGLĄDZIE ===== */
+.top-nav li:hover .icon {
+    transform: scale(1.1);
+}
+
+.top-nav li:hover .label {
+    max-width: 140px;
+    opacity: 1;
+    margin-left: 12px;
+}
+.nav-button {
+    all: unset; /* usuwa domyślny styl buttona */
+    display: flex;
+    align-items: center;
+    width: 100%; /* wypełnia całe li */
+    cursor: pointer;
+}
+
+</style>
+
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  height: 100%;
+  width: 100%;
+  background-color: #0c0c0c; /* czarne tło */
+  overflow-x: hidden;
+}
+
+/* Hero section */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh;
+  color: #fff;
+  background-color: #0c0c0c;
+  padding: 2rem;
+  overflow: hidden; /* ważne, żeby video się nie wychodziło */
+  z-index: 0; /* dodane, żeby mieć bazowy kontekst */
+}
+
+.hero-logo {
+  width: 600px;        /* dostosuj */
+  height: auto;
+  margin-bottom: 10px;
+  position: relative;    /* dodaj */
+  top: -120px;            /* przesunięcie w górę */
+  animation: fadeBlurZoom 1.4s ease-out forwards;
+}
+
+.hero h1 {
+  position: relative;
+  top: -120px;            /* przesunięcie w górę */
+  font-size: 26px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  opacity: 0;
+  animation: slideUpFade 1s ease-out forwards;
+  animation-delay: 0.6s;
+}
+
+.hero p {
+  color: #d3d3d3;
+  position: relative;
+  top: -140px;
+  font-size: 1.25rem;
+  max-width: 900px;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  cursor: default;
+  transition: text-shadow 0.6s ease;
+  opacity: 0;
+  animation: slideUpFade 1s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+.hero p:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.56);
+}
+
+/* PRZYCISK - HEADER */ 
+.btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  width: 140px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right,#6e6e6e,#ffffff,#6e6e6e,#6e6e6e,#ffffff,#6e6e6e);
+  background-size: 250%;
+  background-position: left;
+  color: #ffffff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 1s;
+  overflow: hidden;
+  top: -130px;            /* przesunięcie w górę */
+}
+
+.btn::before {
+  position: absolute;
+  content: "CONTACT US";
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 97%;
+  height: 90%;
+  border-radius: 8px;
+  transition-duration: 1s;
+  background-color: rgba(0, 0, 0, 0.842);
+  background-size: 200%;
+}
+
+.btn:hover {
+  background-position: right;
+  transition-duration: 1s;
+}
+
+.btn:hover::before {
+  background-position: right;
+  transition-duration: 1s;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* Nowe style dla video i gradientu */
+
+.hero-video {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2; /* video pod całą zawartością */
+}
+
+.hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    #0c0c0c 0%,
+    #0c0c0cbb 60%,
+    #0c0c0c88 80%,
+    #0c0c0ca2 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+.hero-overlay {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0e0e0ed3; /* reguluj krycie przyciemnienia */
+  z-index: -1; /* nad video, pod gradientem */
+  pointer-events: none;
+  backdrop-filter: blur(3px); /* rozmycie tła pod nakładką */
+}
+
+.hero-light {
+  pointer-events: none;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 400px;
+  z-index: 2;
+
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 80%
+  );
+
+  filter: blur(70px);
+  mix-blend-mode: screen;
+}
+/* ===== ANIMACJE OGÓLNE ===== */
+@keyframes fadeBlurZoom {
+  0% {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+  </style>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      threshold: 0.1  // Gdy 10% elementu jest widoczne
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Odobserwuj po pojawieniu się
+        }
+      });
+    }, observerOptions);
+
+    // Wybierz wszystkie elementy z klasą fade-in-up
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
+
+
+
+
+</body>
+</html>

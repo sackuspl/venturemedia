@@ -15,9 +15,6 @@ const firebaseConfig = {
   apiKey: "AIzaSyC0ALO1e0MQ2YZG5yJ43kXlQvLF9M1i-EE",
   authDomain: "venture-panel.firebaseapp.com",
   projectId: "venture-panel",
-  storageBucket: "venturemedia.firebaseapp.com",
-  messagingSenderId: "986564015404",
-  appId: "1:986564015404:web:b3d9e7b32c4fdfd82ca889"
 };
 
 // 🔹 Inicjalizacja
@@ -26,7 +23,7 @@ const db = getFirestore(app);
 
 // 🔹 Funkcja śledząca wejścia
 async function trackVisit() {
-  // Generujemy unikalny visitor ID na przeglądarkę
+  // Unikalny ID użytkownika dla przeglądarki
   let visitorId = localStorage.getItem("visitor_id");
   if (!visitorId) {
     visitorId = crypto.randomUUID();
@@ -36,7 +33,7 @@ async function trackVisit() {
   // Dzisiejsza data YYYY-MM-DD
   const today = new Date().toISOString().split("T")[0];
 
-  // 🔹 Zapisujemy wejście – bez odczytu, od razu tworzymy dokument
+  // 🔹 Zapis wejścia do kolekcji visits
   const visitRef = doc(db, "visits", today, "users", visitorId);
   try {
     await setDoc(visitRef, {
@@ -47,15 +44,19 @@ async function trackVisit() {
     console.error("Nie udało się zapisać wejścia:", err);
   }
 
-  // 🔹 Inkrement dziennego licznika w stats
+  // 🔹 Zwiększenie dziennego licznika w stats
   const statRef = doc(db, "stats", today);
   try {
     await updateDoc(statRef, { count: increment(1) });
   } catch {
-    // jeśli dokument nie istnieje, tworzymy go
-    await setDoc(statRef, { count: 1 });
+    // jeśli dokument nie istnieje, tworzymy go z count = 1
+    try {
+      await setDoc(statRef, { count: 1 });
+    } catch(err) {
+      console.error("Nie udało się utworzyć dokumentu statystyki:", err);
+    }
   }
 }
 
-// 🔹 Uruchamiamy funkcję
+// 🔹 Uruchomienie śledzenia
 trackVisit().catch(console.error);

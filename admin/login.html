@@ -7,7 +7,8 @@
 <body>
   <h2>Panel Zarządu – Logowanie</h2>
   <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Hasło" type="password">
+<input id="password" type="password" placeholder="Hasło">
+
   <button onclick="login()">Zaloguj</button>
 
   <script type="module">
@@ -31,6 +32,16 @@
     onAuthStateChanged(auth, user => {
       if (user) location.href = "panel.html"; // jeśli już zalogowany, od razu przekieruj
     });
+
+    window.login = async () => {
+  try {
+    await signInWithEmailAndPassword(auth, email.value, password.value);
+    location.href = "panel.html"; // po zalogowaniu
+  } catch(e) {
+    alert("Błąd logowania: " + e.message);
+  }
+}
+
   </script>
 </body>
 </html>

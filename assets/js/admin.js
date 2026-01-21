@@ -24,52 +24,57 @@ onAuthStateChanged(auth, user => {
 // 🔹 Wylogowanie
 window.logout = () => signOut(auth).then(() => location.href="login.html");
 
-// 🔹 Funkcja pobierająca dane i wyświetlająca liczby
+// 🔹 Pobranie danych i wstawienie w panel
 async function loadStats() {
-  // Pobranie danych
   const statsSnap = await getDocs(collection(db, "stats"));
   const visitsSnap = await getDocs(collection(db, "visits"));
 
-  // Sumy dzienne, tygodniowe i miesięczne
+  // Sumy dzienne/tygodniowe/miesięczne
   let dailyTotal = 0;
-  let weeklyMap = {};
-  let monthlyMap = {};
-  let pageCounts = {};
+  let weeklyTotal = 0;
+  let monthlyTotal = 0;
+
+  const weeklyMap = {};
+  const monthlyMap = {};
 
   statsSnap.forEach(docSnap => {
-    const date = docSnap.id; // YYYY-MM-DD
+    const date = docSnap.id;
     const count = docSnap.data().count;
     dailyTotal += count;
 
-    // Tygodnie
-    const weekNum = Math.ceil(new Date(date).getDate() / 7);
-    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`] || 0) + count;
+    // tydzień
+    const weekNum = Math.ceil(new Date(date).getDate()/7);
+    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`]||0)+count;
 
-    // Miesiące
-    const monthKey = date.slice(0, 7); // YYYY-MM
-    monthlyMap[monthKey] = (monthlyMap[monthKey] || 0) + count;
+    // miesiąc
+    const monthKey = date.slice(0,7);
+    monthlyMap[monthKey] = (monthlyMap[monthKey]||0)+count;
   });
 
+  weeklyTotal = Object.values(weeklyMap).reduce((a,b)=>a+b,0);
+  monthlyTotal = Object.values(monthlyMap).reduce((a,b)=>a+b,0);
+
   // TOP podstrony
+  const pageCounts = {};
   for (let dayDoc of visitsSnap.docs) {
     const usersCol = collection(db, "visits", dayDoc.id, "users");
     const usersSnap = await getDocs(usersCol);
     usersSnap.forEach(userDoc => {
       const page = userDoc.data().page;
-      pageCounts[page] = (pageCounts[page] || 0) + 1;
+      pageCounts[page] = (pageCounts[page]||0)+1;
     });
   }
 
-  // 🔹 Wstawianie danych do panelu
+  // Wstawienie danych do panelu
   document.getElementById("dailyCount").textContent = dailyTotal;
-  document.getElementById("weeklyCount").textContent = Object.values(weeklyMap).reduce((a,b) => a+b, 0);
-  document.getElementById("monthlyCount").textContent = Object.values(monthlyMap).reduce((a,b) => a+b, 0);
+  document.getElementById("weeklyCount").textContent = weeklyTotal;
+  document.getElementById("monthlyCount").textContent = monthlyTotal;
 
   const tbody = document.querySelector("#topPages tbody");
   tbody.innerHTML = "";
   Object.entries(pageCounts)
-    .sort((a,b) => b[1]-a[1])
-    .forEach(([page,count]) => {
+    .sort((a,b)=>b[1]-a[1])
+    .forEach(([page,count])=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `<td>${page}</td><td>${count}</td>`;
       tbody.appendChild(tr);

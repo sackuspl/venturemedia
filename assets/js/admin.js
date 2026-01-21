@@ -1,9 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-import { Chart, registerables } from "https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.esm.min.js";
-
-Chart.register(...registerables);
 
 // 🔹 Firebase config
 const firebaseConfig = {
@@ -16,21 +13,24 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// 🔹 Logowanie i wylogowanie
+// logowanie
 onAuthStateChanged(auth, user => {
   if (!user) location.href = "login.html";
   else loadStats();
 });
 
+// wylogowanie
 window.logout = () => signOut(auth).then(() => location.href="login.html");
 
-// 🔹 Pobieranie danych i generowanie wykresów
+// funkcja pobierająca dane i rysująca wykresy
 async function loadStats() {
   const statsSnap = await getDocs(collection(db, "stats"));
+  const visitsSnap = await getDocs(collection(db, "visits"));
+
   const dailyLabels = [];
   const dailyData = [];
-  const weeklyDataMap = {};
-  const monthlyDataMap = {};
+  const weeklyMap = {};
+  const monthlyMap = {};
 
   statsSnap.forEach(docSnap => {
     const date = docSnap.id;
@@ -39,39 +39,44 @@ async function loadStats() {
     dailyLabels.push(date);
     dailyData.push(count);
 
-    const weekNum = Math.ceil(new Date(date).getDate() / 7);
-    weeklyDataMap[`Tydzień ${weekNum}`] = (weeklyDataMap[`Tydzień ${weekNum}`] || 0) + count;
+    // Tygodnie
+    const weekNum = Math.ceil(new Date(date).getDate()/7);
+    weeklyMap[`Tydzień ${weekNum}`] = (weeklyMap[`Tydzień ${weekNum}`]||0)+count;
 
+    // Miesiące
     const monthKey = date.slice(0,7);
-    monthlyDataMap[monthKey] = (monthlyDataMap[monthKey] || 0) + count;
+    monthlyMap[monthKey] = (monthlyMap[monthKey]||0)+count;
   });
 
+  // Wykres dzienny
   new Chart(document.getElementById('dailyChart'), {
     type: 'bar',
-    data: { labels: dailyLabels, datasets: [{ label:'Wejścia dzienne', data: dailyData, backgroundColor:'#4f46e5' }] },
-    options: { responsive:true }
+    data: { labels: dailyLabels, datasets:[{label:'Wejścia dzienne', data:dailyData, backgroundColor:'#4f46e5'}] },
+    options:{responsive:true}
   });
 
+  // Wykres tygodniowy
   new Chart(document.getElementById('weeklyChart'), {
     type: 'bar',
-    data: { labels:Object.keys(weeklyDataMap), datasets:[{label:'Wejścia tygodniowe', data:Object.values(weeklyDataMap), backgroundColor:'#4f46e5'}] },
+    data:{ labels:Object.keys(weeklyMap), datasets:[{label:'Wejścia tygodniowe', data:Object.values(weeklyMap), backgroundColor:'#4f46e5'}]},
     options:{responsive:true}
   });
 
+  // Wykres miesięczny
   new Chart(document.getElementById('monthlyChart'), {
     type:'bar',
-    data:{ labels:Object.keys(monthlyDataMap), datasets:[{label:'Wejścia miesięczne', data:Object.values(monthlyDataMap), backgroundColor:'#4f46e5'}] },
+    data:{ labels:Object.keys(monthlyMap), datasets:[{label:'Wejścia miesięczne', data:Object.values(monthlyMap), backgroundColor:'#4f46e5'}]},
     options:{responsive:true}
   });
 
+  // TOP podstrony
   const pageCounts = {};
-  const visitsSnap = await getDocs(collection(db, "visits"));
   for (let dayDoc of visitsSnap.docs) {
     const usersCol = collection(db, "visits", dayDoc.id, "users");
     const usersSnap = await getDocs(usersCol);
     usersSnap.forEach(userDoc => {
       const page = userDoc.data().page;
-      pageCounts[page] = (pageCounts[page] || 0) + 1;
+      pageCounts[page] = (pageCounts[page]||0)+1;
     });
   }
 

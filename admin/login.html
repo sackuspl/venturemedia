@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Logowanie – Panel</title>
+</head>
+<body>
+  <h2>Panel Zarządu – Logowanie</h2>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Hasło" type="password">
+  <button onclick="login()">Zaloguj</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0ALO1e0MQ2YZG5yJ43kXlQvLF9M1i-EE",
+      authDomain: "venture-panel.firebaseapp.com",
+      projectId: "venture-panel",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.login = async () => {
+      await signInWithEmailAndPassword(auth, email.value, password.value);
+      location.href = "panel.html"; // po zalogowaniu wchodzisz do panelu
+    }
+
+    onAuthStateChanged(auth, user => {
+      if (user) location.href = "panel.html"; // jeśli już zalogowany, od razu przekieruj
+    });
+  </script>
+</body>
+</html>

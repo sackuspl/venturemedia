@@ -136,279 +136,364 @@ window.addEventListener('load', () => {
 
 </script>
 
-<section class="gazety" id="gazety">
-
-  <h2>Nasze Wydania</h2>
-  <div class="description-box">
-    Po kliknięciu na wybrany numer zostaniesz przekierowany do menu podglądu naszego wydania.
-  </div>
 
 
+  <header>
+    <h1>Panel Statystyk – Venture Media</h1>
+    <button onclick="logout()">Wyloguj</button>
+  </header>
 
-  <div class="gallery">
+  <main>
+    <section class="stats-section">
+      <h2>Wejścia dzienne</h2>
+      <canvas id="dailyChart"></canvas>
+    </section>
 
+    <section class="stats-section">
+      <h2>Wejścia tygodniowe</h2>
+      <canvas id="weeklyChart"></canvas>
+    </section>
 
+    <section class="stats-section">
+      <h2>Wejścia miesięczne</h2>
+      <canvas id="monthlyChart"></canvas>
+    </section>
 
-
-    <div class="paper" data-link="https://heyzine.com/flip-book/c9187f0b30.html">
-      <img src="assets/images/okladki/gazeta1.png" alt="Gazeta 1">
-    <!--   <div class="tag bestseller">BESTSELLER!</div>  -->
-      <div class="tag new">NEW</div>
-    </div>
-
-
-  
-    <!--
-
-    <div class="paper" data-link="https://heyzine.com/flip-book/909161484f2.html">
-      <img src="assets/images/okladki/gazeta2.png" alt="Gazeta 2">
-    </div>
-
-    -->
-
-  </div>
-
-
-  
-  <div class="reader" id="reader">
-    <button class="close">✕</button>
-    <div id="flipbook-container"></div>
-  </div>
+    <section class="stats-section">
+      <h2>TOP podstrony</h2>
+      <table id="topPages">
+        <thead>
+          <tr>
+            <th>Podstrona</th>
+            <th>Wejścia</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
 
 
 
-  
-</section>
+  <style>
+    header {
+  background: #4f46e5;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+header button {
+  background: #fff;
+  color: #4f46e5;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+main {
+  padding: 2rem;
+}
+
+.stats-section {
+  background: #fff;
+  padding: 1rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.stats-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+  </style>
+  <script type="module" src="assets/js/admin.js"></script>
+
 
 <style>
-/* ===== SEKCJA ===== */
-.gazety {
-  background: #0c0c0c;
+/* ===== SEKACJA JOIN US ===== */
+.join-us-section.join-us-dark {
+  background-color: #0c0c0c;
+  padding: 40px 20px;
+  text-align: center;
+  color: #ffffff;
+  max-width: 1200px;
+  margin: 0 auto 100px auto;
 }
 
-/* ===== GALERIA PC ===== */
-.gazety .gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 200px);
-  justify-content: center;
-  column-gap: 50px;
-  row-gap: 60px;
-  padding: 40px 0;
-  margin-bottom: 100px;
+.join-us-heading {
+  max-width: 600px;
+  margin: 0 auto 100px auto;
+  padding: 0 1rem;
+  font-size: 2.8rem;
+  cursor: default;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255,255,255,0.25);
+  text-align: center;
 }
 
-.gazety .paper {
-  cursor: pointer;
+.join-us-title {
+  letter-spacing: 5px;
+  color: #FFFFFF;
+  font-size: 25px !important;
+  margin-bottom: 65px !important;
+  margin-top: 5px !important;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  position: relative;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
-.gazety .paper.visible {
+.join-us-title.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.gazety .paper img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  box-shadow: -5px 10px 15px rgba(0,0,0,0.4);
-  border-radius: 3px;
+.join-us-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.join-us-section img.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.gazety .paper:hover {
-  transform: translateY(-8px) scale(1.03);
-}
-
-/* ===== TAGI "BESTSELLER" i "NEW" ===== */
-.gazety .paper .tag {
-  position: absolute;
-  top: 0;
-  padding: 3px 8px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: white;
-  border-radius: 4px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-  z-index: 2;
-}
-
-.gazety .paper .bestseller {
-  left: 0;
-  border-radius: 0 0 6px 0;
-  background: linear-gradient(135deg,#a3622570 0%,#ee90397a 100%);
-}
-
-.gazety .paper .new {
-  right: 0;
-  border-radius: 0 0 0 6px;
-  background: linear-gradient(135deg,#25a32570 0%,#39ee397a 100%);
-}
-
-/* ===== OPIS ===== */
-.gazety .description-box {
-  background-color: #2222227c;
-  color: #afafaf;
-  padding: 1rem 0.1rem;
-  border: 1px solid #5555558e;
-  border-radius: 5px;
-  font-size: 1rem;
-  max-width: 800px;
-  margin: 1rem auto 3rem auto;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.158);
-}
-
-/* ===== CZYTNIK ===== */
-.gazety .reader {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(6px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  padding: 10px;
-}
-
-.gazety .reader.active {
-  display: flex;
-}
-
-#flipbook-container {
-  width: 95%;
-  max-width: none;
-  height: 80vh;
-}
-
-.gazety .close {
-  position: absolute;
-  top: 25px;
-  right: 35px;
-  font-size: 3rem;
-  color: white;
-  background: none;
-  border: none;
+button.click2 {
+  opacity: 0;
+  animation: fadeInOnly 0.8s ease-out forwards;
+  animation-delay: 0.8s;
+  display: block;
+  width: 10rem;
+  height: 2.6em;
+  line-height: 2.5em;
+  margin: 0px auto 120px auto;
+  position: relative;
   cursor: pointer;
-  z-index: 10;
+  overflow: hidden;
+  background: #1a1a1a;
+  color: #73ffb2;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 6px;
+  z-index: 15;
+  transition: color 0.5s;
+  border: 1px solid transparent;
+  background-image: 
+    linear-gradient(#1a1a1a, #1a1a1a), 
+    linear-gradient(135deg, #73ffb2, #73ffb233);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
-.gazety h2 {
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  text-shadow: 0 0 12px rgba(255,255,255,0.25);
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
+button.click2:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: radial-gradient(circle, #73ffb2, #73ffb233);
+  width: 280px;
+  height: 150px;
+  border-radius: 50%;
+  top: 100%;
+  left: 100%;
+  transition: all 0.7s;
 }
 
-/* ===== GALERIA MOBILNA ===== */
-@media (max-width: 768px) {
-  .gazety .gallery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    padding: 20px 0;
-  }
+button.click2:hover {
+  color: #131313;
+}
 
-  .gazety .paper {
-    width: 80%;
-    max-width: 300px;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+button.click2:hover:before {
+  top: -30px;
+  left: -30px;
+}
 
-  .gazety .paper img {
-    width: 100%;
-    height: auto;
-  }
+button.click2:active::before {
+  background: radial-gradient(circle, #8affbe, #73ffb250);
+}
 
-  /* Przycisk ✕ na górze ekranu w mobilnym widoku */
-  .gazety .reader .close {
-    top: 10px;
-    right: 15px;
-    font-size: 2.5rem;
-  }
+/* ===== KOLUMNY ===== */
+.join-columns-modern {
+  display: flex;
+  justify-content: center;
+  gap: 6%;
+  margin: 0 auto;
+  color: #ffffff;
+  flex-wrap: nowrap;
+}
+
+.join-modern-column {
+  background: linear-gradient(to bottom right, #181818, #1f1f1f);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.151);
+  color: #ffffff;
+  width: 48%;
+  text-align: left;
+  overflow: hidden;
+  margin-bottom: 0;
+  position: relative;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.join-modern-column.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.join-modern-column::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: 400px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.171) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  filter: blur(70px);
+}
+
+.join-modern-column:hover::before {
+  opacity: 1;
+}
+
+.join-modern-column h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px #ffffff3b;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  color: inherit; /* kolor nagłówka */
+}
+
+.offer h3 i { color: #6dffc2; }
+.require h3 i { color: #7cd6ff; }
+
+.join-modern-column h3 span { transform: translateY(-2px); color: inherit; }
+
+/* ===== LINIEK GRADIENT HOVER ===== */
+.offer .modern-item {
+  background: linear-gradient(
+      to right,
+      rgba(83, 255, 183, 0.5) 0%,
+      rgba(83, 255, 183, 0.25) 40%,
+      rgba(83, 255, 183, 0.1) 60%,
+      rgba(83, 255, 183, 0) 80%
+    ) 0 0 / 0% 100% no-repeat,
+      linear-gradient(to bottom right, #333333, #222222);
+  transition: background-size 0.6s ease;
+  color: #ffffff;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.offer .modern-item:hover {
+  background-size: 60% 100%, auto;
+}
+
+.require .modern-item {
+  background: linear-gradient(
+      to right,
+      rgba(83, 200, 255, 0.5) 0%,
+      rgba(83, 200, 255, 0.25) 40%,
+      rgba(83, 200, 255, 0.1) 60%,
+      rgba(83, 200, 255, 0) 80%
+    ) 0 0 / 0% 100% no-repeat,
+      linear-gradient(to bottom right, #333333, #222222);
+  transition: background-size 0.6s ease;
+  color: #ffffff;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.require .modern-item:hover {
+  background-size: 60% 100%, auto;
+}
+
+/* Ikony w linijkach */
+.icon-check { color: #8affbe; }
+.icon-important { color: #7cd6ff; }
+.modern-item:hover i { color: #313131e5; text-shadow: none; }
+
+/* ===== ANIMACJE ===== */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInOnly {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 </style>
 
 <script>
-// ===== ELEMENTY =====
-const reader = document.getElementById('reader');
-const flipbookContainer = document.getElementById('flipbook-container');
-const papers = document.querySelectorAll('.gazety .paper');
+// Scalony Intersection Observer dla zdjęcia i kolumn
+const joinItems = document.querySelectorAll('.join-us-section img, .join-modern-column');
 
-// ===== FUNKCJE DO NAVBARU =====
-function hideNav() {
-  const nav = document.querySelector('.navigation-section'); // poprawiony selektor
-  if(nav && window.innerWidth <= 768) nav.style.display = 'none';
-}
-
-function showNav() {
-  const nav = document.querySelector('.navigation-section'); // poprawiony selektor
-  if(nav && window.innerWidth <= 768) nav.style.display = '';
-}
-
-// ===== OTWIERANIE CZYTNIKA =====
-function openHeyzine(link) {
-  reader.classList.add('active');
-  flipbookContainer.innerHTML = `
-    <iframe 
-      allowfullscreen 
-      allow="clipboard-write" 
-      scrolling="no" 
-      class="fp-iframe" 
-      style="border:0;width:100%;height:80vh;"
-      src="${link}">
-    </iframe>
-  `;
-  hideNav(); // ukryj navbar na telefonie
-  history.replaceState(null, '', '?gazeta=' + encodeURIComponent(link));
-}
-
-// ===== ZAMYKANIE CZYTNIKA =====
-document.querySelector('.close').onclick = () => {
-  reader.classList.remove('active');
-  flipbookContainer.innerHTML = '';
-  showNav(); // pokaż navbar z powrotem
-  history.replaceState(null, '', window.location.pathname);
-};
-
-// ===== KLIKNIĘCIE W GAZETĘ =====
-papers.forEach(paper => {
-  paper.addEventListener('click', () => openHeyzine(paper.dataset.link));
-});
-
-// ===== OTWARCIE PODGLĄDU Z LINKU URL =====
-window.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const gazetaLink = urlParams.get('gazeta');
-  if(gazetaLink) openHeyzine(decodeURIComponent(gazetaLink));
-});
-
-// ===== ANIMACJA POJAWIANIA SIĘ GAZET =====
-const observer = new IntersectionObserver((entries, obs) => {
+const observerJoin = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
-    if(entry.isIntersecting){
+    if (entry.isIntersecting) {
+      // Dodajemy widoczność
       entry.target.classList.add('visible');
-      obs.unobserve(entry.target);
+
+      // Opcjonalnie opóźnienia dla kolumn
+      if(entry.target.classList.contains('offer')) {
+        entry.target.style.transitionDelay = '0.2s';
+      } else if(entry.target.classList.contains('require')) {
+        entry.target.style.transitionDelay = '0.4s';
+      }
+
+      observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.2 });
-papers.forEach(paper => observer.observe(paper));
+}, { threshold: 0.3 });
+
+// Obserwujemy wszystkie elementy
+joinItems.forEach(item => observerJoin.observe(item));
 </script>
-
-
-
-
-
-
-
-
 
 
 

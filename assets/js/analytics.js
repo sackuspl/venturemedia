@@ -25,18 +25,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// 🔹 Funkcja śledząca wejścia
 async function trackVisit() {
-  // 🔹 Unikalny użytkownik (1 na przeglądarkę)
+  // Unikalny użytkownik na przeglądarkę
   let visitorId = localStorage.getItem("visitor_id");
   if (!visitorId) {
     visitorId = crypto.randomUUID();
     localStorage.setItem("visitor_id", visitorId);
   }
 
-  // 🔹 Dzisiejsza data (YYYY-MM-DD)
+  // Dzisiejsza data YYYY-MM-DD
   const today = new Date().toISOString().split("T")[0];
 
-  // 🔹 Sprawdzenie czy już liczone
+  // 🔹 Sprawdzenie, czy już zapisano wejście
   const visitRef = doc(db, "visits", today, "users", visitorId);
   const visitSnap = await getDoc(visitRef);
 
@@ -51,7 +52,8 @@ async function trackVisit() {
     const statRef = doc(db, "stats", today);
     try {
       await updateDoc(statRef, { count: increment(1) });
-    } catch {
+    } catch (err) {
+      // jeśli dokument nie istnieje, tworzymy go
       await setDoc(statRef, { count: 1 });
     }
   }

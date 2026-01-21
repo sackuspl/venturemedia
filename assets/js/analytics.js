@@ -1,7 +1,7 @@
 // Firebase core
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 
-// Firestore (baza danych)
+// Firestore
 import {
   getFirestore,
   doc,
@@ -11,7 +11,7 @@ import {
   increment
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-// 🔹 Konfiguracja Firebase (TA, KTÓRĄ SKOPIOWAŁEŚ)
+// 🔹 Konfiguracja Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyC0ALO1e0MQ2YZG5yJ43kXlQvLF9M1i-EE",
   authDomain: "venture-panel.firebaseapp.com",
@@ -25,32 +25,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 🔹 Unikalny użytkownik (1 na przeglądarkę)
-let visitorId = localStorage.getItem("visitor_id");
-if (!visitorId) {
-  visitorId = crypto.randomUUID();
-  localStorage.setItem("visitor_id", visitorId);
-}
+async function trackVisit() {
+  // 🔹 Unikalny użytkownik (1 na przeglądarkę)
+  let visitorId = localStorage.getItem("visitor_id");
+  if (!visitorId) {
+    visitorId = crypto.randomUUID();
+    localStorage.setItem("visitor_id", visitorId);
+  }
 
-// 🔹 Dzisiejsza data (YYYY-MM-DD)
-const today = new Date().toISOString().split("T")[0];
+  // 🔹 Dzisiejsza data (YYYY-MM-DD)
+  const today = new Date().toISOString().split("T")[0];
 
-// 🔹 Sprawdzenie czy już liczone
-const visitRef = doc(db, "visits", today, "users", visitorId);
-const visitSnap = await getDoc(visitRef);
+  // 🔹 Sprawdzenie czy już liczone
+  const visitRef = doc(db, "visits", today, "users", visitorId);
+  const visitSnap = await getDoc(visitRef);
 
-if (!visitSnap.exists()) {
-  // zapis wejścia
-  await setDoc(visitRef, {
-    page: location.pathname,
-    time: Date.now()
-  });
+  if (!visitSnap.exists()) {
+    // zapis wejścia
+    await setDoc(visitRef, {
+      page: location.pathname,
+      time: Date.now()
+    });
 
-  // inkrement dziennego licznika
-  const statRef = doc(db, "stats", today);
-  try {
-    await updateDoc(statRef, { count: increment(1) });
-  } catch {
-    await setDoc(statRef, { count: 1 });
+    // inkrement dziennego licznika
+    const statRef = doc(db, "stats", today);
+    try {
+      await updateDoc(statRef, { count: increment(1) });
+    } catch {
+      await setDoc(statRef, { count: 1 });
+    }
   }
 }
+
+// uruchamiamy funkcję
+trackVisit().catch(console.error);

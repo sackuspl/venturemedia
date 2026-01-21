@@ -38,20 +38,17 @@ async function trackVisit() {
     // 3️⃣ Referencja do wizyty
     const visitRef = doc(db, "visits", today, "users", visitorId);
 
-    // 🔑 KLUCZOWE: sprawdzamy czy JUŻ był liczony
+    // 🔑 Sprawdzenie, czy wizytę już zapisano (1/dzień)
     const visitSnap = await getDoc(visitRef);
-    if (visitSnap.exists()) {
-      // już policzony dzisiaj → STOP
-      return;
-    }
+    if (visitSnap.exists()) return; // już policzone → STOP
 
-    // 4️⃣ Zapis wizyty (1 raz dziennie)
+    // 4️⃣ Zapis wizyty
     await setDoc(visitRef, {
       page: location.pathname,
       time: Date.now()
     });
 
-    // 5️⃣ Inkrement dziennego licznika
+    // 5️⃣ Inkrement dziennego licznika w stats
     const statRef = doc(db, "stats", today);
     try {
       await updateDoc(statRef, { count: increment(1) });

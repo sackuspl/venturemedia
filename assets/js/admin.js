@@ -35,6 +35,7 @@ const pageNames = {
   "/index.html": "Home",
   "/join-us.html": "Join Us",
   "/newspapers.html": "Newspapers",
+  "/forbidden-minds.html": "Forbidden Minds"
 };
 
 // 🔹 Pomocnicze daty

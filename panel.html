@@ -34,42 +34,69 @@
 </head>
 <body>
 
-  <section class="navigation-section">
-  <nav class="top-nav">
-    <ul>
-      <li>
-        <button class="nav-button" onclick="window.location.href='index.html'">
-          <i class="fa-solid fa-house icon"></i>
-          <span class="label">Home</span>
-        </button>
-      </li>
-      <li>
-        <button class="nav-button" onclick="window.location.href='newspapers.html?scrollTo=gazety'">
-          <i class="fa-solid fa-newspaper icon"></i>
-          <span class="label">Newspapers</span>
-        </button>
-      </li>
-      <li>
-        <button class="nav-button" onclick="window.location.href='index.html?scrollTo=employees'">
-          <i class="fa-solid fa-users icon"></i>
-          <span class="label">Employees</span>
-        </button>
-      </li>
-      <li>
-  <!--    <button class="nav-button" onclick="window.location.href='index.html'">      -->
-          <i class="fa-solid fa-video icon"></i>
-          <span class="label">Programs</span>
-        </button>
-      </li>
-      <li>
-        <button class="nav-button" onclick="window.location.href='join-us.html'">
-          <i class="fa-solid fa-briefcase icon"></i>
-          <span class="label">Join us</span>
-        </button>
-      </li>
+<section class="navigation-section">
+<nav class="top-nav">
+<ul>
+<li>
+<button class="nav-button" onclick="window.location.href='index.html'">
+<i class="fa-solid fa-house icon"></i>
+<span class="label">Home</span>
+</button>
+</li>
+<li>
+<button class="nav-button" onclick="window.location.href='newspapers.html?scrollTo=gazety'">
+<i class="fa-solid fa-newspaper icon"></i>
+<span class="label">Newspapers</span>
+</button>
+</li>
+
+
+<!-- MAGAZINES (nowa zakładka, po prawej od Newspapers) -->
+<li class="dropdown">
+    <button class="nav-button">
+        <i class="fa-solid fa-book-open-lines icon"></i>
+        <span class="label">Magazines</span>
+    </button>
+
+    <ul class="dropdown-menu">
+         <li class="forbidden-minds" onclick="window.location.href='forbidden-minds.html'">Forbidden Minds</li>
+         <li class="coming-soon" onclick="window.location.href=''">Coming Soon..</li>
+         <li class="coming-soon" onclick="window.location.href=''">Coming Soon..</li>
     </ul>
-  </nav>
+</li>
+
+
+
+
+<li>
+<button class="nav-button" onclick="scrollToSection('employees')">
+<i class="fa-solid fa-users icon"></i>
+<span class="label">Employees</span>
+</button>
+</li>
+
+
+<!-- PROGRAMS – ukryte, do ewentualnego przywrócenia -->
+<!--
+<li>
+<button class="nav-button" onclick="window.location.href='index.html'">
+<i class="fa-solid fa-video icon"></i>
+<span class="label">Programs</span>
+</button>
+</li>
+-->
+
+
+<li>
+<button class="nav-button" onclick="window.location.href='join-us.html'">
+<i class="fa-solid fa-briefcase icon"></i>
+<span class="label">Join us</span>
+</button>
+</li>
+</ul>
+</nav>
 </section>
+
 
 <script>
 window.addEventListener('load', () => {
@@ -179,9 +206,9 @@ window.addEventListener('load', () => {
 </main>
 
 <style>
-  header { background:#4f46e5; color:#fff; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+  header { background:#555555; color:#fff; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
   header h1 { margin:0; font-size:1.5rem; }
-  header button { background:#fff; color:#4f46e5; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer; font-weight:bold; }
+  header button { background:#ffe1e1; color:#f53737; border:none; padding:0.5rem 1rem; border-radius:6px; cursor:pointer; font-weight:bold; }
   main { padding:2rem; }
   .stats-section { background:#fff; padding:1rem 2rem; margin-bottom:2rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
   .stats-section h2 { margin-top:0; margin-bottom:1rem; }
@@ -1607,7 +1634,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </style>
 
 <style>
-/* NAWIGACJA */
+/* =================== NAWIGACJA =================== */
 
 /* ===== ANIMACJA WEJŚCIA NAVBARU ===== */
 @keyframes fadeInNavbar {
@@ -1659,9 +1686,7 @@ document.addEventListener('DOMContentLoaded', () => {
     padding: 12px 16px;
     border-radius: 10px;
     cursor: pointer;
-    overflow: hidden;
-
-    /* PŁYNNIEJ + WOLNIEJ */
+    overflow: visible; /* ważne dla dropdown */
     transition: all 0.5s ease;
 }
 
@@ -1670,7 +1695,6 @@ document.addEventListener('DOMContentLoaded', () => {
     color: #ffffff;
     font-size: 18px;
     min-width: 22px;
-
     transition: transform 0.45s ease;
 }
 
@@ -1680,7 +1704,6 @@ document.addEventListener('DOMContentLoaded', () => {
     opacity: 0;
     margin-left: 0;
     white-space: nowrap;
-
     transition:
         max-width 0.45s ease,
         opacity 0.45s ease,
@@ -1697,15 +1720,136 @@ document.addEventListener('DOMContentLoaded', () => {
     opacity: 1;
     margin-left: 12px;
 }
+
 .nav-button {
-    all: unset; /* usuwa domyślny styl buttona */
+    all: unset;
     display: flex;
     align-items: center;
-    width: 100%; /* wypełnia całe li */
+    width: 100%;
     cursor: pointer;
 }
 
+/* =================== DROPDOWN MAGAZINES (HOVER) =================== */
+
+/* Dropdown container */
+.top-nav li.dropdown {
+    position: relative;
+    overflow: visible; /* menu może wysunąć się spod li */
+}
+
+/* Menu dropdown – pionowe, ukryte od startu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* dokładnie pod przyciskiem */
+    left: 0;
+    background: linear-gradient(to bottom, #181818e6, #0c0c0ce6);
+    border: 1px solid #ffffff3f;
+    border-radius: 10px;
+    padding: 4px 0;
+    list-style: none;
+    min-width: 180px;
+
+    display: flex;
+    flex-direction: column; /* pionowo */
+    justify-content: flex-start;
+
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+    z-index: 2000;
+
+    /* ukryte od startu */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Pokazywanie menu na hover */
+.top-nav li.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* Opcje menu */
+.dropdown-menu li {
+    padding: 10px 16px;
+    color: #e5e5e5;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* Hover opcji */
+.dropdown-menu li:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.dropdown-menu li.forbidden-minds {
+    color: #ffdbd8; /* np. czerwony */
+}
+.dropdown-menu li.coming-soon {
+    color: #a5a5a5; /* np. czerwony */
+}
+
 </style>
+
+<script>
+const btn = document.getElementById("magazines-btn");
+const menu = document.getElementById("magazines-menu");
+const closeBtn = document.getElementById("magazines-close");
+
+let clickedOpen = false; // flaga, czy menu otwarte kliknięciem
+
+// Klik w Magazines otwiera lub zamyka menu
+btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    clickedOpen = !clickedOpen;
+    if(clickedOpen){
+        menu.classList.add("show");
+    } else {
+        menu.classList.remove("show");
+    }
+});
+
+// Klik w X zamyka menu
+closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    clickedOpen = false;
+    menu.classList.remove("show");
+});
+
+// Klik w dowolne miejsce poza menu zamyka menu
+document.addEventListener("click", () => {
+    if(clickedOpen){
+        clickedOpen = false;
+        menu.classList.remove("show");
+    }
+});
+
+// NAJECHANIE: pokazuje menu, ale jeśli nie zostało otwarte kliknięciem
+btn.addEventListener("mouseenter", () => {
+    if(!clickedOpen){
+        menu.classList.add("show");
+    }
+});
+btn.addEventListener("mouseleave", () => {
+    if(!clickedOpen){
+        menu.classList.remove("show");
+    }
+});
+
+// Pozwala menu pozostać widoczne jeśli kursor nad nim (hover)
+menu.addEventListener("mouseenter", () => {
+    if(!clickedOpen){
+        menu.classList.add("show");
+    }
+});
+menu.addEventListener("mouseleave", () => {
+    if(!clickedOpen){
+        menu.classList.remove("show");
+    }
+});
+</script>
 
 
 <style>

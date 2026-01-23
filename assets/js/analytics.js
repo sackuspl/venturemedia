@@ -10,6 +10,7 @@ const firebaseConfig = {
   projectId: "venture-panel",
 };
 
+// 🔹 Inicjalizacja Firebase
 const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -30,12 +31,17 @@ async function trackVisit() {
     const lastVisit = localStorage.getItem(`visited_${today}`);
     if (lastVisit) return; // już odwiedzone → STOP
 
-    // 4️⃣ Zapis wizyty w Firestore
+    // 4️⃣ Zapis wizyty w Firestore (tylko create, nie update)
     const visitRef = doc(db, "visits", today, "users", visitorId);
-    await setDoc(visitRef, {
-      page: location.pathname,
-      time: Date.now()
-    });
+    try {
+      await setDoc(visitRef, {
+        page: location.pathname,
+        time: Date.now()
+      });
+    } catch (err) {
+      // dokument istnieje lub brak uprawnień → ignorujemy
+      console.warn("Nie udało się zapisać wizyty (prawdopodobnie już istnieje):", err);
+    }
 
     // 5️⃣ Inkrement licznika w stats
     const statRef = doc(db, "stats", today);
@@ -44,10 +50,14 @@ async function trackVisit() {
     // 6️⃣ Oznaczenie w localStorage, że dziś odwiedził
     localStorage.setItem(`visited_${today}`, "1");
 
+    console.log(">>> Wyświetlenie policzone:", today, visitorId);
+
   } catch (err) {
     console.error("Analytics error:", err);
   }
 }
 
-// 🚀 Start
-trackVisit();
+// 🚀 Start po wczytaniu DOM
+document.addEventListener('DOMContentLoaded', () => {
+  trackVisit();
+});

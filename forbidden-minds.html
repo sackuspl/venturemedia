@@ -1716,14 +1716,15 @@ document.addEventListener('DOMContentLoaded', () => {
 </style>
 
 <script>
-const btn = document.getElementById("magazines-btn");
-const menu = document.getElementById("magazines-menu");
-const closeBtn = document.getElementById("magazines-close");
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.querySelector(".dropdown"); // li.dropdown
+  const btn = dropdown.querySelector(".nav-button");    // przycisk Magazines
+  const menu = dropdown.querySelector(".dropdown-menu"); // ul.dropdown-menu
 
-let clickedOpen = false; // flaga, czy menu otwarte kliknięciem
+  let clickedOpen = false; // flaga, czy menu otwarte kliknięciem
 
-// Klik w Magazines otwiera lub zamyka menu
-btn.addEventListener("click", (e) => {
+  // Klik w Magazines otwiera lub zamyka menu
+  btn.addEventListener("click", (e) => {
     e.stopPropagation();
     clickedOpen = !clickedOpen;
     if(clickedOpen){
@@ -1731,46 +1732,32 @@ btn.addEventListener("click", (e) => {
     } else {
         menu.classList.remove("show");
     }
-});
+  });
 
-// Klik w X zamyka menu
-closeBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    clickedOpen = false;
-    menu.classList.remove("show");
-});
-
-// Klik w dowolne miejsce poza menu zamyka menu
-document.addEventListener("click", () => {
+  // Klik w dowolne miejsce poza menu zamyka menu
+  document.addEventListener("click", () => {
     if(clickedOpen){
         clickedOpen = false;
         menu.classList.remove("show");
     }
+  });
+
+  // Hover: pokazuje menu, jeśli nie zostało otwarte kliknięciem
+  btn.addEventListener("mouseenter", () => {
+    if(!clickedOpen) menu.classList.add("show");
+  });
+  btn.addEventListener("mouseleave", () => {
+    if(!clickedOpen) menu.classList.remove("show");
+  });
+
+  menu.addEventListener("mouseenter", () => {
+    if(!clickedOpen) menu.classList.add("show");
+  });
+  menu.addEventListener("mouseleave", () => {
+    if(!clickedOpen) menu.classList.remove("show");
+  });
 });
 
-// NAJECHANIE: pokazuje menu, ale jeśli nie zostało otwarte kliknięciem
-btn.addEventListener("mouseenter", () => {
-    if(!clickedOpen){
-        menu.classList.add("show");
-    }
-});
-btn.addEventListener("mouseleave", () => {
-    if(!clickedOpen){
-        menu.classList.remove("show");
-    }
-});
-
-// Pozwala menu pozostać widoczne jeśli kursor nad nim (hover)
-menu.addEventListener("mouseenter", () => {
-    if(!clickedOpen){
-        menu.classList.add("show");
-    }
-});
-menu.addEventListener("mouseleave", () => {
-    if(!clickedOpen){
-        menu.classList.remove("show");
-    }
-});
 </script>
 
 

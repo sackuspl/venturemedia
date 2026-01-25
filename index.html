@@ -115,8 +115,8 @@
 
 <li>
 <button class="nav-button" onclick="scrollToSection('employees')">
-<i class="fa-solid fa-users icon"></i>
-<span class="label">Employees</span>
+  <i class="fa-solid fa-users icon"></i>
+  <span class="label">Employees</span>
 </button>
 </li>
 
@@ -141,6 +141,17 @@
 </ul>
 </nav>
 </section>
+
+<script>
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    // scroll w dół do sekcji z płynnym efektem
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+</script>
+
 
 
 <script>
@@ -424,8 +435,8 @@ window.addEventListener('load', () => {
   </div>
   
     
-  <div class="client-gif visible-scroll">
-      <img src="https://i.imgur.com/jmbUQ8r.gif" alt="client-gif">
+<div class="client-gif visible-scroll">
+  <img id="clientGif" alt="client-gif">
     </a>
   </div>
 </section>
@@ -462,6 +473,11 @@ window.addEventListener('load', () => {
     </p>
   </section>
 </footer>
+
+<script src="gif-link.js"></script>
+<script>
+  document.getElementById('clientGif').src = gifUrl;
+</script>
 
 <script>
 function polishTimeAgo(date) {

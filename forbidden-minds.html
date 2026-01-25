@@ -68,10 +68,11 @@
 
 
 <li>
-<button class="nav-button" onclick="scrollToSection('employees')">
-<i class="fa-solid fa-users icon"></i>
-<span class="label">Employees</span>
+<button class="nav-button" onclick="goToIndex('employees')">
+  <i class="fa-solid fa-users icon"></i>
+  <span class="label">Employees</span>
 </button>
+
 </li>
 
 
@@ -95,6 +96,14 @@
 </ul>
 </nav>
 </section>
+
+<script>
+function goToIndex(sectionId) {
+  // Przekierowanie na index.html z parametrem scrollTo
+  window.location.href = `index.html?scrollTo=${sectionId}`;
+}
+</script>
+
 
 <script>
 window.addEventListener('load', () => {
@@ -454,8 +463,8 @@ papers.forEach(paper => observer.observe(paper));
     </div>
   </div>
 
-  <div class="client-gif visible-scroll">
-      <img src="https://i.imgur.com/jmbUQ8r.gif" alt="client-gif">
+<div class="client-gif visible-scroll">
+  <img id="clientGif" alt="client-gif">
     </a>
   </div>
   
@@ -495,7 +504,10 @@ papers.forEach(paper => observer.observe(paper));
 </footer>
 
 
-
+<script src="gif-link.js"></script>
+<script>
+  document.getElementById('clientGif').src = gifUrl;
+</script>
 
 <style>
 .logo {

@@ -43,31 +43,35 @@ margin-top: 250px;
     padding: 8px 10px;
 }
 
-/* ===== EMPLOYEES ===== */
-.employees h2 {
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+  /* Zarząd i reszta personelu – jedna kolumna, wycentrowane */
+  .board,
+  .staff {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: none; /* usuwamy ograniczenie grid */
+    margin: 0 auto;
+  }
+
+  /* Karty – większe i responsywne */
+  .employee-card {
+    width: 90%;          /* dopasowanie do ekranu */
+    max-width: 400px;    /* ograniczenie szerokości, żeby nie były za szerokie */
+    margin: 0;           /* wycentrowanie dzięki flex + align-items: center */
+    padding: 2rem 1.5rem;
+  }
+
+  /* Nagłówek mniejszy na telefonie */
+  .employees h2 {
     font-size: 2rem;
     margin-bottom: 3rem;
+  }
 }
 
-/* EMPLOYEES - wszystkie karty jedna pod drugą */
-.employees-container {
-    display: flex !important;            /* nadpisujemy grid z PC */
-    flex-direction: column !important;   /* jedna pod drugą */
-    width: 100%;
-    gap: 1.5rem;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    align-items: center;                 /* wycentrowanie kart */
-}
-
-
-.employee-card {
-    width: 95%;           /* dopasowanie do telefonu */
-    max-width: 400px;     /* ograniczenie maksymalnej szerokości */
-    opacity: 1;           /* wszystkie widoczne */
-    transform: translateY(0);
-    margin: 0 auto;       /* dodatkowe wycentrowanie */
-}
 /* ===== LATEST ARTICLES ===== */
 .latest-articles h2 {
     font-size: 2rem;

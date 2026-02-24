@@ -1347,16 +1347,12 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  console.log(">>> JS startuje: DOM gotowy <<<");
 
   const RSS_URL = 'https://articles.sackydesign.workers.dev/';
   const LIMIT = 3;
 
   const container = document.getElementById("articles");
-  if (!container) {
-    console.error(">>> Brak kontenera #articles <<<");
-    return;
-  }
+  if (!container) return;
 
   fetch(RSS_URL)
     .then(res => {
@@ -1369,11 +1365,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const allItems = xml.getElementsByTagName("item");
 
       const items = Array.from(allItems)
-        .sort((a, b) => {
-          const dateA = new Date(a.getElementsByTagName("pubDate")[0]?.textContent);
-          const dateB = new Date(b.getElementsByTagName("pubDate")[0]?.textContent);
-          return dateB - dateA;
-        })
+        .sort((a, b) => new Date(b.getElementsByTagName("pubDate")[0]?.textContent) 
+                       - new Date(a.getElementsByTagName("pubDate")[0]?.textContent))
         .slice(0, LIMIT);
 
       container.innerHTML = "";
@@ -1382,7 +1375,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let title = item.getElementsByTagName("title")[0]?.textContent || '';
         title = cleanTitle(title);
-        title = truncateText(title, 70); // 🔥 LIMIT 70 znaków
+        title = truncateText(title, 70); // limit nagłówka
 
         const link = item.getElementsByTagName("link")[0]?.textContent || '';
         const date = item.getElementsByTagName("pubDate")[0]?.textContent || '';
@@ -1419,8 +1412,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       observeArticles();
+
     })
     .catch(err => console.error(">>> RSS ERROR:", err));
+
 });
 
 /* ===== HELPERS ===== */
@@ -1442,25 +1437,25 @@ function cleanTitle(title) {
 function extractImage(html, category) {
   if (!html) return "https://i.imgur.com/rbBLULs.png";
 
+  // Znajdź wszystkie obrazki
   const matches = [...html.matchAll(/<img[^>]+src="([^">]+)"/g)];
   if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
 
-  const categoriesWithSecondImage = ["News", "Sport", "Business Review"];
-
-  if (categoriesWithSecondImage.includes(category) && matches.length > 1) {
-    return matches[1][1]; // 🔥 DRUGI OBRAZ
+  const secondImageCategories = ["News", "Sport", "Business Review"];
+  if (secondImageCategories.includes(category) && matches.length > 1) {
+    return matches[1][1]; // drugi obraz
   }
 
-  return matches[0][1]; // 🔥 PIERWSZY OBRAZ
+  return matches[0][1]; // pierwszy obraz
 }
 
 function cleanText(html) {
   if (!html) return "";
 
   return html
-    .replace(/HOME NEWS BUSINESS REVIEW TELEVISION SPOTLIGHT OTHER FORMATS/gi, "") // 🔥 usuwa menu
+    .replace(/HOME\s*NEWS\s*BUSINESS REVIEW\s*TELEVISION\s*SPOTLIGHT\s*OTHER FORMATS/gi, "")
     .replace(/<img[^>]*>/g, "")
-    .replace(/<table[^>]*>[\s\S]*?<\/table>/gi, "") // 🔥 usuwa tabelę
+    .replace(/<table[^>]*>[\s\S]*?<\/table>/gi, "")
     .replace(/<[^>]*>/g, "")
     .replace(/\s+/g, " ")
     .trim()
@@ -1469,44 +1464,43 @@ function cleanText(html) {
 
 function extractAuthorFromDescription(description) {
   if (!description) return "";
-  const match = description.match(/([A-Z][a-z]+ [A-Z][a-z]+) for Venture Media\./);
-  return match ? match[1] : "";
+  const match = description.match(/([A-Z][a-z]+(?: [A-Z][a-z]+)*) for Venture Media\./);
+  if (!match) return "";
+
+  const fullName = match[1].trim().split(" ");
+  if (fullName.length <= 2) return fullName.join(" "); // Imię + Nazwisko
+  const firstName = fullName[0];
+  const lastName = fullName[fullName.length - 1];
+  return `${firstName} ${lastName}`;
 }
 
 function mapAuthor(author) {
   if (!author) return "Redakcja";
-  const map = {
-    "Sacky": "Finneas Puttvise",
-    "CZEMPION": "Raymond Hall"
-  };
+  const map = { "Sacky": "Finneas Puttvise", "CZEMPION": "Raymond Hall" };
   return map[author] || author;
 }
 
 function timeAgo(date) {
   if (!date) return "";
-
   const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
-
   if (seconds < 600) return "przed chwilą";
   if (seconds < 3600) {
     const minutes = Math.floor(seconds / 60);
-    return `${minutes} ${pluralize(minutes, "minutę", "minuty", "minut")} temu`;
+    return `${minutes} ${pluralize(minutes,"minutę","minuty","minut")} temu`;
   }
   if (seconds < 86400) {
     const hours = Math.floor(seconds / 3600);
-    return `${hours} ${pluralize(hours, "godzinę", "godziny", "godzin")} temu`;
+    return `${hours} ${pluralize(hours,"godzinę","godziny","godzin")} temu`;
   }
-
   const days = Math.floor(seconds / 86400);
-  return `${days} ${pluralize(days, "dzień", "dni", "dni")} temu`;
+  return `${days} ${pluralize(days,"dzień","dni","dni")} temu`;
 }
 
-function pluralize(n, singular, few, many) {
-  n = Math.abs(n) % 100;
-  const n1 = n % 10;
-  if (n > 10 && n < 20) return many;
-  if (n1 > 1 && n1 < 5) return few;
-  if (n1 === 1) return singular;
+function pluralize(n,singular,few,many) {
+  n = Math.abs(n)%100; const n1=n%10;
+  if(n>10 && n<20) return many;
+  if(n1>1 && n1<5) return few;
+  if(n1===1) return singular;
   return many;
 }
 
@@ -1520,7 +1514,6 @@ function observeArticles() {
       }
     });
   }, { threshold: 0.1 });
-
   articles.forEach(article => observer.observe(article));
 }
 </script>

@@ -1440,9 +1440,9 @@ function extractImage(html, category, title = "") {
   html = html.replace(/&quot;/g, '"');
 
   // Znajdź wszystkie obrazki
-  let matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"]/gi)];
+  let matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"][^>]*>/gi)];
   
-  // 🔥 filtrujemy niechciane obrazki (ikonki forum, spacer.png, avatary)
+  // filtrujemy ikonki forum
   matches = matches.filter(m => {
     const src = m[1].toLowerCase();
     return !/spacer\.png|avatars?|icons?/.test(src);
@@ -1450,16 +1450,18 @@ function extractImage(html, category, title = "") {
 
   if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
 
-  const secondImageCategories = ["News", "Business Review"];
-  if (secondImageCategories.includes(category) && matches.length > 1) {
-    return matches[1][1]; // drugi obraz
+  // wybierz obraz o dużej rozdzielczości (wysokość >=1000px lub i.imgur.com)
+  const largeImages = matches.filter(m => /i\.imgur\.com/.test(m[1]) || /height=["']1[0-9]{3}/.test(m[0]));
+
+  if (category === "News" || category === "Business Review") {
+    return largeImages.length ? largeImages[0][1] : matches[0][1];
   }
 
-  if (category === "Other Formats" && /sport/i.test(title) && matches.length > 1) {
-    return matches[1][1]; // drugi obraz tylko dla sportu
+  if (category === "Other Formats" && /sport/i.test(title)) {
+    return largeImages.length ? largeImages[0][1] : matches[0][1];
   }
 
-  return matches[0][1]; // pierwszy obraz w pozostałych przypadkach
+  return matches[0][1]; // reszta → pierwszy obrazek
 }
 
 function cleanText(html) {

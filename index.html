@@ -1435,39 +1435,40 @@ function cleanTitle(title) {
 }
 
 function extractImage(html, category, title = "") {
-  if (!html) return "https://i.imgur.com/rbBLULs.png";
+  if (!html) return null;
 
   html = html.replace(/&quot;/g, '"');
 
-  // Znajdź wszystkie obrazki z src lub data-src
-  let matches = [...html.matchAll(/<img[^>]+(?:src|data-src)=['"]([^'"]+)['"][^>]*>/gi)];
+  // Znajdź wszystkie obrazki
+  let matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"][^>]*>/gi)];
 
-  // filtrujemy ikonki forum
+  // filtrujemy ikonki forum / spacer
   matches = matches.filter(m => {
     const src = m[1].toLowerCase();
     return !/spacer\.png|avatars?|icons?/.test(src);
   });
 
-  if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
+  if (!matches.length) return null;
 
-  // obraz dużej rozdzielczości (wysokość ≥1000 lub i.imgur.com)
-  const largeImages = matches.filter(m => {
-    const tag = m[0];
-    return /i\.imgur\.com/.test(m[1]) || /height=["']1[0-9]{3}/.test(tag);
-  });
+  // wybierz obraz o dużej rozdzielczości (height>=1000 lub i.imgur.com)
+  const largeImages = matches.filter(m => /i\.imgur\.com/.test(m[1]) || /height=["']1[0-9]{3}/.test(m[0]));
 
-  // wybór obrazka według reguły
-  if ((category === "News" || category === "Business Review") || 
-      (category === "Other Formats" && /\[Venture SPORT\]/i.test(title))) {
+  // News / Business Review → pierwszy obraz z dużej rozdzielczości
+  if (category === "News" || category === "Business Review") {
     return largeImages.length ? largeImages[0][1] : matches[0][1];
   }
 
-  return matches[0][1]; // reszta → pierwszy obrazek
+  // Other Formats → jeśli tytuł zawiera [Venture SPORT] → pierwszy obraz dużej rozdzielczości
+  if (category === "Other Formats" && /\[Venture SPORT\]/i.test(title)) {
+    return largeImages.length ? largeImages[0][1] : matches[0][1];
+  }
+
+  // reszta → pierwszy obrazek
+  return matches[0][1];
 }
 
 function cleanText(html) {
   if (!html) return "";
-
   return html
     .replace(/HOME\s*NEWS\s*BUSINESS REVIEW\s*TELEVISION\s*SPOTLIGHT\s*OTHER FORMATS/gi, "")
     .replace(/<img[^>]*>/g, "")
@@ -1484,7 +1485,7 @@ function extractAuthorFromDescription(description) {
   if (!match) return "";
 
   const fullName = match[1].trim().split(" ");
-  if (fullName.length <= 2) return fullName.join(" ");
+  if (fullName.length <= 2) return fullName.join(" "); // Imię + Nazwisko
   const firstName = fullName[0];
   const lastName = fullName[fullName.length - 1];
   return `${firstName} ${lastName}`;

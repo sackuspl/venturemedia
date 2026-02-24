@@ -1439,32 +1439,43 @@ function extractImage(html, category, title = "") {
 
   html = html.replace(/&quot;/g, '"');
 
-  // Znajdź wszystkie obrazki
-  let matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"][^>]*>/gi)];
+  // Znajdź wszystkie tagi <img>
+  let matches = [...html.matchAll(/<img[^>]+>/gi)];
 
   // filtrujemy ikonki forum / spacer
   matches = matches.filter(m => {
-    const src = m[1].toLowerCase();
-    return !/spacer\.png|avatars?|icons?/.test(src);
+    const imgTag = m[0];
+    const src = imgTag.match(/data-src=['"]([^'"]+)['"]/i)?.[1] 
+             || imgTag.match(/src=['"]([^'"]+)['"]/i)?.[1];
+    return src && !/spacer\.png|avatars?|icons?/.test(src.toLowerCase());
   });
 
   if (!matches.length) return null;
 
-  // wybierz obraz o dużej rozdzielczości (height>=1000 lub i.imgur.com)
-  const largeImages = matches.filter(m => /i\.imgur\.com/.test(m[1]) || /height=["']1[0-9]{3}/.test(m[0]));
+  // Tworzymy tablicę obrazków z wysokością i data-src
+  const images = matches.map(m => {
+    const tag = m[0];
+    const src = tag.match(/data-src=['"]([^'"]+)['"]/i)?.[1] 
+             || tag.match(/src=['"]([^'"]+)['"]/i)?.[1];
+    const height = parseInt(tag.match(/height=['"]?(\d+)/i)?.[1] || "0", 10);
+    return { src, height };
+  });
 
-  // News / Business Review → pierwszy obraz z dużej rozdzielczości
+  if (!images.length) return null;
+
+  // Reguły wyboru obrazka
   if (category === "News" || category === "Business Review") {
-    return largeImages.length ? largeImages[0][1] : matches[0][1];
+    const largeImg = images.find(img => /i\.imgur\.com/.test(img.src) && img.height >= 1000);
+    return largeImg ? largeImg.src : images[0].src;
   }
 
-  // Other Formats → jeśli tytuł zawiera [Venture SPORT] → pierwszy obraz dużej rozdzielczości
   if (category === "Other Formats" && /\[Venture SPORT\]/i.test(title)) {
-    return largeImages.length ? largeImages[0][1] : matches[0][1];
+    const largeImg = images.find(img => /i\.imgur\.com/.test(img.src) && img.height >= 1000);
+    return largeImg ? largeImg.src : images[0].src;
   }
 
-  // reszta → pierwszy obrazek
-  return matches[0][1];
+  // reszta → pierwszy obrazek z góry
+  return images[0].src;
 }
 
 function cleanText(html) {
@@ -1483,9 +1494,8 @@ function extractAuthorFromDescription(description) {
   if (!description) return "";
   const match = description.match(/([A-Z][a-z]+(?: [A-Z][a-z]+)*) for Venture Media\./);
   if (!match) return "";
-
   const fullName = match[1].trim().split(" ");
-  if (fullName.length <= 2) return fullName.join(" "); // Imię + Nazwisko
+  if (fullName.length <= 2) return fullName.join(" ");
   const firstName = fullName[0];
   const lastName = fullName[fullName.length - 1];
   return `${firstName} ${lastName}`;

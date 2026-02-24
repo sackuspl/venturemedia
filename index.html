@@ -1440,17 +1440,23 @@ function extractImage(html, category, title = "") {
   html = html.replace(/&quot;/g, '"');
 
   // Znajdź wszystkie obrazki
-  const matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"]/gi)];
+  let matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"]/gi)];
+  
+  // 🔥 filtrujemy niechciane obrazki (ikonki forum, spacer.png, avatary)
+  matches = matches.filter(m => {
+    const src = m[1].toLowerCase();
+    return !/spacer\.png|avatars?|icons?/.test(src);
+  });
+
   if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
 
-  // Specjalne zasady
   const secondImageCategories = ["News", "Business Review"];
   if (secondImageCategories.includes(category) && matches.length > 1) {
     return matches[1][1]; // drugi obraz
   }
 
   if (category === "Other Formats" && /sport/i.test(title) && matches.length > 1) {
-    return matches[1][1]; // drugi obraz tylko dla sportu w Other Formats
+    return matches[1][1]; // drugi obraz tylko dla sportu
   }
 
   return matches[0][1]; // pierwszy obraz w pozostałych przypadkach

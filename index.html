@@ -1349,7 +1349,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   console.log(">>> JS startuje: DOM gotowy <<<");
 
-  const RSS_URL = 'https://articles.sackydesign.workers.dev/'; // Twój Worker
+  const RSS_URL = 'https://articles.sackydesign.workers.dev/';
   const LIMIT = 3;
 
   const container = document.getElementById("articles");
@@ -1357,20 +1357,16 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error(">>> Brak kontenera #articles <<<");
     return;
   }
-  console.log(">>> Kontener #articles znaleziony <<<");
 
   fetch(RSS_URL)
     .then(res => {
-      console.log(">>> Fetch RSS wykonany, status:", res.status);
       if (!res.ok) throw new Error("Błąd sieci przy pobieraniu RSS");
       return res.text();
     })
     .then(str => {
-      console.log(">>> Parsowanie XML RSS");
-      const xml = new DOMParser().parseFromString(str, "text/xml");
 
+      const xml = new DOMParser().parseFromString(str, "text/xml");
       const allItems = xml.getElementsByTagName("item");
-      console.log(">>> Całkowita liczba elementów RSS:", allItems.length);
 
       const items = Array.from(allItems)
         .sort((a, b) => {
@@ -1380,23 +1376,22 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .slice(0, LIMIT);
 
-      console.log(`>>> Wybrano ${items.length} elementy RSS do wyświetlenia`);
-
       container.innerHTML = "";
 
       items.forEach((item, index) => {
-        // Tytuł
+
         let title = item.getElementsByTagName("title")[0]?.textContent || '';
         title = cleanTitle(title);
+        title = truncateText(title, 70); // 🔥 LIMIT 70 znaków
 
         const link = item.getElementsByTagName("link")[0]?.textContent || '';
         const date = item.getElementsByTagName("pubDate")[0]?.textContent || '';
         const description = item.getElementsByTagName("description")[0]?.textContent || '';
+        const category = item.getElementsByTagName("category")[0]?.textContent || "News";
 
-        const image = extractImage(description);
+        const image = extractImage(description, category);
         let text = cleanText(description);
 
-        // Jeśli artykuł nie ma treści (tylko obraz lub pusty), dodaj placeholder
         if (!text || text === "...") {
           text = "Artykuł zawiera obraz, kliknij w przycisk poniżej, aby zapoznać się z jego dokładną treścią!";
         }
@@ -1404,66 +1399,80 @@ document.addEventListener("DOMContentLoaded", () => {
         const authorFromContent = extractAuthorFromDescription(description);
         const mappedAuthor = mapAuthor(authorFromContent);
 
-        console.log(`>>> Tworzę artykuł: ${title} (Autor: ${mappedAuthor})`);
-
         const article = document.createElement("article");
         article.className = "article-card";
         article.style.transitionDelay = (index * 0.3) + "s";
 
         article.innerHTML = `
-          <div class="category">NEWS</div>
+          <div class="category">${category}</div>
           ${image ? `<img src="${image}" alt="">` : ""}
           <h3>${title}</h3>
           <p>${text}</p>
           <a href="${link}" target="_blank" class="read-more">Read more</a>
           <div class="meta">
             <span>Pisze: ${mappedAuthor}</span>
-            <span style="float: right;">${timeAgo(date)}</span>
+            <span>${timeAgo(date)}</span>
           </div>
         `;
 
         container.appendChild(article);
       });
 
-      console.log(">>> Wszystkie artykuły wstawione do DOM");
       observeArticles();
     })
     .catch(err => console.error(">>> RSS ERROR:", err));
 });
 
-/* ===== helpers ===== */
+/* ===== HELPERS ===== */
+
+function truncateText(text, max) {
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return text.slice(0, max - 3).trim() + "...";
+}
+
 function cleanTitle(title) {
   if (!title) return "";
   return title
-    .replace(/\[QUICKNEWS\]\s*/i, "") // usuwa [QUICKNEWS]
-    .replace(/^\d+\.\s*/, "")         // usuwa numerki typu 01., 02.
+    .replace(/\[QUICKNEWS\]\s*/i, "")
+    .replace(/^\d+\.\s*/, "")
     .trim();
 }
 
-function extractImage(html) {
+function extractImage(html, category) {
   if (!html) return "https://i.imgur.com/rbBLULs.png";
-  // Szukamy pierwszego obrazka z Imgur
-  const match = html.match(/<img[^>]+src="([^">]*i\.imgur\.com[^">]+)"/);
-  return match ? match[1] : "https://i.imgur.com/rbBLULs.png";
+
+  const matches = [...html.matchAll(/<img[^>]+src="([^">]+)"/g)];
+  if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
+
+  const categoriesWithSecondImage = ["News", "Sport", "Business Review"];
+
+  if (categoriesWithSecondImage.includes(category) && matches.length > 1) {
+    return matches[1][1]; // 🔥 DRUGI OBRAZ
+  }
+
+  return matches[0][1]; // 🔥 PIERWSZY OBRAZ
 }
 
 function cleanText(html) {
+  if (!html) return "";
+
   return html
+    .replace(/HOME NEWS BUSINESS REVIEW TELEVISION SPOTLIGHT OTHER FORMATS/gi, "") // 🔥 usuwa menu
     .replace(/<img[^>]*>/g, "")
+    .replace(/<table[^>]*>[\s\S]*?<\/table>/gi, "") // 🔥 usuwa tabelę
     .replace(/<[^>]*>/g, "")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 180) + "...";
 }
 
-// Wyciąga autora z końcówki artykułu: "Imię Nazwisko for Venture Media."
 function extractAuthorFromDescription(description) {
   if (!description) return "";
   const match = description.match(/([A-Z][a-z]+ [A-Z][a-z]+) for Venture Media\./);
   return match ? match[1] : "";
 }
 
-// Mapowanie nicków na pełne imię i nazwisko
 function mapAuthor(author) {
   if (!author) return "Redakcja";
   const map = {
@@ -1473,27 +1482,25 @@ function mapAuthor(author) {
   return map[author] || author;
 }
 
-// Poprawna polska funkcja czasu
 function timeAgo(date) {
   if (!date) return "";
 
   const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
 
-  if (seconds < 600) { // mniej niż 10 minut
-    return "przed chwilą";
-  } else if (seconds < 3600) { // poniżej godziny
+  if (seconds < 600) return "przed chwilą";
+  if (seconds < 3600) {
     const minutes = Math.floor(seconds / 60);
     return `${minutes} ${pluralize(minutes, "minutę", "minuty", "minut")} temu`;
-  } else if (seconds < 86400) { // poniżej doby
+  }
+  if (seconds < 86400) {
     const hours = Math.floor(seconds / 3600);
     return `${hours} ${pluralize(hours, "godzinę", "godziny", "godzin")} temu`;
-  } else { // dni
-    const days = Math.floor(seconds / 86400);
-    return `${days} ${pluralize(days, "dzień", "dni", "dni")} temu`;
   }
+
+  const days = Math.floor(seconds / 86400);
+  return `${days} ${pluralize(days, "dzień", "dni", "dni")} temu`;
 }
 
-// Funkcja do polskiej liczby mnogiej
 function pluralize(n, singular, few, many) {
   n = Math.abs(n) % 100;
   const n1 = n % 10;
@@ -1515,10 +1522,8 @@ function observeArticles() {
   }, { threshold: 0.1 });
 
   articles.forEach(article => observer.observe(article));
-  console.log(">>> IntersectionObserver ustawiony dla artykułów");
 }
 </script>
-
 
 
 

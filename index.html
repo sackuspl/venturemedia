@@ -1375,14 +1375,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let title = item.getElementsByTagName("title")[0]?.textContent || '';
         title = cleanTitle(title);
-        title = truncateText(title, 70); // limit nagłówka
+        title = truncateText(title, 70);
 
         const link = item.getElementsByTagName("link")[0]?.textContent || '';
         const date = item.getElementsByTagName("pubDate")[0]?.textContent || '';
         const description = item.getElementsByTagName("description")[0]?.textContent || '';
         const category = item.getElementsByTagName("category")[0]?.textContent || "News";
 
-        const image = extractImage(description, category);
+        const image = extractImage(description, category, title);
         let text = cleanText(description);
 
         if (!text || text === "...") {
@@ -1434,22 +1434,26 @@ function cleanTitle(title) {
     .trim();
 }
 
-function extractImage(html, category) {
+function extractImage(html, category, title = "") {
   if (!html) return "https://i.imgur.com/rbBLULs.png";
 
-  // Zamień encje HTML na normalne cudzysłowy
   html = html.replace(/&quot;/g, '"');
 
-  // Znajdź wszystkie obrazki (zarówno " jak i ')
+  // Znajdź wszystkie obrazki
   const matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"]/gi)];
   if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
 
-  const secondImageCategories = ["News", "Sport", "Business Review"];
+  // Specjalne zasady
+  const secondImageCategories = ["News", "Business Review"];
   if (secondImageCategories.includes(category) && matches.length > 1) {
     return matches[1][1]; // drugi obraz
   }
 
-  return matches[0][1]; // pierwszy obraz
+  if (category === "Other Formats" && /sport/i.test(title) && matches.length > 1) {
+    return matches[1][1]; // drugi obraz tylko dla sportu w Other Formats
+  }
+
+  return matches[0][1]; // pierwszy obraz w pozostałych przypadkach
 }
 
 function cleanText(html) {
@@ -1471,7 +1475,7 @@ function extractAuthorFromDescription(description) {
   if (!match) return "";
 
   const fullName = match[1].trim().split(" ");
-  if (fullName.length <= 2) return fullName.join(" "); // Imię + Nazwisko
+  if (fullName.length <= 2) return fullName.join(" ");
   const firstName = fullName[0];
   const lastName = fullName[fullName.length - 1];
   return `${firstName} ${lastName}`;

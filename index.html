@@ -1437,8 +1437,11 @@ function cleanTitle(title) {
 function extractImage(html, category) {
   if (!html) return "https://i.imgur.com/rbBLULs.png";
 
-  // Znajdź wszystkie obrazki
-  const matches = [...html.matchAll(/<img[^>]+src="([^">]+)"/g)];
+  // Zamień encje HTML na normalne cudzysłowy
+  html = html.replace(/&quot;/g, '"');
+
+  // Znajdź wszystkie obrazki (zarówno " jak i ')
+  const matches = [...html.matchAll(/<img[^>]+src=['"]([^'"]+)['"]/gi)];
   if (!matches.length) return "https://i.imgur.com/rbBLULs.png";
 
   const secondImageCategories = ["News", "Sport", "Business Review"];

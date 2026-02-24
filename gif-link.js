@@ -1,2 +1,2 @@
 // gif-link.js
-const gifUrl = "https://i.imgur.com/pyV3eDQ.gif";
+const gifUrl = "https://i.imgur.com/PJ1KAav.gif";

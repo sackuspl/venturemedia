@@ -34,7 +34,7 @@
   <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="venturemedia.pl - Your story, Venture glory!">
 <meta property="og:description" content="Innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.">
-<meta property="og:url" content="https://venturemedia.pl/forbidden-minds">
+<meta property="og:url" content="https://venturemedia.pl/drive">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://sackuspl.github.io/venturemedia/assets/images/venture-og2.png">
 <meta property="og:image:type" content="image/png">
@@ -46,7 +46,7 @@
 <meta name="twitter:title" content="venturemedia.pl - Your story, Venture glory!">
 <meta name="twitter:description" content="Innowacyjna stacja medialna łącząca radio, telewizję i prasę, oferująca rzetelne informacje i specjalistyczne treści z zakresu biznesu, sportu oraz kultury.">
 <meta name="twitter:image" content="https://sackuspl.github.io/venturemedia/assets/images/venture-og2.png">
-<meta name="twitter:url" content="https://venturemedia.pl/forbidden-minds">
+<meta name="twitter:url" content="https://venturemedia.pl/drive">
 
 
 </head>
@@ -148,26 +148,38 @@ window.addEventListener('load', () => {
 
 <section class="hero">
 
-  <div class="hero-overlay"></div>      <!-- nakładka przyciemnienia -->
-  <div class="hero-gradient"></div>     <!-- gradient od dołu -->
-   <div class="hero-light"></div>
-
-   <a href="https://www.devgaming.pl/" target="_blank" rel="noopener noreferrer">
-    <img src="assets/images/logo-devgaming.png" alt="Logo" class="logo">
-</a>
-
-  <div class="fade-in">
-    <img src="assets/images/forbidden-minds-logo2.png" alt="Venture logo" class="hero-logo">
+  <!-- BACKGROUND IMAGES -->
+  <div class="hero-bg">
+    <img src="assets/images/tlo-drive (1).png" class="bg active">
+    <img src="assets/images/tlo-drive (2).png" class="bg">
+    <img src="assets/images/tlo-drive (3).png" class="bg">
+    <img src="assets/images/tlo-drive (4).png" class="bg">
+    <img src="assets/images/tlo-drive (5).png" class="bg">
   </div>
+
+  <!-- NAKŁADKI -->
+  <div class="hero-overlay"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-light"></div>
+
+  <!-- LOGO TOP -->
+  <a href="https://www.devgaming.pl/" target="_blank" rel="noopener noreferrer">
+    <img src="assets/images/logo-devgaming.png" alt="Logo" class="logo">
+  </a>
+
+  <!-- CONTENT -->
+  <div class="fade-in">
+    <img src="assets/images/drive-logo.png" alt="Venture logo" class="hero-logo">
+  </div>
+
   <div class="fade-in">
     <p>
-      To specjalistyczne czasopismo kryminalno-psychologiczne prezentujące pogłębione analizy głośnych i tajemniczych spraw kryminalnych.
+      DRiVE Magazine to pisemny odpowiednik programu telewizyjnego DRiVE, oferujący pogłębione artykuły motoryzacyjne w formacie cyfrowym i papierowym.
     </p>
   </div>
-  <div class="fade-in">
-  </div>
 
-<i class="fa-light fa-computer-mouse-scrollwheel scroll-icon"></i>
+  <i class="fa-light fa-computer-mouse-scrollwheel scroll-icon"></i>
+
 </section>
 
 <script>
@@ -184,7 +196,7 @@ window.addEventListener('load', () => {
 
 <section class="gazety" id="gazety">
 
-  <h2>Forbidden Minds</h2>
+  <h2>DRiVE Magazine</h2>
   <div class="description-box">
     Po kliknięciu na wybrany numer zostaniesz przekierowany do menu podglądu naszego wydania.
   </div>
@@ -196,10 +208,10 @@ window.addEventListener('load', () => {
 
 
 
-    <div class="paper" data-link="https://heyzine.com/flip-book/8485d27ac1.html">
-      <img src="assets/images/okladki/forbidden-minds-1.png" alt="Forbidden Minds 1">
-    <!--   <div class="tag bestseller">BESTSELLER!</div>  -->
-      <div class="tag new">NEW</div>
+        <div class="paper" data-link="https://heyzine.com/flip-book/79cc1dd027.html">
+      <img src="assets/images/okladki/drive-1.png" alt="Gazeta 1">
+       <div class="tag bestseller">BESTSELLER!</div> 
+     <!--  <div class="tag new">NEW</div> -->
     </div>
 
 
@@ -297,9 +309,9 @@ window.addEventListener('load', () => {
 /* ===== OPIS ===== */
 .gazety .description-box {
   background-color: #1313137c;
-  color: #bebebe;
+  color: #bdbdbd;
   padding: 1.1rem 0.5rem;
-  border: 1px solid #4949498e;
+  border: 1px solid #5252528e;
   border-radius: 5px;
   font-size: 1rem;
   max-width: 800px;
@@ -1713,6 +1725,9 @@ document.addEventListener('DOMContentLoaded', () => {
 .dropdown-menu li.forbidden-minds {
     color: #ffdbd8; /* np. czerwony */
 }
+.dropdown-menu li.drive {
+    color: #ffffff; /* np. czerwony */
+}
 .dropdown-menu li.coming-soon {
     color: #a5a5a5; /* np. czerwony */
 }
@@ -1784,16 +1799,40 @@ html, body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 100vh;
+  height: 100vh; /* zamiast min-height */
   color: #fff;
   padding: 2rem;
-  overflow: hidden; /* ważne, żeby video się nie wychodziło */
-  z-index: 0; /* dodane, żeby mieć bazowy kontekst */
+  overflow: hidden;
+  z-index: 0;
+}
+/* ===== BACKGROUND IMAGES ===== */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+}
 
-    background-image: url('assets/images/tlo-forbidden2.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.hero-bg .bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.hero-bg .bg.active {
+  opacity: 1;
+}
+
+.hero-bg .bg.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .hero-logo {
@@ -1920,10 +1959,10 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #141414d3; /* reguluj krycie przyciemnienia */
+  background-color: #0f0f0f6b; /* reguluj krycie przyciemnienia */
   z-index: -1; /* nad video, pod gradientem */
   pointer-events: none;
-  backdrop-filter: blur(3px); /* rozmycie tła pod nakładką */
+  backdrop-filter: blur(1px); /* rozmycie tła pod nakładką */
 }
 
 .hero-light {
@@ -1936,22 +1975,12 @@ html, body {
   height: 400px;
   z-index: 2;
 
- /* 
-background: radial-gradient(
-  circle at 50% 0%,
-  rgba(228, 61, 61, 0.199) 0%,
-  rgba(223, 53, 53, 0.08) 30%,
-  rgba(214, 53, 53, 0.04) 50%,
-  transparent 80%
-);
-*/
-
 background: radial-gradient(
   circle at 50% 0%,
   rgba(61, 61, 61, 0.199) 0%,   /* zamiast rgba(228,61,61,0.199) */
   rgba(53, 53, 53, 0.08) 30%,    /* zamiast rgba(223,53,53,0.08) */
   rgba(53, 53, 53, 0.04) 50%,    /* zamiast rgba(214,53,53,0.04) */
-  transparent 90%
+  transparent 80%
 );
 
 
@@ -2002,25 +2031,42 @@ background: radial-gradient(
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = {
-      threshold: 0.1  // Gdy 10% elementu jest widoczne
-    };
+document.addEventListener('DOMContentLoaded', () => {
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // Odobserwuj po pojawieniu się
-        }
-      });
-    }, observerOptions);
+  /* ===== FADE-IN OBSERVER ===== */
+  const observerOptions = {
+    threshold: 0.1
+  };
 
-    // Wybierz wszystkie elementy z klasą fade-in-up
-    document.querySelectorAll('.fade-in-up').forEach(el => {
-      observer.observe(el);
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
     });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in-up, .fade-in').forEach(el => {
+    observer.observe(el);
   });
+
+
+  /* ===== BACKGROUND IMAGE SLIDER ===== */
+  const images = document.querySelectorAll('.hero-bg .bg');
+  let index = 0;
+
+  if (images.length > 0) {
+    setInterval(() => {
+      images[index].classList.remove('active');
+
+      index = (index + 1) % images.length;
+
+      images[index].classList.add('active');
+    }, 4000); // zmiana co 4 sekundy
+  }
+
+});
 </script>
 
 

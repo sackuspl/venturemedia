@@ -35,7 +35,8 @@ const pageNames = {
   "/index.html": "Home",
   "/join-us.html": "Join Us",
   "/newspapers.html": "Newspapers",
-  "/forbidden-minds.html": "Forbidden Minds"
+  "/forbidden-minds.html": "Forbidden Minds",
+  "/drive.html": "DRiVE Magazine"
 };
 
 // 🔹 Pomocnicze daty

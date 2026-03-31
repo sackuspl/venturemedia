@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Reklam</title>
+
+  <style>
+    body {
+      background: #121212;
+      color: white;
+      font-family: Arial;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #1e1e1e;
+      color: white;
+      box-sizing: border-box;
+    }
+
+    button {
+      cursor: pointer;
+      background: #333;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    .panel {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .ads {
+      display: grid;
+      gap: 15px;
+    }
+
+    .ad {
+      padding: 15px;
+      border-radius: 10px;
+      background: #1e1e1e;
+    }
+
+    .active {
+      border: 2px solid #00ff88;
+    }
+
+    .expired {
+      border: 2px solid #ff4444;
+    }
+
+    .company {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .text {
+      background: #2a2a2a;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .date {
+      margin-top: 5px;
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
+
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 500px) {
+      .actions button {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Panel Reklam</h1>
+
+<!-- LOGOWANIE -->
+<div class="panel" id="authPanel">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Hasło">
+  <button onclick="login()">Zaloguj</button>
+  <button onclick="guestMode()">Przejdź bez logowania</button>
+  <button onclick="logout()">Wyloguj</button>
+</div>
+
+<!-- DODAWANIE -->
+<div class="panel" id="formPanel">
+  <input id="company" placeholder="Nazwa kontrahenta">
+  <textarea id="content" placeholder="Treść reklamy"></textarea>
+  <input id="date" type="date">
+  <button onclick="addAd()">Dodaj reklamę</button>
+</div>
+
+<!-- LISTA -->
+<div class="ads" id="ads"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+  // KONFIGURACJA FIREBASE
+  const firebaseConfig = {
+    apiKey: "AIzaSyBgOzacHE3lq-giPtYymU8kpxuP15PPuZI",
+    authDomain: "panel-reklam.firebaseapp.com",
+    projectId: "panel-reklam",
+    storageBucket: "panel-reklam.firebasestorage.app",
+    messagingSenderId: "749169704388",
+    appId: "1:749169704388:web:a82a74d6c67cfdee757891"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let isLogged = false;
+  let ads = [];
+
+  // LOGOWANIE
+  window.login = function() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        isLogged = true;
+        alert("Zalogowano");
+        loadAds();
+      })
+      .catch(() => alert("Błąd logowania"));
+  };
+
+  // WYLOGOWANIE
+  window.logout = function() {
+    signOut(auth).then(() => {
+      isLogged = false;
+      loadAds();
+      alert("Wylogowano");
+    });
+  };
+
+  // TRYB GOŚCIA
+  window.guestMode = function() {
+    isLogged = false;
+    loadAds();
+  };
+
+  // DODAWANIE REKLAMY
+  window.addAd = async function() {
+    if (!isLogged) return alert("Tylko dla zalogowanych");
+
+    const company = document.getElementById("company").value.trim();
+    const content = document.getElementById("content").value.trim();
+    const date = document.getElementById("date").value;
+
+    if (!company || !content || !date) return alert("Wypełnij wszystkie pola");
+
+    await addDoc(collection(db, "ads"), {
+      company,
+      content,
+      date
+    });
+
+    document.getElementById("company").value = "";
+    document.getElementById("content").value = "";
+    document.getElementById("date").valueAsDate = new Date();
+  };
+
+  // POBIERANIE REKLAM
+  function loadAds() {
+    onSnapshot(collection(db, "ads"), (snapshot) => {
+      ads = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      render();
+    });
+  }
+
+  // RENDEROWANIE
+  function render() {
+    const container = document.getElementById("ads");
+    container.innerHTML = "";
+
+    const now = new Date();
+
+    // Formularz widoczny tylko dla zalogowanego
+    document.getElementById("formPanel").style.display = isLogged ? "block" : "none";
+
+    ads.forEach(ad => {
+      const div = document.createElement("div");
+      div.className = "ad";
+
+      const expiry = new Date(ad.date);
+      div.classList.add(expiry >= now ? "active" : "expired");
+
+      div.innerHTML = `
+        <div class="company">${ad.company}</div>
+        <div class="text">${ad.content}</div>
+        <div class="date">Wygasa: ${ad.date}</div>
+      `;
+
+      // KLIK = KOPIUJ
+      const textDiv = div.querySelector(".text");
+      textDiv.onclick = () => {
+        navigator.clipboard.writeText(ad.content);
+        textDiv.style.background = "#00aa00";
+        setTimeout(() => textDiv.style.background = "#2a2a2a", 500);
+      };
+
+      // AKCJE DLA WYLOGOWANEGO / GOŚCIA
+      if (isLogged && expiry < now) {
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const del = document.createElement("button");
+        del.innerText = "Usuń";
+        del.onclick = () => deleteDoc(doc(db, "ads", ad.id));
+
+        const extend = document.createElement("button");
+        extend.innerText = "Przedłuż";
+        extend.onclick = async () => {
+          const newDate = prompt("Nowa data (YYYY-MM-DD):", ad.date);
+          if (newDate) {
+            await updateDoc(doc(db, "ads", ad.id), { date: newDate });
+          }
+        };
+
+        actions.appendChild(del);
+        actions.appendChild(extend);
+        div.appendChild(actions);
+      }
+
+      container.appendChild(div);
+    });
+  }
+
+  // DOMYŚLNA DATA
+  document.getElementById("date").valueAsDate = new Date();
+
+  // START
+  loadAds();
+</script>
+
+</body>
+</html>

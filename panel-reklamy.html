@@ -1,274 +1,387 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>Panel Reklam</title>
+<meta charset="UTF-8">
+<title>Panel Reklam</title>
 
-  <style>
-    body {
-      background: #121212;
-      color: white;
-      font-family: Arial;
-      padding: 20px;
-      margin: 0;
-    }
+<style>
+  body {
+    background: #121212;
+    color: white;
+    font-family: Arial;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    transition: padding-top 0.5s;
+    padding: 20px;
+  }
 
-    h1 {
-      text-align: center;
-    }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: none;
-      background: #1e1e1e;
-      color: white;
-      box-sizing: border-box;
-    }
+  input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #1e1e1e;
+    color: white;
+    box-sizing: border-box;
+  }
 
-    button {
-      cursor: pointer;
-      background: #333;
-      transition: background 0.2s;
-    }
+  button {
+    cursor: pointer;
+    background: #333;
+    transition: background 0.2s;
+  }
 
-    button:hover {
-      background: #555;
-    }
+  button:hover { background: #555; }
 
-    .panel {
-      background: #1a1a1a;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+  .panel {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.356);
+    transition: all 0.5s;
+  }
 
-    .ads {
-      display: grid;
-      gap: 15px;
-    }
+  #formPanel { border: none; max-width: 600px; }
 
-    .ad {
-      padding: 15px;
-      border-radius: 10px;
-      background: #1e1e1e;
-    }
+  .ads {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    width: 100%;
+    margin-top: 20px;
+  }
 
-    .active {
-      border: 2px solid #00ff88;
-    }
+  .ad { padding: 15px; border-radius: 10px; background: #1e1e1e; margin-bottom: 10px; }
+  .active { border: 2px solid #00ff88; }
+  .expired { border: 2px solid #ff4444; }
+  .company { font-weight: bold; margin-bottom: 5px; }
+  .text { background: #2a2a2a; padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+  .date { margin-top: 5px; font-size: 0.9em; opacity: 0.7; }
+  .actions { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (max-width: 500px) { .actions button { flex: 1 1 100%; } }
 
-    .expired {
-      border: 2px solid #ff4444;
-    }
+  /* Panel logowania wycentrowany lub na górze */
+  .centered {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-    .company {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .text {
-      background: #2a2a2a;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .date {
-      margin-top: 5px;
-      font-size: 0.9em;
-      opacity: 0.7;
-    }
-
-    .actions {
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 500px) {
-      .actions button {
-        flex: 1 1 100%;
-      }
-    }
-  </style>
+  .top {
+    position: relative;
+    top: 0;
+    transform: translateY(0);
+  }
+</style>
 </head>
 <body>
 
-<h1>Panel Reklam</h1>
+<h1>Venture - Reklamy</h1>
 
 <!-- LOGOWANIE -->
-<div class="panel" id="authPanel">
+<div class="panel centered" id="authPanel">
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Hasło">
   <button onclick="login()">Zaloguj</button>
   <button onclick="guestMode()">Przejdź bez logowania</button>
-  <button onclick="logout()">Wyloguj</button>
+  <button id="logoutBtn" onclick="logout()" style="display:none;">Wyloguj</button>
 </div>
 
 <!-- DODAWANIE -->
-<div class="panel" id="formPanel">
+<div class="panel" id="formPanel" style="display:none;">
   <input id="company" placeholder="Nazwa kontrahenta">
   <textarea id="content" placeholder="Treść reklamy"></textarea>
   <input id="date" type="date">
   <button onclick="addAd()">Dodaj reklamę</button>
 </div>
 
-<!-- LISTA -->
-<div class="ads" id="ads"></div>
+<!-- LISTA REKLAM -->
+<div class="ads" id="ads" style="display:none;"></div>
 
 <!-- FIREBASE -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-  // KONFIGURACJA FIREBASE
-  const firebaseConfig = {
-    apiKey: "AIzaSyBgOzacHE3lq-giPtYymU8kpxuP15PPuZI",
-    authDomain: "panel-reklam.firebaseapp.com",
-    projectId: "panel-reklam",
-    storageBucket: "panel-reklam.firebasestorage.app",
-    messagingSenderId: "749169704388",
-    appId: "1:749169704388:web:a82a74d6c67cfdee757891"
-  };
+// KONFIGURACJA FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSyBgOzacHE3lq-giPtYymU8kpxuP15PPuZI",
+  authDomain: "panel-reklam.firebaseapp.com",
+  projectId: "panel-reklam",
+  storageBucket: "panel-reklam.firebasestorage.app",
+  messagingSenderId: "749169704388",
+  appId: "1:749169704388:web:a82a74d6c67cfdee757891"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  let isLogged = false;
-  let ads = [];
+let isLogged = false;
+let guestModeActive = false;
+let ads = [];
 
-  // LOGOWANIE
-  window.login = function() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        isLogged = true;
-        alert("Zalogowano");
-        loadAds();
-      })
-      .catch(() => alert("Błąd logowania"));
-  };
-
-  // WYLOGOWANIE
-  window.logout = function() {
-    signOut(auth).then(() => {
-      isLogged = false;
-      loadAds();
-      alert("Wylogowano");
-    });
-  };
-
-  // TRYB GOŚCIA
-  window.guestMode = function() {
-    isLogged = false;
+// OBSERVER STANU ZALOGOWANIA
+onAuthStateChanged(auth, user => {
+  if(user) {
+    isLogged = true; 
+    guestModeActive = false;
+    updateUI();
     loadAds();
-  };
-
-  // DODAWANIE REKLAMY
-  window.addAd = async function() {
-    if (!isLogged) return alert("Tylko dla zalogowanych");
-
-    const company = document.getElementById("company").value.trim();
-    const content = document.getElementById("content").value.trim();
-    const date = document.getElementById("date").value;
-
-    if (!company || !content || !date) return alert("Wypełnij wszystkie pola");
-
-    await addDoc(collection(db, "ads"), {
-      company,
-      content,
-      date
-    });
-
-    document.getElementById("company").value = "";
-    document.getElementById("content").value = "";
-    document.getElementById("date").valueAsDate = new Date();
-  };
-
-  // POBIERANIE REKLAM
-  function loadAds() {
-    onSnapshot(collection(db, "ads"), (snapshot) => {
-      ads = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      render();
-    });
+  } else { 
+    isLogged = false; 
+    updateUI(); 
   }
+});
 
-  // RENDEROWANIE
-  function render() {
-    const container = document.getElementById("ads");
-    container.innerHTML = "";
+// LOGOWANIE
+window.login = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  signInWithEmailAndPassword(auth,email,password)
+    .then(()=>{ 
+      isLogged=true; 
+      guestModeActive=false; 
+      updateUI(); 
+      loadAds(); 
+    })
+    .catch(()=>alert("Błąd logowania"));
+};
 
-    const now = new Date();
+// WYLOGOWANIE
+window.logout = function() {
+  signOut(auth).then(()=>{ 
+    isLogged=false; 
+    guestModeActive=false; 
+    updateUI(); 
+  });
+};
 
-    // Formularz widoczny tylko dla zalogowanego
-    document.getElementById("formPanel").style.display = isLogged ? "block" : "none";
+// TRYB GOŚCIA
+window.guestMode = function() {
+  isLogged=false; 
+  guestModeActive=true; 
+  updateUI(true); 
+  loadAds();
+};
 
-    ads.forEach(ad => {
-      const div = document.createElement("div");
-      div.className = "ad";
+// DODAWANIE REKLAMY
+window.addAd = async function() {
+  if(!isLogged) return alert("Tylko dla zalogowanych");
+  const company=document.getElementById("company").value.trim();
+  const content=document.getElementById("content").value.trim();
+  const date=document.getElementById("date").value;
+  if(!company || !content || !date) return alert("Wypełnij wszystkie pola");
+  await addDoc(collection(db,"ads"),{company,content,date});
+  document.getElementById("company").value="";
+  document.getElementById("content").value="";
+  document.getElementById("date").valueAsDate=new Date();
+};
 
-      const expiry = new Date(ad.date);
-      div.classList.add(expiry >= now ? "active" : "expired");
+// POBIERANIE REKLAM
+function loadAds() {
+  if(!isLogged && !guestModeActive) return;
+  onSnapshot(collection(db,"ads"), snapshot=>{
+    ads = snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+    render();
+  });
+}
 
-      div.innerHTML = `
-        <div class="company">${ad.company}</div>
-        <div class="text">${ad.content}</div>
-        <div class="date">Wygasa: ${ad.date}</div>
-      `;
+// RENDEROWANIE
+function render() {
+  const container=document.getElementById("ads");
+  container.innerHTML="";
+  const now=new Date();
+  container.style.display='flex';
+  container.style.flexDirection='column';
+  container.style.alignItems='center';
+  container.style.gap='15px';
 
-      // KLIK = KOPIUJ
-      const textDiv = div.querySelector(".text");
-      textDiv.onclick = () => {
-        navigator.clipboard.writeText(ad.content);
-        textDiv.style.background = "#00aa00";
-        setTimeout(() => textDiv.style.background = "#2a2a2a", 500);
-      };
+  ads.forEach(ad=>{
+    const expiry=new Date(ad.date);
 
-      // AKCJE DLA WYLOGOWANEGO / GOŚCIA
-      if (isLogged && expiry < now) {
-        const actions = document.createElement("div");
-        actions.className = "actions";
+    // KONTEJNER REKLAMY + PANEL AKCJI
+    const wrapper = document.createElement("div");
+    wrapper.style.display = "flex";
+    wrapper.style.position = "relative";
+    wrapper.style.justifyContent = "center";
 
-        const del = document.createElement("button");
-        del.innerText = "Usuń";
-        del.onclick = () => deleteDoc(doc(db, "ads", ad.id));
+    // PANEL REKLAMY
+    const adDiv = document.createElement("div");
+    adDiv.className = "ad";
+    adDiv.classList.add(expiry >= now ? "active" : "expired");
+    adDiv.style.width = "640px"; // SZTYWNA szerokość
+    adDiv.style.boxSizing = "border-box";
+    adDiv.style.paddingRight = "10px";
+    adDiv.innerHTML = `
+      <div class="company">${ad.company}</div>
+      <div class="text">${ad.content}</div>
+      <div class="date">Wygasa: ${ad.date}</div>
+    `;
 
-        const extend = document.createElement("button");
-        extend.innerText = "Przedłuż";
-        extend.onclick = async () => {
-          const newDate = prompt("Nowa data (YYYY-MM-DD):", ad.date);
-          if (newDate) {
-            await updateDoc(doc(db, "ads", ad.id), { date: newDate });
-          }
-        };
+    adDiv.querySelector(".text").onclick = () => {
+      navigator.clipboard.writeText(ad.content);
+      adDiv.querySelector(".text").style.background="#00aa00";
+      setTimeout(()=>adDiv.querySelector(".text").style.background="#2a2a2a",500);
+    };
 
-        actions.appendChild(del);
-        actions.appendChild(extend);
-        div.appendChild(actions);
+    // PANEL AKCJI PO PRAWEJ TYLKO DLA ZALOGOWANYCH
+    if(isLogged){
+      const actions = document.createElement("div");
+      actions.style.position = "absolute";
+      actions.style.right = "-140px";
+      actions.style.top = "0";
+      actions.style.display = "flex";
+      actions.style.flexDirection = "column";
+      actions.style.gap = "5px";
+      actions.style.width = "120px";
+
+      // PRZYCISK ZALEŻNY OD STATUSU REKLAMY
+      const actionBtn = document.createElement("button");
+      if(expiry >= now){
+        actionBtn.innerText = "Zmień datę";
+        actionBtn.onclick = () => showDateModal(ad.id, ad.date, "Zmień datę");
+      } else {
+        actionBtn.innerText = "Przedłuż";
+        actionBtn.onclick = () => showDateModal(ad.id, ad.date, "Przedłuż reklamę");
       }
 
-      container.appendChild(div);
-    });
+      // PRZYCISK USUŃ
+      const delBtn = document.createElement("button");
+      delBtn.innerText = "Usuń";
+      delBtn.onclick = () => deleteDoc(doc(db,"ads",ad.id));
+
+      actions.appendChild(actionBtn);
+      actions.appendChild(delBtn);
+
+      wrapper.appendChild(adDiv);
+      wrapper.appendChild(actions);
+    } else {
+      wrapper.appendChild(adDiv);
+    }
+
+    container.appendChild(wrapper);
+  });
+}
+
+// MODAL DO ZMIANY/PRZEDŁUŻENIA DATY
+function showDateModal(adId, currentDate, title){
+  const modal = document.createElement("div");
+  modal.style.position = "fixed";
+  modal.style.top = "50%";
+  modal.style.left = "50%";
+  modal.style.transform = "translate(-50%, -50%)";
+  modal.style.background = "#1a1a1a";
+  modal.style.padding = "20px";
+  modal.style.border = "2px solid white";
+  modal.style.borderRadius = "10px";
+  modal.style.zIndex = 1000;
+  modal.innerHTML = `
+    <h3>${title}</h3>
+    <input type="date" id="newDate" value="${currentDate}">
+    <div style="margin-top:10px;">
+      <button id="confirm">OK</button>
+      <button id="cancel">Anuluj</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  modal.querySelector("#cancel").onclick = () => modal.remove();
+  modal.querySelector("#confirm").onclick = async () => {
+    const newDate = modal.querySelector("#newDate").value;
+    if(newDate) await updateDoc(doc(db,"ads",adId), { date: newDate });
+    modal.remove();
+  };
+}
+
+// AKTUALIZACJA UI
+function updateUI(guest=false) {
+  const authPanel = document.getElementById("authPanel");
+  const formPanel = document.getElementById("formPanel");
+  const adsContainer = document.getElementById("ads");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const loginBtn = authPanel.querySelector("button[onclick='login()']");
+  const guestBtn = authPanel.querySelector("button[onclick='guestMode()']");
+
+  formPanel.style.display = isLogged ? "block" : "none";
+
+  if (!isLogged && !guest) {
+    authPanel.style.display = "block";
+    authPanel.classList.add("centered");
+    authPanel.classList.remove("top");
+    adsContainer.style.display = "none";
+
+    emailInput.style.display = "block";
+    passwordInput.style.display = "block";
+    loginBtn.style.display = "inline-block";
+    guestBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+
+  } else if (guest) {
+    authPanel.style.display = "none";
+    adsContainer.style.display = "flex";
+
+  } else {
+    authPanel.style.display = "block";
+    authPanel.classList.add("top");
+    authPanel.classList.remove("centered");
+    adsContainer.style.display = "flex";
+
+    emailInput.style.display = "none";
+    passwordInput.style.display = "none";
+    loginBtn.style.display = "none";
+    guestBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
   }
+}
 
-  // DOMYŚLNA DATA
-  document.getElementById("date").valueAsDate = new Date();
+// DOMYŚLNA DATA
+document.getElementById("date").valueAsDate=new Date();
 
-  // START
-  loadAds();
+// START
+updateUI();
 </script>
+
+<style>
+    #credits {
+  margin-top: auto; /* sprawia, że footer "przykleja się" na dole przy flex column */
+  padding: 10px;
+  color: #555; /* ciemnoszary */
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#credits a {
+  color: #696969;
+  text-decoration: none;
+}
+
+#credits a:hover {
+  text-decoration: underline;
+}
+</style>
+
+<footer id="credits">
+  Created by <a href="https://discord.com/users/662788934266388510" target="_blank">sacky</a>
+</footer>
 
 </body>
 </html>

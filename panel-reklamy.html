@@ -57,7 +57,7 @@
 
   #formPanel { border: none; max-width: 600px; }
 
-  .ads {
+  .adList {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -66,27 +66,17 @@
     margin-top: 20px;
   }
 
-  .ad { padding: 15px; border-radius: 10px; background: #1e1e1e; margin-bottom: 10px; }
-  .active { border: 2px solid #00ff88; }
-  .expired { border: 2px solid #ff4444; }
-  .company { font-weight: bold; margin-bottom: 5px; }
-  .text { background: #2a2a2a; padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
-  .date { margin-top: 5px; font-size: 0.9em; opacity: 0.7; }
-  .actions { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
-  @media (max-width: 500px) { .actions button { flex: 1 1 100%; } }
+  .adItem { padding: 15px; border-radius: 10px; background: #1e1e1e; margin-bottom: 10px; }
+  .adActive { border: 2px solid #00ff88; }
+  .adExpired { border: 2px solid #ff4444; }
+  .adBrand { font-weight: bold; margin-bottom: 5px; }
+  .adContent { background: #2a2a2a; padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+  .adDate { margin-top: 5px; font-size: 0.9em; opacity: 0.7; }
+  .adActions { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (max-width: 500px) { .adActions button { flex: 1 1 100%; } }
 
-  /* Panel logowania wycentrowany lub na górze */
-  .centered {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .top {
-    position: relative;
-    top: 0;
-    transform: translateY(0);
-  }
+  .centered { position: absolute; top: 50%; transform: translateY(-50%); }
+  .top { position: relative; top: 0; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -111,15 +101,13 @@
 </div>
 
 <!-- LISTA REKLAM -->
-<div class="ads" id="ads" style="display:none;"></div>
+<div class="adList" id="ads" style="display:none;"></div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// KONFIGURACJA FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyBgOzacHE3lq-giPtYymU8kpxuP15PPuZI",
   authDomain: "panel-reklam.firebaseapp.com",
@@ -137,51 +125,27 @@ let isLogged = false;
 let guestModeActive = false;
 let ads = [];
 
-// OBSERVER STANU ZALOGOWANIA
 onAuthStateChanged(auth, user => {
-  if(user) {
-    isLogged = true; 
-    guestModeActive = false;
-    updateUI();
-    loadAds();
-  } else { 
-    isLogged = false; 
-    updateUI(); 
-  }
+  if(user) { isLogged = true; guestModeActive = false; updateUI(); loadAds(); }
+  else { isLogged = false; updateUI(); }
 });
 
-// LOGOWANIE
 window.login = function() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   signInWithEmailAndPassword(auth,email,password)
-    .then(()=>{ 
-      isLogged=true; 
-      guestModeActive=false; 
-      updateUI(); 
-      loadAds(); 
-    })
+    .then(()=>{ isLogged=true; guestModeActive=false; updateUI(); loadAds(); })
     .catch(()=>alert("Błąd logowania"));
 };
 
-// WYLOGOWANIE
 window.logout = function() {
-  signOut(auth).then(()=>{ 
-    isLogged=false; 
-    guestModeActive=false; 
-    updateUI(); 
-  });
+  signOut(auth).then(()=>{ isLogged=false; guestModeActive=false; updateUI(); });
 };
 
-// TRYB GOŚCIA
 window.guestMode = function() {
-  isLogged=false; 
-  guestModeActive=true; 
-  updateUI(true); 
-  loadAds();
+  isLogged=false; guestModeActive=true; updateUI(true); loadAds();
 };
 
-// DODAWANIE REKLAMY
 window.addAd = async function() {
   if(!isLogged) return alert("Tylko dla zalogowanych");
   const company=document.getElementById("company").value.trim();
@@ -194,7 +158,6 @@ window.addAd = async function() {
   document.getElementById("date").valueAsDate=new Date();
 };
 
-// POBIERANIE REKLAM
 function loadAds() {
   if(!isLogged && !guestModeActive) return;
   onSnapshot(collection(db,"ads"), snapshot=>{
@@ -203,45 +166,44 @@ function loadAds() {
   });
 }
 
-// RENDEROWANIE
 function render() {
-  const container=document.getElementById("ads");
-  container.innerHTML="";
-  const now=new Date();
-  container.style.display='flex';
-  container.style.flexDirection='column';
-  container.style.alignItems='center';
-  container.style.gap='15px';
+  const container = document.getElementById("ads");
+  container.innerHTML = "";
+  const now = new Date();
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+  container.style.alignItems = 'center';
+  container.style.gap = '15px';
 
-  ads.forEach(ad=>{
-    const expiry=new Date(ad.date);
+  const activeAds = ads.filter(ad => new Date(ad.date) >= now);
+  const expiredAds = ads.filter(ad => new Date(ad.date) < now);
+  const sortedAds = [...activeAds, ...expiredAds];
 
-    // KONTEJNER REKLAMY + PANEL AKCJI
+  sortedAds.forEach(ad => {
+    const expiry = new Date(ad.date);
     const wrapper = document.createElement("div");
     wrapper.style.display = "flex";
     wrapper.style.position = "relative";
     wrapper.style.justifyContent = "center";
 
-    // PANEL REKLAMY
     const adDiv = document.createElement("div");
-    adDiv.className = "ad";
-    adDiv.classList.add(expiry >= now ? "active" : "expired");
-    adDiv.style.width = "640px"; // SZTYWNA szerokość
+    adDiv.className = "adItem";
+    adDiv.classList.add(expiry >= now ? "adActive" : "adExpired");
+    adDiv.style.width = "640px";
     adDiv.style.boxSizing = "border-box";
     adDiv.style.paddingRight = "10px";
     adDiv.innerHTML = `
-      <div class="company">${ad.company}</div>
-      <div class="text">${ad.content}</div>
-      <div class="date">Wygasa: ${ad.date}</div>
+      <div class="adBrand">${ad.company}</div>
+      <div class="adContent">${ad.content}</div>
+      <div class="adDate">Wygasa: ${ad.date}</div>
     `;
 
-    adDiv.querySelector(".text").onclick = () => {
+    adDiv.querySelector(".adContent").onclick = () => {
       navigator.clipboard.writeText(ad.content);
-      adDiv.querySelector(".text").style.background="#00aa00";
-      setTimeout(()=>adDiv.querySelector(".text").style.background="#2a2a2a",500);
+      adDiv.querySelector(".adContent").style.background="#00aa00";
+      setTimeout(()=>adDiv.querySelector(".adContent").style.background="#2a2a2a",500);
     };
 
-    // PANEL AKCJI PO PRAWEJ TYLKO DLA ZALOGOWANYCH
     if(isLogged){
       const actions = document.createElement("div");
       actions.style.position = "absolute";
@@ -252,7 +214,6 @@ function render() {
       actions.style.gap = "5px";
       actions.style.width = "120px";
 
-      // PRZYCISK ZALEŻNY OD STATUSU REKLAMY
       const actionBtn = document.createElement("button");
       if(expiry >= now){
         actionBtn.innerText = "Zmień datę";
@@ -262,7 +223,6 @@ function render() {
         actionBtn.onclick = () => showDateModal(ad.id, ad.date, "Przedłuż reklamę");
       }
 
-      // PRZYCISK USUŃ
       const delBtn = document.createElement("button");
       delBtn.innerText = "Usuń";
       delBtn.onclick = () => deleteDoc(doc(db,"ads",ad.id));
@@ -280,7 +240,6 @@ function render() {
   });
 }
 
-// MODAL DO ZMIANY/PRZEDŁUŻENIA DATY
 function showDateModal(adId, currentDate, title){
   const modal = document.createElement("div");
   modal.style.position = "fixed";
@@ -310,7 +269,6 @@ function showDateModal(adId, currentDate, title){
   };
 }
 
-// AKTUALIZACJA UI
 function updateUI(guest=false) {
   const authPanel = document.getElementById("authPanel");
   const formPanel = document.getElementById("formPanel");
@@ -328,23 +286,19 @@ function updateUI(guest=false) {
     authPanel.classList.add("centered");
     authPanel.classList.remove("top");
     adsContainer.style.display = "none";
-
     emailInput.style.display = "block";
     passwordInput.style.display = "block";
     loginBtn.style.display = "inline-block";
     guestBtn.style.display = "inline-block";
     logoutBtn.style.display = "none";
-
   } else if (guest) {
     authPanel.style.display = "none";
     adsContainer.style.display = "flex";
-
   } else {
     authPanel.style.display = "block";
     authPanel.classList.add("top");
     authPanel.classList.remove("centered");
     adsContainer.style.display = "flex";
-
     emailInput.style.display = "none";
     passwordInput.style.display = "none";
     loginBtn.style.display = "none";
@@ -353,30 +307,20 @@ function updateUI(guest=false) {
   }
 }
 
-// DOMYŚLNA DATA
 document.getElementById("date").valueAsDate=new Date();
-
-// START
 updateUI();
 </script>
 
 <style>
-    #credits {
-  margin-top: auto; /* sprawia, że footer "przykleja się" na dole przy flex column */
+#credits {
+  margin-top: auto;
   padding: 10px;
-  color: #555; /* ciemnoszary */
+  color: #555;
   font-size: 0.9em;
   text-align: center;
 }
-
-#credits a {
-  color: #696969;
-  text-decoration: none;
-}
-
-#credits a:hover {
-  text-decoration: underline;
-}
+#credits a { color: #696969; text-decoration: none; }
+#credits a:hover { text-decoration: underline; }
 </style>
 
 <footer id="credits">

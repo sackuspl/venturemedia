@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <title>Panel Reklam</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
   body {
     background: #121212;
     color: white;
-    font-family: Arial;
+    font-family: 'Roboto';
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -29,8 +31,9 @@
     padding: 10px;
     margin-top: 10px;
     border-radius: 6px;
+    font-family: 'Roboto';
     border: none;
-    background: #1e1e1e;
+    background: #252525;
     color: white;
     box-sizing: border-box;
   }
@@ -51,11 +54,11 @@
     max-width: 400px;
     width: 100%;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.356);
+    border: 1px solid #ffffff5b;
     transition: all 0.5s;
   }
 
-  #formPanel { border: none; max-width: 600px; }
+  #formPanel { border: solid 1px #ffffff5b; max-width: 600px; }
 
   .adList {
     display: flex;
@@ -70,7 +73,7 @@
   .adActive { border: 2px solid #00ff88; }
   .adExpired { border: 2px solid #ff4444; }
   .adBrand { font-weight: bold; margin-bottom: 5px; }
-  .adContent { background: #2a2a2a; padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+  .adContent { color: #c7c7c7; background: #2a2a2a; padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
   .adDate { margin-top: 5px; font-size: 0.9em; opacity: 0.7; }
   .adActions { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
   @media (max-width: 500px) { .adActions button { flex: 1 1 100%; } }
@@ -217,14 +220,17 @@ function render() {
       const actionBtn = document.createElement("button");
       if(expiry >= now){
         actionBtn.innerText = "Zmień datę";
+        actionBtn.classList.add("changeDateBtn"); // <- nowa klasa
         actionBtn.onclick = () => showDateModal(ad.id, ad.date, "Zmień datę");
       } else {
         actionBtn.innerText = "Przedłuż";
+        actionBtn.classList.add("extendBtn"); // <- nowa klasa
         actionBtn.onclick = () => showDateModal(ad.id, ad.date, "Przedłuż reklamę");
       }
 
       const delBtn = document.createElement("button");
       delBtn.innerText = "Usuń";
+      delBtn.classList.add("deleteBtn"); // <-- tutaj dodajemy klasę
       delBtn.onclick = () => deleteDoc(doc(db,"ads",ad.id));
 
       actions.appendChild(actionBtn);
@@ -312,6 +318,12 @@ updateUI();
 </script>
 
 <style>
+  /* Zmiana koloru ikonki kalendarza w input type=date */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(100%) brightness(150%); /* odwraca kolor na jasny */
+    cursor: pointer; /* wskaźnik myszki */
+}
+
 #credits {
   margin-top: auto;
   padding: 10px;
@@ -321,6 +333,32 @@ updateUI();
 }
 #credits a { color: #696969; text-decoration: none; }
 #credits a:hover { text-decoration: underline; }
+
+.deleteBtn {
+  background-color: #382727; /* czerwony dla przycisku Usuń */
+  color: white;
+}
+
+.deleteBtn:hover {
+  background-color: #473131; /* jaśniejszy czerwony przy najechaniu */
+}
+.extendBtn {
+  background-color: #2b3833; /* ciemny turkus dla Przedłuż */
+  color: white;
+}
+
+.extendBtn:hover {
+  background-color: #374741; /* jaśniejszy turkus przy hover */
+}
+
+.changeDateBtn {
+  background-color: #2d353b; /* ciemny oliwkowy dla Zmień datę */
+  color: white;
+}
+
+.changeDateBtn:hover {
+  background-color: #3a4550; /* jaśniejszy oliwkowy przy hover */
+}
 </style>
 
 <footer id="credits">

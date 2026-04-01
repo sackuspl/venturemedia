@@ -201,11 +201,17 @@ function render() {
       <div class="adDate">Wygasa: ${ad.date}</div>
     `;
 
-    adDiv.querySelector(".adContent").onclick = () => {
-      navigator.clipboard.writeText(ad.content);
-      adDiv.querySelector(".adContent").style.background="#00aa00";
-      setTimeout(()=>adDiv.querySelector(".adContent").style.background="#2a2a2a",500);
-    };
+adDiv.querySelector(".adContent").onclick = () => {
+  const tekstDoSkopiowania = "/reklama dodaj 2 " + ad.content;
+
+  navigator.clipboard.writeText(tekstDoSkopiowania);
+
+  adDiv.querySelector(".adContent").style.background = "#00aa00";
+  setTimeout(() => {
+    adDiv.querySelector(".adContent").style.background = "#2a2a2a";
+  }, 500);
+};
+
 
     if(isLogged){
       const actions = document.createElement("div");
